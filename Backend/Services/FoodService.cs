@@ -29,4 +29,14 @@ public class FoodService
     
     return result.DeletedCount > 0;
   }
+
+  public async Task CreateProductAsync(FoodModel product)
+  {
+    await _products.InsertOneAsync(product);
+  }
+
+  public async Task UpdateProductByIdAsync(string id, FoodModel updatedProduct)
+  {
+    var filter = Builders<FoodModel>.Filter.Eq(product => product.Id_prod, Int32.Parse(id));
+  }
 }

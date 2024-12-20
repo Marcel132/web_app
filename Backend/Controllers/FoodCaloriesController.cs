@@ -52,4 +52,18 @@ public class FoodCaloriesController : ControllerBase
         return NotFound("Product not found"); 
     }
   }
+
+  [HttpPost]
+  public async Task<IActionResult> CreateProduct([FromBody] FoodModel newProduct)
+  {
+    if( newProduct == null)
+    {
+      return BadRequest("Invalid Data: data is null");
+    }
+
+    await _foodService.CreateProductAsync(newProduct);
+    return CreatedAtAction(nameof(GetAllProducts), null, newProduct);
+  }
 }
+
+
