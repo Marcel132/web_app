@@ -2,6 +2,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using DnsClient.Protocol;
 
 public class FoodService 
 {
@@ -20,5 +21,12 @@ public class FoodService
   public async Task<FoodModel?> GetProductByIdAsync(string id)
   { 
     return await _products.Find(product => product.Id_prod == Int32.Parse(id)).FirstOrDefaultAsync();
+  }
+
+  public async Task<bool> DeleteProductByIdAsync(string id)
+  {
+    var result = await _products.DeleteOneAsync(product => product.Id_prod == Int32.Parse(id));
+    
+    return result.DeletedCount > 0;
   }
 }

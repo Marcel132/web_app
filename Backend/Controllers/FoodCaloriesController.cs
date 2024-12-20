@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/food")]
+[Route("api/v01/food")]
 
 
 public class FoodCaloriesController : ControllerBase 
@@ -26,7 +26,7 @@ public class FoodCaloriesController : ControllerBase
   }
 
   [HttpGet("{id}")]
-  public async Task<IActionResult> GetProductById( string id)
+  public async Task<IActionResult> GetProductById( string id )
   {
     var product = await _foodService.GetProductByIdAsync(id);
 
@@ -36,5 +36,20 @@ public class FoodCaloriesController : ControllerBase
     }
 
       return Ok(product);
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteProductById( string id )
+  {
+    var result = await _foodService.DeleteProductByIdAsync(id);
+
+    if( result )
+    {
+      return NoContent();
+    }
+    else
+    {
+        return NotFound("Product not found"); 
+    }
   }
 }
