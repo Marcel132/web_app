@@ -64,6 +64,25 @@ public class FoodCaloriesController : ControllerBase
     await _foodService.CreateProductAsync(newProduct);
     return CreatedAtAction(nameof(GetAllProducts), null, newProduct);
   }
+
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdateProductById(string id, [FromBody] FoodModel updatedValue)
+  {
+    if (updatedValue == null)
+    {
+      return BadRequest("Invalid data: data is null");
+    }
+
+    try 
+    {
+        await _foodService.UpdateProductByIdAsync(id, updatedValue);
+        return NoContent();
+    }
+    catch (Exception ex) 
+    {
+      return StatusCode(500, $"Internal server error: {ex.Message}");
+    }
+  }
 }
 
 

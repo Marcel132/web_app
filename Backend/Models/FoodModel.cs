@@ -7,40 +7,33 @@ public class FoodModel
 {
   [BsonId]
   [BsonRepresentation(BsonType.ObjectId)]
-  public string Id { get; set; }
+  public string? Id { get; set; }
 
   [BsonElement("id_prod")]
-  [Required]
-  public int Id_prod { get; set; }
+  public int? Id_prod { get; set; }
 
   [BsonElement("name")]
-  [Required]
-  public string Name { get; set; }
+  public string? Name { get; set; }
 
   [BsonElement("details")]
-  [Required]
-  public FoodDetalis Details { get; set;}
+  public FoodDetalis? Details { get; set;}
 }
 
 public class FoodDetalis 
 {
   [BsonElement("kcal")]
   [Range(0, float.MaxValue)]
-  [Required]
-  public double Kcal { get; set;}
+  public double? Kcal { get; set;}
 
   [BsonElement("proteins")]
   [Range(0, float.MaxValue)]
-  [Required]
-  public double Proteins { get; set; } 
+  public double? Proteins { get; set; } 
 
   [BsonElement("fats")]
   [Range(0, float.MaxValue)]
-  [Required]
-  public double Fats { get; set; }
+  public double? Fats { get; set; }
 
   [BsonElement("carbohydrates")]
   [Range(0, float.MaxValue)]
-  [Required]
-  public double Carbohydrates { get; set; }
+  public double? Carbohydrates { get; set; }
 }
