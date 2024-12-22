@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -13,6 +14,7 @@ public class FoodCaloriesController : ControllerBase
     _foodService = foodService;
   }
 
+  [Authorize]
   [HttpGet]
   public async Task<IActionResult> GetAllProducts()
   {
