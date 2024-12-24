@@ -21,7 +21,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class AuthContainerComponent {
 	isLogged?: boolean;
-	isLoginMode: boolean = false;
+	isLoginMode: boolean = true;
 
 	constructor(
 		private AuthService: AuthService,
