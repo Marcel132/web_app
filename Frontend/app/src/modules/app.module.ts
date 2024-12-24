@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../components/shared/header/header.component';
+import { FooterComponent } from '../components/shared/footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -8,10 +10,12 @@ import { HeaderComponent } from '../components/shared/header/header.component';
   declarations: [],
   imports: [
     CommonModule,
-		HeaderComponent
+		HeaderComponent,
+		FooterComponent,
   ],
 	exports: [
-		HeaderComponent
+		HeaderComponent,
+		FooterComponent,
 	]
 })
 export class AppModule { }
