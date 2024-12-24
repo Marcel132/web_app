@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from './shared.module';
-import { FeatureModule } from './feature.module';
+import { SharedModule } from '../../modules/shared.module';
 
 
 
@@ -10,11 +9,9 @@ import { FeatureModule } from './feature.module';
   imports: [
     CommonModule,
 		SharedModule,
-		FeatureModule,
   ],
 	exports: [
-		SharedModule,
-		FeatureModule,
+
 	]
 })
-export class AppModule { }
+export class AuthModule { }
