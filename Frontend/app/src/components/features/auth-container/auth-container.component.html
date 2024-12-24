@@ -1,5 +1,27 @@
 <div class='w-full h-full items-center justify-center'>
 
-	<app-header></app-header>
+	<app-logo></app-logo>
+
+	<div *ngIf="isLogged; else LoginFormTemplate">
+		<app-dashboard></app-dashboard>
+	</div>
+
+
+	<ng-template #LoginFormTemplate>
+
+		<div *ngIf="isLoginMode; else RegisterFormTemplate">
+
+			<app-login></app-login>
+
+		</div>
+
+
+		<ng-template #RegisterFormTemplate>
+
+			<app-register></app-register>
+
+		</ng-template>
+
+	</ng-template>
 
 </div>
