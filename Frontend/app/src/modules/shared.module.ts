@@ -16,6 +16,7 @@ import { LogoComponent } from '../components/shared/logo/logo.component';
   ],
 	exports: [
 		CommonModule,
+
 		HeaderComponent,
 		FooterComponent,
 		LogoComponent,

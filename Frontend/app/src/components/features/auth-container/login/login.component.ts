@@ -1,18 +1,30 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedModule } from '../../../../modules/shared.module';
+import { AuthService } from '../../../../services/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-		
+	SharedModule,
+	FormsModule,
+	ReactiveFormsModule,
 	],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
+	login: string = '';
+	password: string = '';
+	validData?: boolean;
+	message?: string[];
+
 	constructor(
+		private authService: AuthService,
 		private routes: Router,
 	) { }
 
@@ -21,4 +33,25 @@ export class LoginComponent {
 		this.routes.navigate(['/register']);
 	}
 
+	sendFormValue() {
+
+		console.log(this.login, this.password);
+
+		let checkData = this.authService.checkValidData(this.login, this.password)
+
+		this.validData = checkData.valid;
+		this.message = checkData.message;
+
+
+		if(this.validData)
+		{
+			this.validData = !this.validData
+			this.message = ['Zalogowano pomyślnie.'];
+			setTimeout(() => {
+				this.authService.login();
+				this.routes.navigate(['/dashboard']);
+			}, 2000)
+		}
+
+	}
 }
