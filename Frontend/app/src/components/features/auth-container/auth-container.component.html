@@ -2,31 +2,9 @@
 
 	<app-logo></app-logo>
 
-	<div *ngIf="isLogged; else LoginFormTemplate">
-		<app-dashboard></app-dashboard>
+	<div class="custom w-full flex items-center justify-center">
+		<router-outlet></router-outlet>
 	</div>
 
-
-	<ng-template #LoginFormTemplate>
-
-		<div *ngIf="isLoginMode; else RegisterFormTemplate">
-
-
-			<div class="custom w-screen flex items-center justify-center">
-				<app-login></app-login>
-			</div>
-
-		</div>
-
-
-		<ng-template #RegisterFormTemplate>
-
-			<div class="custom w-screen h-screen flex items-center justify-center">
-				<app-register></app-register>
-			</div>
-
-		</ng-template>
-
-	</ng-template>
-
+	<app-footer></app-footer>
 </div>

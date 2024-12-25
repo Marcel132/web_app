@@ -5,32 +5,18 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthModule } from './auth.module';
 import { AuthService } from '../../../services/auth.service';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-auth-container',
   standalone: true,
   imports: [
 		AuthModule,
     SharedModule,
-		DashboardComponent,
-		LoginComponent,
-		RegisterComponent,
+		RouterModule,
 ],
   templateUrl: './auth-container.component.html',
   styleUrl: './auth-container.component.scss'
 })
 export class AuthContainerComponent {
-	isLogged?: boolean;
-	isLoginMode: boolean = true;
-
-	constructor(
-		private AuthService: AuthService,
-	){}
-
-	ngOnInit(): void
-	{
-		this.isLogged = this.AuthService.isUserLogged();
-		console.log(this.isLogged);
-	}
 
 }

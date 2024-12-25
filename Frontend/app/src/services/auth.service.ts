@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,9 @@ export class AuthService {
 
   constructor() { }
 
-	private isLogged: boolean = false
+	private isLogged: boolean = true
+	private changeMode = new BehaviorSubject<boolean>(true)
+	isLoginMode = this.changeMode.asObservable();
 
 	isUserLogged(): boolean
 	{
@@ -23,5 +26,10 @@ export class AuthService {
 	{
 		this.isLogged = false;
 	}
-	
+
+	updateLoginModeValue(value: boolean)
+	{
+		this.changeMode.next(value);
+	}
+
 }

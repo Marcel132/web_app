@@ -14,5 +14,4 @@ import { AuthContainerComponent } from '../components/features/auth-container/au
 })
 export class AppComponent {
   title = 'app';
-	isLogged: boolean = false;
 }
