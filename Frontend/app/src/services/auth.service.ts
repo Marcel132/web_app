@@ -64,7 +64,7 @@ export class AuthService {
 
 	saveDataToDatabase(data: any)
 	{
-		const url = 'http://localhost:3000/register';
+		const url = 'http://localhost:3000/v01/register';
 		const body = {
 			login: data.login,
 			password: data.password
