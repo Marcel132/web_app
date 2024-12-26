@@ -14,7 +14,7 @@ public class FoodCaloriesController : ControllerBase
     _foodService = foodService;
   }
 
-  [Authorize]
+  // [Authorize]
   [HttpGet]
   public async Task<IActionResult> GetAllProducts()
   {
