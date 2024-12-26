@@ -1,1 +1,24 @@
-<button (click)="changeMode()">Zmień mnie (Register component)</button>
+<div class="container flex flex-col items-center justify-center">
+	<h2 class='text-3xl '>Rejestracja</h2>
+	<form class="w3/4 flex flex-col items-center justify-center p-3 my-10">
+		<input type="email"
+		placeholder="Login"
+		[(ngModel)]="login"
+		name='login'
+		class='input'
+		>
+		<input type="text"
+		placeholder='Hasło'
+		[(ngModel)]="password"
+		name='password'
+		class='input'
+		>
+		<button type="button" (click)="sendFormValue()">Zarejestruj się</button>
+	</form>
+
+	<div *ngIf="!validData"  class="">
+		{{message}}
+	</div>
+</div>
+
+<button (click)="changeMode()">Zmień mnie (Login component)</button>

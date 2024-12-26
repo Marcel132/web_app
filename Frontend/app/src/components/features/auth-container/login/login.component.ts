@@ -34,24 +34,5 @@ export class LoginComponent {
 	}
 
 	sendFormValue() {
-
-		console.log(this.login, this.password);
-
-		let checkData = this.authService.checkValidData(this.login, this.password)
-
-		this.validData = checkData.valid;
-		this.message = checkData.message;
-
-
-		if(this.validData)
-		{
-			this.validData = !this.validData
-			this.message = ['Zalogowano pomyślnie.'];
-			setTimeout(() => {
-				this.authService.login();
-				this.routes.navigate(['/dashboard']);
-			}, 2000)
-		}
-
 	}
 }
