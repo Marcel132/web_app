@@ -29,10 +29,17 @@ export class LoginComponent {
 	) { }
 
 	ngOnInit(): void {
-		if(this.authService.getToken() != undefined || null)
+		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined')
+		{
+			if(this.authService.getToken() != undefined || null)
 			{
 				this.routes.navigate(['/home'])
 			}
+		}
+		else
+		{
+			console.warn('localStorage is not available in this environment.');
+		}
 	}
 
 	changeMode()
@@ -40,6 +47,7 @@ export class LoginComponent {
 		this.routes.navigate(['/register']);
 	}
 
-	sendFormValue() {
+	sendFormValue()
+	{
 	}
 }

@@ -29,7 +29,18 @@ export class RegisterComponent {
 		private authService: AuthService,
 		private routes: Router,
 	) { }
-	
+
+	ngOnInit(): void {
+		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+			if(this.authService.getToken() != undefined || null)
+				{
+					this.routes.navigate(['/home'])
+				}
+		} else {
+			console.warn('localStorage is not available in this environment.');
+		}
+	}
+
 
 	changeMode()
 	{
@@ -55,7 +66,7 @@ export class RegisterComponent {
 			setTimeout(() => {
 				this.message = ['Trwa rejestracja...'];
 				this.authService.register(data)
-				if(this.authService.getToken() != undefined || null)
+				if(this.authService.getToken() != null)
 				{
 					setTimeout(() => { this.routes.navigate(['/home']) }, 2500)
 				}
