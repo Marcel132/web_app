@@ -34,6 +34,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<MongoDBContext>();
+builder.Services.AddSingleton<TokenService>();
 builder.Services.AddScoped<FoodService>();
 builder.Services.AddScoped<UsersService>();
 

@@ -30,6 +30,7 @@ public class UsersService
     }
 
     await _users.InsertOneAsync(newUser);
+
   } catch(Exception error)
   {
     throw new Exception("Error while creating a user" + " " + error);
