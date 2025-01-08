@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SharedModule } from '../../../modules/shared.module';
 import { AuthModule } from './auth.module';
 import { RouterModule } from '@angular/router';
+import { register } from 'module';
 @Component({
   selector: 'app-auth-container',
   standalone: true,
@@ -14,5 +15,4 @@ import { RouterModule } from '@angular/router';
   styleUrl: './auth-container.component.scss'
 })
 export class AuthContainerComponent {
-
 }

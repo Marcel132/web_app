@@ -28,6 +28,13 @@ export class LoginComponent {
 		private routes: Router,
 	) { }
 
+	ngOnInit(): void {
+		if(this.authService.getToken() != undefined || null)
+			{
+				this.routes.navigate(['/home'])
+			}
+	}
+
 	changeMode()
 	{
 		this.routes.navigate(['/register']);

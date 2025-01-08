@@ -22,12 +22,14 @@ export class RegisterComponent {
 	login: string = '';
 	password: string = '';
 	validData?: boolean;
+	changeColor: boolean = false;
 	message?: string[];
 
 	constructor(
 		private authService: AuthService,
 		private routes: Router,
 	) { }
+	
 
 	changeMode()
 	{
@@ -35,9 +37,6 @@ export class RegisterComponent {
 	}
 
 	sendFormValue() {
-
-		console.log(this.login, this.password);
-
 		let checkData = this.authService.checkRegisterData(this.login, this.password)
 
 		this.validData = checkData.valid;
@@ -49,23 +48,21 @@ export class RegisterComponent {
 		}
 
 
-		if(this.validData)
-		{
-			this.validData = !this.validData
+		if(this.validData) {
+			this.validData = !this.validData;
+			this.changeColor = true;
 			this.message = ['Login i hasło poprawne.'];
 			setTimeout(() => {
 				this.message = ['Trwa rejestracja...'];
-				this.authService.saveDataToDatabase(data).subscribe((response) => {
-					if(response.valid){
-						this.message = response.message;
-						setTimeout(() => {
-							this.routes.navigate(['/dashboard']);
-						}, 2000)
-					}
-					else if(!response.valid){
-						this.message = response.message;
-					}
-				});
+				this.authService.register(data)
+				if(this.authService.getToken() != undefined || null)
+				{
+					setTimeout(() => { this.routes.navigate(['/home']) }, 2500)
+				}
+				else {
+					this.changeColor = false;
+					this.message = ['Rejestracja nie powiodła się. Spróbuj ponownie później lub skontaktuj się z administratorem.'];
+				}
 			}, 2000)
 		}
 

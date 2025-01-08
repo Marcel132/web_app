@@ -1,6 +1,6 @@
 <div class="container flex flex-col items-center justify-center">
 	<h2 class='text-3xl '>Rejestracja</h2>
-	<form class="w3/4 flex flex-col items-center justify-center p-3 my-10">
+	<form class="w3/4 flex flex-col items-center justify-center p-3 mt-10">
 		<input type="email"
 		placeholder="Login"
 		[(ngModel)]="login"
@@ -16,9 +16,10 @@
 		<button type="button" (click)="sendFormValue()">Zarejestruj się</button>
 	</form>
 
-	<div *ngIf="!validData"  class="">
-		{{message}}
+	<div *ngIf="!validData"  class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
+		{{ message }}
 	</div>
+
+	<button (click)="changeMode()">Zmień mnie (Login component)</button>
 </div>
 
-<button (click)="changeMode()">Zmień mnie (Login component)</button>
