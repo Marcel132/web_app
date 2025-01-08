@@ -10,7 +10,7 @@ public class TokenService
 
   public TokenService(IConfiguration configuration)
   {
-    _key = configuration["Jwt:Key"];
+    _key = configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key is missing in configuration");
   }
 
   public string GenerateAccessToken(string userId)

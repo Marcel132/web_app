@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 public class UsersController : ControllerBase 
 {
   private readonly UsersService _usersService;
+  private readonly TokenService _tokenService;
 
-  public UsersController(UsersService usersService)
+  public UsersController(UsersService usersService, TokenService tokenService)
   {
+    _tokenService = tokenService;
     _usersService = usersService;
   }
 
@@ -23,6 +25,7 @@ public class UsersController : ControllerBase
 
     await _usersService.RegisterUserAsync(newUser);
 
-    return Ok();
+    var token = _tokenService.GenerateAccessToken(newUser.uid);
+    return Ok( new { token });
   }
 }
