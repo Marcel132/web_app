@@ -3,7 +3,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(options => 
+{
+  options.AddPolicy("AllowFrontend", policy => 
+  {
+    policy.WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+  });
+});
 // builder.Services.AddAuthentication("Bearer")
 //     .AddJwtBearer("Bearer", options =>
 //     {
@@ -42,7 +50,7 @@ var app = builder.Build();
 
 // app.UseAuthorization();
 // app.UseAuthentication();
-
+app.UseCors("AllowFrontend");
 app.UseRouting();
 app.MapControllers();
 
