@@ -28,20 +28,6 @@ export class LoginComponent {
 		private routes: Router,
 	) { }
 
-	ngOnInit(): void {
-		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined')
-		{
-			if(this.authService.getToken() != undefined || null)
-			{
-				this.routes.navigate(['/home'])
-			}
-		}
-		else
-		{
-			console.warn('localStorage is not available in this environment.');
-		}
-	}
-
 	changeMode()
 	{
 		this.routes.navigate(['/register']);

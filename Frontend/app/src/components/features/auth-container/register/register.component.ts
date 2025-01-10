@@ -30,24 +30,12 @@ export class RegisterComponent {
 		private routes: Router,
 	) { }
 
-	ngOnInit(): void {
-		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-			if(this.authService.getToken() != undefined || null)
-				{
-					this.routes.navigate(['/home'])
-				}
-		} else {
-			console.warn('localStorage is not available in this environment.');
-		}
-	}
-
-
 	changeMode()
 	{
 		this.routes.navigate(['/login']);
 	}
 
-	sendFormValue() {
+	async sendFormValue() {
 		let checkData = this.authService.checkRegisterData(this.login, this.password)
 
 		this.validData = checkData.valid;
@@ -60,22 +48,26 @@ export class RegisterComponent {
 
 
 		if(this.validData) {
-			this.validData = !this.validData;
+			this.validData = false;
 			this.changeColor = true;
 			this.message = ['Login i hasło poprawne.'];
-			setTimeout(() => {
-				this.message = ['Trwa rejestracja...'];
-				this.authService.register(data)
-				if(this.authService.getToken() != null)
-				{
-					setTimeout(() => { this.routes.navigate(['/home']) }, 2500)
-				}
-				else {
-					this.changeColor = false;
-					this.message = ['Rejestracja nie powiodła się. Spróbuj ponownie później lub skontaktuj się z administratorem.'];
-				}
-			}, 2000)
-		}
 
+			try {
+				this.message = ['Trwa rejestracja...']
+
+				const response = await this.authService.register(data)
+
+				this.message = ['Pomyślnie zarejestrowano użytkownika']
+
+				if(this.authService.getToken() != null){
+					setTimeout(() => {
+						this.routes.navigate(['/home'])
+					}, 2500);
+				}
+			} catch (error: any){
+				this.changeColor = false
+				this.message = [error.message]
+			}
+		}
 	}
 }

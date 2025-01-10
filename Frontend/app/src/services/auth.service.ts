@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { error } from 'node:console';
-import { map } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,17 @@ export class AuthService {
 	) { }
 
 
-	login(accessToken: any, refreshToken: any): void
-	{
-		localStorage.setItem('accesToken', accessToken);
-		sessionStorage.setItem('refreshToken', refreshToken);
-	}
+	// login(accessToken: any, refreshToken: any): void
+	// {
+	// 	localStorage.setItem('accesToken', accessToken);
+	// 	sessionStorage.setItem('refreshToken', refreshToken);
+	// }
 
-	logout(): void
-	{
-		localStorage.removeItem('accesToken');
-		sessionStorage.removeItem('refreshToken');
-	}
+	// logout(): void
+	// {
+	// 	localStorage.removeItem('accesToken');
+	// 	sessionStorage.removeItem('refreshToken');
+	// }
 
 	checkRegisterData(login: string, password: string): { valid: boolean; message: string[]}
 	{
@@ -53,7 +53,7 @@ export class AuthService {
 		return { valid: errors.length === 0, message: errors };
 	}
 
-	register(data: any)
+	async register(data: any)
 	{
 		const url = 'https://localhost:5000/api/v01/users/register';
 		const body = {
@@ -61,17 +61,21 @@ export class AuthService {
 			password: data.password
 		}
 
-		return this.http.post<{token: string}>(url, body).subscribe(
-			response =>
-			{
-				this.setToken(response.token);
-				return true;
-			},
-			error =>
-			{
-				return false
-			}
-		)
+		return this.http.post<{ token: string }>(url, body).pipe(
+			tap(response => {
+				this.setToken(response.token)
+			}),
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'An unexpected error occurred.';
+        if (error.status === 400) {
+          errorMessage = 'Bad request: ' + (error.error?.message || 'Invalid input.');
+        }
+				else if (error.status === 409) {
+          errorMessage = 'Conflict: ' + (error.error?.message || 'User already exists.');
+        }
+        return throwError(() => new Error(errorMessage));
+      })
+    ).toPromise();
 	}
 
 
@@ -79,9 +83,13 @@ export class AuthService {
 	{
 		sessionStorage.setItem('authToken', token);
 	}
-	getToken(): string | null
+	async getToken(): Promise<string | null>
 	{
-		return sessionStorage.getItem('authToken');
+		return new Promise(resolve =>
+		{
+			const token = sessionStorage.getItem('authToken');
+			resolve(token)
+		})
 	}
 
 
