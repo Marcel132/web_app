@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
         var token = _tokenService.GenerateAccessToken(newUser.uid);
         return Ok(new { token });
     }
-    catch (InvalidOperationException ex)
+    catch (UserAlreadyExistsException ex)
     {
         // Error: User is exists in db
         return Conflict(new { message = ex.Message });

@@ -37,6 +37,7 @@ export class RegisterComponent {
 
 	async sendFormValue() {
 		let checkData = this.authService.checkRegisterData(this.login, this.password)
+		console.log("Data is good")
 
 		this.validData = checkData.valid;
 		this.message = checkData.message;
@@ -55,7 +56,7 @@ export class RegisterComponent {
 			try {
 				this.message = ['Trwa rejestracja...']
 
-				const response = await this.authService.register(data)
+				await this.authService.register(data)
 
 				this.message = ['Pomyślnie zarejestrowano użytkownika']
 

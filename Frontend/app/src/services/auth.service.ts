@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { error } from 'node:console';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, firstValueFrom, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -61,21 +60,26 @@ export class AuthService {
 			password: data.password
 		}
 
-		return this.http.post<{ token: string }>(url, body).pipe(
-			tap(response => {
-				this.setToken(response.token)
-			}),
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = 'An unexpected error occurred.';
-        if (error.status === 400) {
-          errorMessage = 'Bad request: ' + (error.error?.message || 'Invalid input.');
-        }
-				else if (error.status === 409) {
-          errorMessage = 'Conflict: ' + (error.error?.message || 'User already exists.');
-        }
-        return throwError(() => new Error(errorMessage));
-      })
-    ).toPromise();
+		try {
+			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
+				tap(response => {
+					this.setToken(response.token)
+				}),
+				catchError((error: HttpErrorResponse) => {
+					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
+						if(error.status === 400){
+							errorMessage = "Błędne dane!" + error.error?.message + " (Status 400)" || "Błędne dane (400)"
+						}
+						if(error.status === 409){
+							errorMessage = "Konflikt!" + error.error?.message + "(Status 409)" || "Taki użytkownik już istnieje (409)"
+						}
+						return throwError(() => new Error(errorMessage))
+				})
+			))
+			return response
+		} catch( error: any){
+			throw error
+		}
 	}
 
 

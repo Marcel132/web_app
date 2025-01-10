@@ -1,6 +1,11 @@
 using MongoDB.Driver;
 using BCrypt.Net;
 
+public class UserAlreadyExistsException : Exception
+{
+    public UserAlreadyExistsException(string message) : base(message) { }
+}
+
 public class UsersService
 {
  private readonly IMongoCollection<UsersModel> _users;
@@ -11,7 +16,7 @@ public class UsersService
     _logger = logger;
   } 
 
-
+// ! Error: status 409 is sending as status 500. Repair
  public async Task RegisterUserAsync(UsersModel newUser)
  {
   string password = newUser.password;
@@ -24,25 +29,19 @@ public class UsersService
 
   newUser.password = BCrypt.Net.BCrypt.HashPassword(password);
 
+  var existingUser = await _users.Find(user => user.login == newUser.login).FirstOrDefaultAsync();
+  if(existingUser != null)
+  {
+    _logger.LogError("User with login {Login} already exists", newUser.login);
+    throw new UserAlreadyExistsException("User already exists");
+  }
   try 
   {
-    var existingUser = await _users.Find(user => user.login == newUser.login).FirstOrDefaultAsync();
-    if(existingUser != null)
-    {
-      _logger.LogError("User with login {Login} already exists", newUser.login);
-      throw new InvalidOperationException("User already exists");
-    }
-
     await _users.InsertOneAsync(newUser);
     _logger.LogInformation("User {Login} created", newUser.login);
 
   }
-  catch (InvalidOperationException) 
-  {
-    _logger.LogError("User with login {Login} already exists", newUser.login);
-    throw;
-  } 
-  catch(Exception error)
+  catch(Exception  error)
   {
     _logger.LogError("Error while creating a user");
     throw new Exception("Error while creating a user" + " " + error);
