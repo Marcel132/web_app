@@ -70,8 +70,11 @@ export class AuthService {
 						if(error.status === 400){
 							errorMessage = "Błędne dane!" + error.error?.message + " (Status 400)" || "Błędne dane (400)"
 						}
-						if(error.status === 409){
+						else if(error.status === 409){
 							errorMessage = "Konflikt!" + error.error?.message + "(Status 409)" || "Taki użytkownik już istnieje (409)"
+						}
+						else if(error.status === 500){
+							errorMessage = "Błąd serwera! (Status 500)"
 						}
 						return throwError(() => new Error(errorMessage))
 				})
