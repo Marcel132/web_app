@@ -16,15 +16,14 @@ public class UsersService
     _logger = logger;
   } 
 
-// ! Error: status 409 is sending as status 500. Repair
  public async Task RegisterUserAsync(UsersModel newUser)
  {
   string password = newUser.password;
 
   if(string.IsNullOrEmpty(password))
   {
-    _logger.LogWarning("Password is missing");
-   throw new ArgumentException("Password is missing");
+    _logger.LogWarning("Data is missing");
+   throw new ArgumentException("Brak danych");
   }
 
   newUser.password = BCrypt.Net.BCrypt.HashPassword(password);
@@ -33,7 +32,7 @@ public class UsersService
   if(existingUser != null)
   {
     _logger.LogError("User with login {Login} already exists", newUser.login);
-    throw new UserAlreadyExistsException("User already exists");
+    throw new UserAlreadyExistsException("Taki użytkownik  już istnieje");
   }
   try 
   {
@@ -44,7 +43,7 @@ public class UsersService
   catch(Exception  error)
   {
     _logger.LogError("Error while creating a user");
-    throw new Exception("Error while creating a user" + " " + error);
+    throw new Exception("Błąd przy tworzeniu użytkownika" + " " + error);
   }
  } 
 }

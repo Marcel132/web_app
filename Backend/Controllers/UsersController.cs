@@ -28,12 +28,13 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.RegisterUserAsync(newUser);
-        var token = _tokenService.GenerateAccessToken(newUser.uid);
+        var token = _tokenService.GenerateAccessToken(newUser.Id);
         return Ok(new { token });
     }
     catch (UserAlreadyExistsException ex)
     {
         // Error: User is exists in db
+        _logger.LogInformation("Return 409 Status");
         return Conflict(new { message = ex.Message });
     }
     catch (Exception ex)
