@@ -36,8 +36,7 @@ export class RegisterComponent {
 	}
 
 	async sendFormValue() {
-		let checkData = this.authService.checkRegisterData(this.login, this.password)
-		console.log("Data is good")
+		let checkData = this.authService.checkFormsDataValidation(this.login, this.password)
 
 		this.validData = checkData.valid;
 		this.message = checkData.message;

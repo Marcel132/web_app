@@ -34,7 +34,31 @@ export class LoginComponent {
 		this.routes.navigate(['/register']);
 	}
 
-	sendFormValue()
+	async sendFormValue()
 	{
+		let checkData = this.authService.checkFormsDataValidation(this.login, this.password)
+
+		this.validData = checkData.valid
+		this.message = checkData.message
+
+		let data = {
+			login: this.login,
+			password: this.password
+		}
+
+		if(this.validData){
+			this.validData = false;
+			this.changeColor = true;
+
+			try {
+				this.message = ["Trwa logowanie..."]
+
+				await this.authService.login(data)
+				
+			} catch (error: any) {
+				this.changeColor = false
+				this.message = [error.message]
+			}
+		}
 	}
 }

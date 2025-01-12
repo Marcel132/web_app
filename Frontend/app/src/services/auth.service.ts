@@ -11,27 +11,21 @@ export class AuthService {
 		private http: HttpClient,
 	) { }
 
+	checkEmailValidation(email: string): boolean {
+		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return false
+    }
+		return true
+	}
 
-	// login(accessToken: any, refreshToken: any): void
-	// {
-	// 	localStorage.setItem('accesToken', accessToken);
-	// 	sessionStorage.setItem('refreshToken', refreshToken);
-	// }
-
-	// logout(): void
-	// {
-	// 	localStorage.removeItem('accesToken');
-	// 	sessionStorage.removeItem('refreshToken');
-	// }
-
-	checkRegisterData(login: string, password: string): { valid: boolean; message: string[]}
+	checkFormsDataValidation(login: string, password: string): { valid: boolean; message: string[]}
 	{
 		const errors: string[] = [];
 
-		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(login)) {
-      errors.push('Nieprawidłowy format e-maila.');
-    }
+		if(!this.checkEmailValidation(login)){
+			errors.push("Nieprawidłowy format adresu email")
+		}
 
     // Sprawdzanie hasła
     else if (password.length < 8) {
@@ -50,6 +44,32 @@ export class AuthService {
       errors.push('Hasło musi zawierać co najmniej jeden znak specjalny (@, $, !, %, *, ?, &).');
     }
 		return { valid: errors.length === 0, message: errors };
+	}
+
+	async login(data: any){
+		const url = "https://localhost:5000/api/v01/users/login"
+		const body = {
+			login: data.login,
+			password: data.password
+		}
+
+		try {
+			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
+				tap(response => {
+					this.setToken(response.token)
+				}),
+				catchError((error: HttpErrorResponse) => {
+					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
+					if(error.status === 400){
+						errorMessage = "Błędne dane! " + error.error?.message + " (Status 400)" || "Błędne dane (400)"
+					}
+					return throwError(() => new Error(errorMessage))
+				})
+			))
+			return response
+		} catch (error) {
+			throw error
+		}
 	}
 
 	async register(data: any)

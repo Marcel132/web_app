@@ -1,6 +1,6 @@
 <div class="container flex flex-col items-center justify-center tracking-wider">
 	<h2 class='text-3xl'>Logowanie</h2>
-	<form class="w3/4 flex flex-col items-center justify-center p-3 my-10">
+	<form class="w3/4 flex flex-col items-center justify-center p-4 mt-5">
 		<input type="email"
 		placeholder="Email"
 		[(ngModel)]="login"
@@ -21,6 +21,10 @@
 	<div *ngIf="!validData"   class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
 		{{message}}
 	</div>
+
 </div>
 
-<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>
+<div class="text-center">
+	<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>
+
+</div>
