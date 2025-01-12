@@ -22,6 +22,7 @@ export class LoginComponent {
 	password: string = '';
 	validData?: boolean;
 	message?: string[];
+	changeColor: boolean = false;
 
 	constructor(
 		private authService: AuthService,

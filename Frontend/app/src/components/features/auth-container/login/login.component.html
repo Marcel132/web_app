@@ -1,24 +1,26 @@
-<div class="container flex flex-col items-center justify-center">
-	<h2 class='text-3xl '>Logowanie</h2>
+<div class="container flex flex-col items-center justify-center tracking-wider">
+	<h2 class='text-3xl'>Logowanie</h2>
 	<form class="w3/4 flex flex-col items-center justify-center p-3 my-10">
 		<input type="email"
-		placeholder="Login"
+		placeholder="Email"
 		[(ngModel)]="login"
 		name='login'
 		class='input'
+		id='login'
 		>
 		<input type="text"
 		placeholder='Hasło'
 		[(ngModel)]="password"
 		name='password'
 		class='input'
+		id='password'
 		>
 		<button type="button" (click)="sendFormValue()">Zaloguj się</button>
 	</form>
 
-	<div *ngIf="!validData"  class="">
+	<div *ngIf="!validData"   class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
 		{{message}}
 	</div>
 </div>
 
-<button (click)="changeMode()">Zmień mnie (Register component)</button>
+<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>

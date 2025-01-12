@@ -1,8 +1,8 @@
-<div class="container flex flex-col items-center justify-center">
-	<h2 class='text-3xl '>Rejestracja</h2>
-	<form class="w3/4 flex flex-col items-center justify-center p-3 mt-10">
+<div class="container flex flex-col items-center justify-center tracking-wider">
+	<h2 class='text-3xl'>Rejestracja</h2>
+	<form class="w3/4 flex flex-col items-center justify-center p-3 mt-10 ">
 		<input type="email"
-		placeholder="Login"
+		placeholder="Email"
 		[(ngModel)]="login"
 		name='login'
 		class='input'
@@ -14,12 +14,13 @@
 		class='input'
 		>
 		<button type="button" (click)="sendFormValue()">Zarejestruj się</button>
+		<i class='text-xs'>Rejestrując się akceptujesz regulamin i politykę prywatności</i>
 	</form>
 
 	<div *ngIf="!validData"  class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
 		{{ message }}
 	</div>
 
-	<button (click)="changeMode()">Zmień mnie (Login component)</button>
+	<button (click)="changeMode()" class="text-s">Masz konto? Zaloguj się</button>
 </div>
 
