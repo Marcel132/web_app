@@ -44,4 +44,31 @@ public class UsersController : ControllerBase
         return StatusCode(500, new { message = "An unexpected error occurred" });
     }
   }
+
+  [HttpPost("login")]
+  public async Task<IActionResult> LoginUser([FromBody] UsersModel existingUser)
+  {
+    if(existingUser == null){
+      return BadRequest(new { message = "User data is missing"});
+    }
+
+    try
+    {
+        await _usersService.LoginUserAsync(existingUser);
+        var token = _tokenService.GenerateAccessToken(existingUser.Id);
+        return Ok(new { token });
+    }
+    catch (UserAlreadyExistsException ex)
+    {
+        // Error: User is exists in db
+        _logger.LogInformation("Return 409 Status");
+        return Conflict(new { message = ex.Message });
+    }
+    catch (Exception ex)
+    {
+        // Error: Other 
+        _logger.LogError("Unexpected error: {Error}", ex.Message);
+        return StatusCode(500, new { message = "An unexpected error occurred" });
+    }
+  }
 }

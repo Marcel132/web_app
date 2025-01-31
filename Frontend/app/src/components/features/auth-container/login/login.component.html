@@ -21,10 +21,9 @@
 	<div *ngIf="!validData"   class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
 		{{message}}
 	</div>
-
-</div>
-
-<div class="text-center">
-	<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>
+	
+	<div class="text-center">
+		<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>
+	</div>
 
 </div>

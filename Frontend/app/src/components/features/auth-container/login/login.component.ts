@@ -54,7 +54,16 @@ export class LoginComponent {
 				this.message = ["Trwa logowanie..."]
 
 				await this.authService.login(data)
-				
+
+				this.message = ["Zalogowano"]
+
+
+				if(this.authService.getToken() != null){
+					setTimeout(() => {
+						this.routes.navigate(['/home'])
+					}, 2500);
+				}
+
 			} catch (error: any) {
 				this.changeColor = false
 				this.message = [error.message]
