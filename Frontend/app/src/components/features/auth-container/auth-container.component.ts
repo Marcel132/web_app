@@ -3,13 +3,14 @@ import { SharedModule } from '../../../modules/shared.module';
 import { AuthModule } from './auth.module';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { LoginComponent } from "./login/login.component";
 @Component({
   selector: 'app-auth-container',
   standalone: true,
   imports: [
-		AuthModule,
+    AuthModule,
     SharedModule,
-		RouterModule,
+    RouterModule,
 ],
   templateUrl: './auth-container.component.html',
   styleUrl: './auth-container.component.scss'

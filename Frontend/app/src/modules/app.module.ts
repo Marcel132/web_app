@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared.module';
 import { FeatureModule } from './feature.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { authInterceptor } from '../interceptors/auth.interceptor';
 
 
 
@@ -20,7 +21,8 @@ import { AuthService } from '../services/auth.service';
 		FeatureModule,
 	],
 	providers: [
-		AuthService
+		AuthService,
+		provideHttpClient(withInterceptors([authInterceptor])),
 	]
 })
 export class AppModule { }

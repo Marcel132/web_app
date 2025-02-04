@@ -18,7 +18,4 @@ import { AuthService } from '../services/auth.service';
 })
 export class AppComponent {
   title = 'app';
-	
-
-
 }
