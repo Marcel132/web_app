@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.RegisterUserAsync(newUser);
-        var token = _tokenService.GenerateAccessToken(newUser.Id);
+        var token = _tokenService.GenerateAccessToken(newUser.Id, newUser.role, newUser.login);
         return Ok(new { token });
     }
     catch (UserAlreadyExistsException ex)
@@ -55,7 +55,7 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.LoginUserAsync(existingUser);
-        var token = _tokenService.GenerateAccessToken(existingUser.Id);
+        var token = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.role, existingUser.login);
         return Ok(new { token });
     }
     catch (UserAlreadyExistsException ex)

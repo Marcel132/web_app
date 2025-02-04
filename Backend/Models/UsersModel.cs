@@ -14,4 +14,7 @@ public class UsersModel
   [BsonElement("password")]
   public string password { get; set;} = string.Empty;
 
+  [BsonElement("role")]
+  public string role { get; set;} = "Free";
+
 }
