@@ -4,14 +4,14 @@ import { AuthContainerComponent } from '../components/features/auth-container/au
 import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from "../components/features/dashboard/dashboard.component";
 import { UserService } from '../services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     AppModule,
-    AuthContainerComponent,
-    DashboardComponent
+		RouterModule
 ],
 	providers: [
 		AuthService,

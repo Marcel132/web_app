@@ -3,10 +3,26 @@ import { LoginComponent } from '../components/features/auth-container/login/logi
 import { RegisterComponent } from '../components/features/auth-container/register/register.component';
 import { DashboardComponent } from '../components/features/dashboard/dashboard.component';
 import { authGuard } from '../guards/auth.guard';
+import { CalculatorComponent } from '../components/features/dashboard/calculator/calculator.component';
+import { AuthContainerComponent } from '../components/features/auth-container/auth-container.component';
 
 export const routes: Routes = [
-	{path: '', redirectTo: 'login', pathMatch: 'full'},
-	{path: 'login', component: LoginComponent},
-	{path: 'register', component: RegisterComponent},
-	{path: 'home', component: DashboardComponent, canActivate: [authGuard]}
+	{path: '', redirectTo: 'home', pathMatch: 'full'},
+	{
+		path: '',
+		component: AuthContainerComponent,
+		children:
+		[
+			{path: 'login', component: LoginComponent},
+			{path: 'register', component: RegisterComponent}
+		]
+	},
+	{
+		path: 'home',
+		component: DashboardComponent,
+		children:
+		[
+			{path: '', component: CalculatorComponent}
+		]
+	}
 ];

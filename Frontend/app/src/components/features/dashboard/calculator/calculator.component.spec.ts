@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoLoggedUsersComponent } from './no-logged-users.component';
+import { CalculatorComponent } from './calculator.component';
 
-describe('NoLoggedUsersComponent', () => {
-  let component: NoLoggedUsersComponent;
-  let fixture: ComponentFixture<NoLoggedUsersComponent>;
+describe('CalculatorComponent', () => {
+  let component: CalculatorComponent;
+  let fixture: ComponentFixture<CalculatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoLoggedUsersComponent]
+      imports: [CalculatorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NoLoggedUsersComponent);
+    fixture = TestBed.createComponent(CalculatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
