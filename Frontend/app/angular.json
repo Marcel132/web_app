@@ -32,8 +32,7 @@
               }
             ],
             "styles": [
-							"src/styles.scss",
-  						"dist/tailwind.css"
+							"src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
