@@ -3,6 +3,7 @@ import { AppModule } from '../modules/app.module';
 import { AuthContainerComponent } from '../components/features/auth-container/auth-container.component';
 import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from "../components/features/dashboard/dashboard.component";
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { DashboardComponent } from "../components/features/dashboard/dashboard.c
     DashboardComponent
 ],
 	providers: [
-		AuthService
+		AuthService,
+		UserService
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
