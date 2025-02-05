@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/v01/food")]
+[Route("api/v01/products")]
 
 
 public class FoodCaloriesController : ControllerBase 
