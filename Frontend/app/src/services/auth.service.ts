@@ -125,5 +125,11 @@ export class AuthService {
 		})
 	}
 
+	isAuthenticated(): boolean{
+		const token = sessionStorage.getItem("authToken")
+		console.log(token !== null || token !== "undefined" || token !== "")
+		return token !== null && token !== "undefined" && token !== ""
+	}
+
 
 }
