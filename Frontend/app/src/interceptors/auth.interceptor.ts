@@ -3,9 +3,6 @@ import { catchError, tap } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   console.log('Intercepting request:', req);
-
-
-
   const modifiedReq = req.clone({
     setHeaders: { Authorization: `Bearer fake-token` }
   });

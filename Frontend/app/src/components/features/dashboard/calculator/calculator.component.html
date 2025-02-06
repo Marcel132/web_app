@@ -1,28 +1,33 @@
-<!-- Producs data -->
-<div class="overflow-x-auto max-h-96 p-2">
-  <table class=" table-auto">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="px-4 py-2 text-left custom-pointer">Nazwa</th>
-        <th class="px-4 py-2 text-left custom-pointer">Kcal /100g	</th>
-        <th class="px-4 py-2 text-left custom-pointer">Białko (g)</th>
-        <th class="px-4 py-2 text-left custom-pointer">Węgle (g)</th>
-        <th class="px-4 py-2 text-left custom-pointer">Tłuszcze (g)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td class="border px-4 py-2 custom-pointer">{{ product.name }}</td>
-        <td class="border px-4 py-2 custom-pointer">{{ product.details.kcal }}</td>
-        <td class="border px-4 py-2 custom-pointer">{{ product.details.proteins }}</td>
-        <td class="border px-4 py-2 custom-pointer">{{ product.details.carbohydrates }}</td>
-        <td class="border px-4 py-2 custom-pointer">{{ product.details.fats }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!-- Kalkulator -->
-<div>
-	Tutaj będzie kalkulator
-</div>
+<div class="flex flex-col items-center justify-center lg:flex-row">
+		<!-- Producs data -->
+	<div class="overflow-x-hidden w-full max-h-80 p-1 flex">
+		<table class="w-full">
+			<thead class="bg-gray-200">
+				<tr>
+					<th class="px-4 py-2 text-left max-w-[65px] custom-pointer text-xs sm:text-sm sm:max-w-[100px]">Nazwa</th>
+					<th class="px-4 py-2 text-left max-w-[65px] custom-pointer text-xs sm:text-sm sm:max-w-[100px]">Kcal /100g	</th>
+					<th class="px-4 py-2 text-left max-w-[65px] custom-pointer text-xs sm:text-sm sm:max-w-[100px]">Białko</th>
+					<th class="px-4 py-2 text-left max-w-[65px] custom-pointer text-xs sm:text-sm sm:max-w-[100px]">Tłuszcze</th>
+					<th class="px-4 py-2 text-left max-w-[65px] custom-pointer text-xs sm:text-sm sm:max-w-[100px]">Węgle</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let product of products">
+					<td class="border px-2 py-2 max-w-[65px] custom-pointer tooltip text-xs sm:text-sm sm:max-w-[100px]">{{ product.name }} <span class='tooltiptext'>Nazwa</span></td>
+					<td class="border px-2 py-2 max-w-[65px] custom-pointer tooltip text-xs sm:text-sm sm:max-w-[100px]">{{ product.details.kcal }} <span class='tooltiptext'>Kcal</span></td>
+					<td class="border px-2 py-2 max-w-[65px] custom-pointer tooltip text-xs sm:text-sm sm:max-w-[100px]">{{ product.details.proteins }} <span class='tooltiptext'>Białko</span></td>
+					<td class="border px-2 py-2 max-w-[65px] custom-pointer tooltip text-xs sm:text-sm sm:max-w-[100px]">{{ product.details.fats }} <span class='tooltiptext'>Tłuszcze</span></td>
+					<td class="border px-2 py-2 max-w-[65px] custom-pointer tooltip text-xs sm:text-sm sm:max-w-[100px]">{{ product.details.carbohydrates }} <span class='tooltiptext'>Węgle</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- Kalkulator -->
+	<div class='max-w-80 max-h-80 px-8 py-8'>
+		<select name="checkProduct" id="checkProduct">
+			<option *ngFor="let product of products" value={{product.name}}>{{product.name}}</option>
+		</select>
+	</div>
 
+
+</div>

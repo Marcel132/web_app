@@ -5,6 +5,7 @@ import { DashboardComponent } from '../components/features/dashboard/dashboard.c
 import { authGuard } from '../guards/auth.guard';
 import { CalculatorComponent } from '../components/features/dashboard/calculator/calculator.component';
 import { AuthContainerComponent } from '../components/features/auth-container/auth-container.component';
+import { ContentDashboardComponent } from '../components/features/dashboard/content-dashboard/content-dashboard.component';
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -22,7 +23,8 @@ export const routes: Routes = [
 		component: DashboardComponent,
 		children:
 		[
-			{path: '', component: CalculatorComponent}
+			{path: '', component: ContentDashboardComponent},
+			{path: 'calculator', component: CalculatorComponent}
 		]
 	}
 ];
