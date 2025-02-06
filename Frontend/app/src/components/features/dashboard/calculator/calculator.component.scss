@@ -5,6 +5,23 @@
 	}
 }
 
+.custom-button {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:hover {
+		background-color: #45a049;
+	}
+}
+
 .tooltip {
   position: relative;
 }
@@ -28,3 +45,35 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+
+
+.enable {
+	pointer-events: all;
+	opacity: 1;
+}
+
+.disable {
+	pointer-events: none;
+	opacity: 0.7;
+}
+
+table {
+  width: 100%;
+  white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}
+
+th {
+  background-color: #f3f4f6; /* Jasne tło dla etykiet */
+  text-align: left;
+  font-weight: bold;
+}
+
+td {
+  text-align: center;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
