@@ -5,20 +5,30 @@
 	}
 }
 
-.custom-button {
+.custom-button-green {
 	background-color: #4CAF50;
 	border: none;
 	color: white;
-	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	display: inline-block;
-	margin: 4px 2px;
 	cursor: pointer;
 	border-radius: 5px;
 
 	&:hover {
 		background-color: #45a049;
+	}
+}
+.custom-button-red {
+	background-color: #ff4000;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:hover {
+		background-color: #ff6000;
 	}
 }
 
@@ -33,11 +43,10 @@
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   text-align: center;
-  padding: 5px 0;
   border-radius: 6px;
 
   position: absolute;
-	transform: translate(-25%, -100%);
+	// transform: translate(-25%, -100%);
   z-index: 1;
 }
 
@@ -76,4 +85,3 @@ td {
 .overflow-x-auto {
   overflow-x: auto;
 }
-

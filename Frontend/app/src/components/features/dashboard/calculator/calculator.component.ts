@@ -20,8 +20,12 @@ export class CalculatorComponent {
 
 	formProductCalculator: FormGroup<any>;
 
-		products:any = [];
-		data:any = [];
+	products:any = [];
+	data:any = [];
+	proteins = 0
+	fats = 0
+	carbohydrates = 0
+	kcal = 0;
 
 	constructor(
 		private userService: UserService,
@@ -33,8 +37,8 @@ export class CalculatorComponent {
 		})
 	}
 
-	ngOnInit(): void {
-		this.userService.getProductsData().subscribe((data) => {
+	async ngOnInit() {
+	  this.userService.getProductsData().subscribe((data) => {
 			this.products = data
 		}, (error) => {
 			console.error(error)
@@ -60,7 +64,6 @@ export class CalculatorComponent {
 	}
 
 	sum() {
-		let proteins = 0, fats = 0, carbohydrates = 0, kcal = 0, weight;
 
 		for (let i = 0; i < this.data.length; i++) {
 			let product = this.data[i].name;
@@ -68,18 +71,20 @@ export class CalculatorComponent {
 			let details = product.details;
 
 			if(details){
-				kcal += details.kcal * weight / 100;
-				proteins += details.proteins * weight / 100;
-				fats += details.fats * weight / 100;
-				carbohydrates += details.carbohydrates * weight / 100;
+				this.kcal += details.kcal * weight / 100;
+				this.proteins += details.proteins * weight / 100;
+				this.fats += details.fats * weight / 100;
+				this.carbohydrates += details.carbohydrates * weight / 100;
 			}
 		}
 
 		console.group('Total');
-		console.info("Kcal: " + kcal.toFixed(2));
-		console.info("Proteins: " + proteins.toFixed(2));
-		console.info("Fats: " + fats.toFixed(2));
-		console.info("Carbohydrates: " + carbohydrates.toFixed(2));
+		console.info("Kcal: " + this.kcal.toFixed(2));
+		console.info("Proteins: " + this.proteins.toFixed(2));
+		console.info("Fats: " + this.fats.toFixed(2));
+		console.info("Carbohydrates: " + this.carbohydrates.toFixed(2));
 		console.groupEnd();
+
+		return
 	}
 }

@@ -1,55 +1,76 @@
-<div class="flex flex-col items-center justify-center lg:flex-row">
+<div class="flex flex-col items-center justify-center ">
 		<!-- Producs data -->
-		<div class="overflow-x-auto max-w-[310px] text-xs md:text-lg sm:max-w-[400px]">
+		<div class="overflow-x-auto max-w-[310px] text-xs sm:max-w-[400px] sm:text-sm md:max-w-[500px] lg:max-w-[750px]">
 			<table class="border-collapse">
 				<tbody>
 					<!-- Nagłówek -->
 					<tr>
 						<th class="p-2 text-left custom-pointer">Nazwa:</th>
-						<td *ngFor="let product of products" class="border p-2 min-w-[150px] custom-pointer">{{ product.name }}</td>
+						<td *ngFor="let product of products" class="border p-2 min-w-[50px] custom-pointer">{{ product.name | titlecase}} </td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Kcal:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer">{{ product.details.kcal }}</td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.kcal }} kcal<span class='tooltiptext'>Kalorie</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Białka:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer">{{ product.details.proteins }}g</td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.proteins }}g <span class='tooltiptext'>Białko</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Tłuszcze:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer">{{ product.details.fats }}g</td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.fats }}g <span class='tooltiptext'>Tłuszcze</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Węgle:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer">{{ product.details.carbohydrates }}g</td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.carbohydrates }}g <span class='tooltiptext'>Węgle</span></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
 	<!-- Kalkulator -->
-	<div class='max-w-80 max-h-80 px-8 py-8'>
+	<div class='w-full'>
 		<form [formGroup]="formProductCalculator" class='flex flex-col items-center justify-center'>
 
-			<select formControlName='selectedProduct' name="selectedProduct" class='py-4'>
+			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer'>
 				<option [ngValue]='null' selected disabled>Wybierz produkt:</option>
 				<option *ngFor="let product of products" [value]="product.name">{{product.name}}</option>
 			</select>
 
-			<input formControlName='weight' name='weight' type="number" placeholder="Waga" class='py-4' />
+			<input formControlName='weight' name='weight' type="number" min='0' placeholder="Waga" class=' p-2 outline-none cursor-pointer ' />
 
-			<div class="button-group">
-				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='max-w-[100px] custom-button' (click)="addValue()">Dodaj Produkt</button>
-				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='max-w-[100px] custom-button' (click)="sum()">Policz Kcal</button>
+			<div class="button-group w-full flex justify-center items-center py-4">
+				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="addValue()">Dodaj Produkt</button>
+				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="sum()">Policz Kcal</button>
+				<button class='w-[100px] h-[30px] custom-button-red'> Wyczyść</button>
 			</div>
 		</form>
 
-		<div id='list-of-added-product' class="py-8">
-			<div *ngFor="let product of data" class='flex justify-between'>
-				<p class='max-w-[100px]'>{{product.name.name}}</p>
+		<div id='list-of-added-product' class="flex flex-col justify-center items-center">
+			<div *ngFor="let product of data" class='w-[250px] flex justify-around'>
+				<p class='max-w-[100px]'>{{product.name.name | titlecase}}</p>
 				<p class='max-w-[30px]'>{{product.weight}}g</p>
-				<p class='max-w-[30px]'>{{product.kcal}}kcal</p>
+				<p class='max-w-[30px]'>{{product.kcal}} kcal</p>
+			</div>
+			<div id="total-calories" class="overflow-x-auto max-w-[320px] text-xs md:text-lg sm:max-w-[400px]">
+				<table class="border-collapse">
+					<thead>
+						<tr>
+							<th class='p-2'>Kalorie</th>
+							<th class='p-2'>Białka</th>
+							<th class='p-2'>Tłuszcze</th>
+							<th class='p-2'>Węgle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class='p-2'>{{kcal.toFixed(2)}}</td>
+							<td class='p-2'>{{proteins.toFixed(2)}}</td>
+							<td class='p-2'>{{fats.toFixed(2)}}</td>
+							<td class='p-2'>{{carbohydrates.toFixed(2)}}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

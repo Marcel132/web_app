@@ -1,14 +1,21 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('Intercepting request:', req);
   const modifiedReq = req.clone({
-    setHeaders: { Authorization: `Bearer fake-token` }
+    setHeaders: {
+			Authorization: `Bearer fake-token`,
+			'Cache-Control': 'no-cache'
+		 },
+
   });
 
   return next(modifiedReq).pipe(
-		tap((event) => { console.info('Intercepting response:', event) }),
+		tap((event) => {
+			if(event instanceof HttpResponse) {
+				console.log('Intercepting response:', event);
+			}
+		}),
 		catchError((error)=> {
 			console.error('Intercepting error:', error);
 			throw error;
