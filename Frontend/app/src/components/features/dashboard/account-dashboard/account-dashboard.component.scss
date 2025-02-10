@@ -1,0 +1,17 @@
+.account-button {
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 8px;
+	width: 142px;
+	height: 92px;
+	margin: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+
+	&:hover {
+		cursor: pointer;
+		transform: scaleX(1.1) scaleY(1.1);
+		font-size: 18px;
+	}
+}
