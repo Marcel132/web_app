@@ -32,7 +32,7 @@
 	<div class='w-full'>
 		<form [formGroup]="formProductCalculator" class='flex flex-col items-center justify-center'>
 
-			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer'>
+			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer' max="5" >
 				<option [ngValue]='null' selected disabled>Wybierz produkt:</option>
 				<option *ngFor="let product of products" [value]="product.name">{{product.name}}</option>
 			</select>
@@ -42,15 +42,16 @@
 			<div class="button-group w-full flex justify-center items-center py-4">
 				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="addValue()">Dodaj Produkt</button>
 				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="sum()">Policz Kcal</button>
-				<button class='w-[100px] h-[30px] custom-button-red'> Wyczyść</button>
+				<button class='w-[100px] h-[30px] custom-button-red' (click)="reset()"> Wyczyść</button>
 			</div>
 		</form>
 
 		<div id='list-of-added-product' class="flex flex-col justify-center items-center">
-			<div *ngFor="let product of data" class='w-[250px] flex justify-around'>
+			<div *ngFor="let product of data; let i = index" class='w-[250px] flex justify-around pb-4'>
 				<p class='max-w-[100px]'>{{product.name.name | titlecase}}</p>
 				<p class='max-w-[30px]'>{{product.weight}}g</p>
 				<p class='max-w-[30px]'>{{product.kcal}} kcal</p>
+				<button (click)="deleteItem(i)">X</button>
 			</div>
 			<div id="total-calories" class="overflow-x-auto max-w-[320px] text-xs md:text-lg sm:max-w-[400px]">
 				<table class="border-collapse">

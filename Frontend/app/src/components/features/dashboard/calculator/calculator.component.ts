@@ -87,4 +87,14 @@ export class CalculatorComponent {
 
 		return
 	}
+
+	deleteItem(number: number){
+		if(number >= 0 && number < this.data.length){
+			this.data.splice(number, 1)
+		}
+	}
+
+	reset(){
+		this.data = []
+	}
 }
