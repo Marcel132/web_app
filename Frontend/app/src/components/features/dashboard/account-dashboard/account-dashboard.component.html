@@ -1,0 +1,15 @@
+<div *ngIf="isLogged then AccountDashboard else UserForms">
+
+</div>
+
+
+<ng-template #UserForms>
+	<div class=""><a [routerLink]='["/login"]'>Logowanie</a></div>
+	<div class=""><a [routerLink]='["/register"]'>Rejestracja</a></div>
+</ng-template>
+<ng-template #AccountDashboard>
+	<div class="">
+		Witaj użytkowniku
+	</div>
+</ng-template>
+
