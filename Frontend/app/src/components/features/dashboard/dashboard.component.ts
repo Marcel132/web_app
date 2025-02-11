@@ -22,4 +22,5 @@ export class DashboardComponent {
 	constructor(
 		private userService: UserService
 	){}
+	
 }

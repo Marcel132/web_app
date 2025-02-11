@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { tokenConfig } from '../../../../services/token.config';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -15,6 +16,6 @@ import { RouterModule } from '@angular/router';
 export class AccountDashboardComponent {
 
 
-	isLogged = sessionStorage.getItem('authToken') ? true : false;
+	isLogged = tokenConfig().getTokenValue()
 
 }

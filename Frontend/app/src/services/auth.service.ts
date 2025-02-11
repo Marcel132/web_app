@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, firstValueFrom, tap, throwError } from 'rxjs';
+import { tokenConfig } from './token.config';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,7 @@ export class AuthService {
 		try {
 			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
 				tap(response => {
-					this.setToken(response.token)
+					tokenConfig().setToken(response.token)
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -89,7 +90,7 @@ export class AuthService {
 		try {
 			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
 				tap(response => {
-					this.setToken(response.token)
+					tokenConfig().setToken(response.token)
 				}),
 				catchError((error: HttpErrorResponse) => {
 					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -111,24 +112,11 @@ export class AuthService {
 		}
 	}
 
-
-	private setToken(token: string): void
-	{
-		sessionStorage.setItem('authToken', token);
-	}
-	async getToken(): Promise<string | null>
-	{
-		return new Promise(resolve =>
-		{
-			const token = sessionStorage.getItem('authToken');
-			resolve(token)
-		})
-	}
-
 	isAuthenticated(): boolean{
-		const token = sessionStorage.getItem("authToken")
+		let token = tokenConfig().getToken()
 		console.log(token !== null || token !== "undefined" || token !== "")
-		return token !== null && token !== "undefined" && token !== ""
+		return token !== null
+
 	}
 
 

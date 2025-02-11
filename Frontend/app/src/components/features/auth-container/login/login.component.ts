@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SharedModule } from '../../../../modules/shared.module';
 import { AuthService } from '../../../../services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { tokenConfig } from '../../../../services/token.config';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class LoginComponent {
 				this.message = ["Zalogowano"]
 
 
-				if(this.authService.getToken() != null){
+				if(tokenConfig().getTokenValue() != null){
 					setTimeout(() => {
 						this.routes.navigate(['/home'])
 					}, 2500);

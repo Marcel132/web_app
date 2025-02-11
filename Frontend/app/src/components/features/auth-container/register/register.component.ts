@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SharedModule } from '../../../../modules/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { tokenConfig } from '../../../../services/token.config';
 
 @Component({
   selector: 'app-register',
@@ -59,7 +60,7 @@ export class RegisterComponent {
 
 				this.message = ['Pomyślnie zarejestrowano użytkownika']
 
-				if(this.authService.getToken() != null){
+				if(tokenConfig().getTokenValue() != null){
 					setTimeout(() => {
 						this.routes.navigate(['/home'])
 					}, 2500);
