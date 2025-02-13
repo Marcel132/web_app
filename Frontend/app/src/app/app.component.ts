@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from "../components/features/dashboard/dashboard.component";
 import { UserService } from '../services/user.service';
 import { RouterModule } from '@angular/router';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -22,4 +23,17 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'app';
+
+	constructor(
+		private tokenService: TokenService,
+	) {}
+
+	ngOnInit(): void {
+		if(typeof window !== 'undefined'){
+			if(!this.tokenService.getTokenSubjectValue()){
+				console.log("Refresh Token Checking... ")
+				this.tokenService.refreshToken()
+			}
+		}
+	}
 }

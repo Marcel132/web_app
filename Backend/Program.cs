@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -40,9 +41,12 @@ builder.Services.AddCors(options =>
 //         };
 
 //     });
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<JwtSettings>>().Value);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<MongoDBContext>();
+builder.Services.AddSingleton<AuthService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddScoped<FoodService>();
 builder.Services.AddScoped<UsersService>();

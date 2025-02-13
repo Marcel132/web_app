@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { tokenConfig } from '../../../../services/token.config';
+import { TokenService } from '../../../../services/token.service';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -15,7 +15,16 @@ import { tokenConfig } from '../../../../services/token.config';
 })
 export class AccountDashboardComponent {
 
+	constructor(
+		private tokenService: TokenService,
+	) {}
 
-	isLogged = tokenConfig().getTokenValue()
+	isLogged!: boolean
+
+	ngOnInit(): void {
+		//Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+		//Add 'implements OnInit' to the class.
+		this.isLogged = this.tokenService.getTokenSubjectValue() != null
+	}
 
 }

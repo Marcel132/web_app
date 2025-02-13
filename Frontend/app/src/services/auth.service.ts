@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, firstValueFrom, tap, throwError } from 'rxjs';
-import { tokenConfig } from './token.config';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class AuthService {
 
   constructor(
 		private http: HttpClient,
+		private tokenService: TokenService
 	) { }
 
 	checkEmailValidation(email: string): boolean {
@@ -55,9 +56,11 @@ export class AuthService {
 		}
 
 		try {
-			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
+			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					tokenConfig().setToken(response.token)
+					this.tokenService.setTokenSubject(response.authToken)
+					this.tokenService.setTokenStorage("token%auth", response.authToken)
+
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -88,9 +91,10 @@ export class AuthService {
 		}
 
 		try {
-			const response = await firstValueFrom(this.http.post<{token: string}>(url, body).pipe(
+			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					tokenConfig().setToken(response.token)
+					this.tokenService.setTokenSubject(response.authToken)
+					this.tokenService.setTokenStorage("token%auth", response.authToken)
 				}),
 				catchError((error: HttpErrorResponse) => {
 					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -113,11 +117,10 @@ export class AuthService {
 	}
 
 	isAuthenticated(): boolean{
-		let token = tokenConfig().getToken()
+		let token = this.tokenService.getTokenSubjectValue()
 		console.log(token !== null || token !== "undefined" || token !== "")
 		return token !== null
 
 	}
-
 
 }

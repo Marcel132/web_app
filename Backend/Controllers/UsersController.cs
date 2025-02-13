@@ -28,8 +28,18 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.RegisterUserAsync(newUser);
-        var token = _tokenService.GenerateAccessToken(newUser.Id, newUser.role, newUser.login);
-        return Ok(new { token });
+        var authToken = _tokenService.GenerateAccessToken(newUser.Id, newUser.role, newUser.login);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+        
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.Now.AddDays(7)
+        });
+
+        return Ok(new { authToken });
     }
     catch (UserAlreadyExistsException ex)
     {
@@ -55,8 +65,18 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.LoginUserAsync(existingUser);
-        var token = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.role, existingUser.login);
-        return Ok(new { token });
+        var authToken = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.role, existingUser.login);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+        
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.Now.AddDays(7)
+        });
+
+        return Ok(new { authToken });
     }
     catch (UserAlreadyExistsException ex)
     {

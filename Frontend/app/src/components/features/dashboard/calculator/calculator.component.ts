@@ -4,7 +4,6 @@ import { error } from 'console';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../modules/shared.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { tokenConfig } from '../../../../services/token.config';
 
 @Component({
   selector: 'app-calculator',
@@ -44,8 +43,6 @@ export class CalculatorComponent {
 		}, (error) => {
 			console.error(error)
 		})
-
-		console.log(tokenConfig().getTokenValue())
 	}
 
 

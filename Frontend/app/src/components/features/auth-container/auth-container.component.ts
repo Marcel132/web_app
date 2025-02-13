@@ -3,8 +3,7 @@ import { SharedModule } from '../../../modules/shared.module';
 import { AuthModule } from './auth.module';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { LoginComponent } from "./login/login.component";
-import { tokenConfig } from '../../../services/token.config';
+import { TokenService } from '../../../services/token.service';
 @Component({
   selector: 'app-auth-container',
   standalone: true,
@@ -19,14 +18,14 @@ import { tokenConfig } from '../../../services/token.config';
 export class AuthContainerComponent {
 
 	constructor(
-		private authService: AuthService,
+		private tokenService: TokenService,
 		private routes: Router
 	){}
 
 	async ngOnInit() {
 		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
 			try {
-				const token = tokenConfig().getTokenValue()
+				const token = this.tokenService.getTokenSubjectValue()
 				if(token != null){
 					this.routes.navigate(['/home'])
 				}
