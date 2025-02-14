@@ -129,4 +129,35 @@ public class UsersService
 
       return result.ModifiedCount > 0;
   }
+  public async Task UpdateUserData (string userEmail, UserDataModel newData)
+  {
+    if(string.IsNullOrEmpty(userEmail))
+    {
+      throw new UserArentExistisException("Nie znaleziono użytkownika");
+    }
+
+    try
+    {
+      var existingUser = await _userData.Find(user => user.Email == userEmail).FirstOrDefaultAsync(); 
+      var updateDefinition = Builders<UserDataModel>.Update
+        .Set(user => user.Weight, newData.Weight != 0 ? newData.Weight : existingUser.Weight)
+        .Set(user => user.Height, newData.Height != 0 ? newData.Height : existingUser.Height)
+        .Set(user => user.Sex, !string.IsNullOrEmpty(newData.Sex) ? newData.Sex : existingUser.Sex)
+        .Set(user => user.Age, newData.Age != 0 ? newData.Age : existingUser.Age);
+
+      var result = await _userData.UpdateOneAsync(
+        user => user.Email == userEmail,
+        updateDefinition
+      );
+
+      if(result.ModifiedCount == 0)
+      {
+        throw new Exception("Nie zakutalizowano dane");
+      }
+    }
+    catch 
+    {
+      throw;
+    }
+  }
 }

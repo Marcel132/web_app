@@ -9,7 +9,6 @@ public class UserDataModel
   public string? Id { get; set; }
 
   [BsonElement("email")]
-  [Required]
   public string Email { get; set; }
 
   [BsonElement("weight")]
@@ -19,7 +18,7 @@ public class UserDataModel
   public float Height { get; set; }
 
   [BsonElement("sex")]
-  public string Sex { get; set; }
+  public string? Sex { get; set; }
   
   [BsonElement("age")]
   public int Age { get; set; }
