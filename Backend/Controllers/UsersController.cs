@@ -28,8 +28,10 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.RegisterUserAsync(newUser);
-        var authToken = _tokenService.GenerateAccessToken(newUser.Id, newUser.role, newUser.login);
+        var authToken = _tokenService.GenerateAccessToken(newUser.Id, newUser.Role, newUser.Login);
         var refreshToken = _tokenService.GenerateRefreshToken();
+        await _usersService.CreateUserWithDataOfMeals(newUser.Login);
+
         
         Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
         {
@@ -65,7 +67,7 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.LoginUserAsync(existingUser);
-        var authToken = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.role, existingUser.login);
+        var authToken = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.Role, existingUser.Login);
         var refreshToken = _tokenService.GenerateRefreshToken();
         
         Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
@@ -78,11 +80,16 @@ public class UsersController : ControllerBase
 
         return Ok(new { authToken });
     }
-    catch (UserAlreadyExistsException ex)
+    // catch (UserAlreadyExistsException ex)
+    // {
+    //     // Error: User is exists in db
+    //     _logger.LogInformation("Return 409 Status");
+    //     return Conflict(new { message = ex.Message });
+    // }
+    catch (UserArentExistisException ex) 
     {
-        // Error: User is exists in db
-        _logger.LogInformation("Return 409 Status");
-        return Conflict(new { message = ex.Message });
+      _logger.LogError("404 Not Found", ex);
+      return NotFound( new {message = ex.Message});
     }
     catch (Exception ex)
     {

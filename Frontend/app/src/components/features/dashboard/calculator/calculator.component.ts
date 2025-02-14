@@ -65,6 +65,12 @@ export class CalculatorComponent {
 
 	sum() {
 
+		// Reset calories to not double the result
+		this.kcal = 0;
+		this.proteins = 0;
+		this.fats = 0;
+		this.carbohydrates = 0;
+
 		for (let i = 0; i < this.data.length; i++) {
 			let product = this.data[i].name;
 			let weight = this.data[i].weight;
@@ -95,6 +101,10 @@ export class CalculatorComponent {
 	}
 
 	reset(){
-		this.data = []
+		this.data = [];
+		this.kcal = 0;
+		this.proteins = 0;
+		this.fats = 0;
+		this.carbohydrates = 0;
 	}
 }

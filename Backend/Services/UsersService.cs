@@ -6,19 +6,26 @@ public class UserAlreadyExistsException : Exception
     public UserAlreadyExistsException(string message) : base(message) { }
 }
 
+public class UserArentExistisException : Exception
+{
+  public UserArentExistisException(string message) : base(message) { }
+}
+
 public class UsersService
 {
  private readonly IMongoCollection<UsersModel> _users;
+ private readonly IMongoCollection<UserDataModel> _userData;
  private readonly ILogger<UsersService> _logger;
 
   public UsersService(MongoDBContext context, ILogger<UsersService> logger){
     _users = context.GetCollection<UsersModel>("Users");
+    _userData = context.GetCollection<UserDataModel>("UserData");
     _logger = logger;
   } 
 
   public async Task RegisterUserAsync(UsersModel newUser)
   {
-    string password = newUser.password;
+    string password = newUser.Password;
 
     if(string.IsNullOrEmpty(password))
     {
@@ -26,18 +33,18 @@ public class UsersService
       throw new ArgumentException("Brak danych");
     }
 
-    newUser.password = BCrypt.Net.BCrypt.HashPassword(password);
+    newUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
 
-    var existingUser = await _users.Find(user => user.login == newUser.login).FirstOrDefaultAsync();
+    var existingUser = await _users.Find(user => user.Login == newUser.Login).FirstOrDefaultAsync();
     if(existingUser != null)
     {
-      _logger.LogError("User with login {Login} already exists", newUser.login);
+      _logger.LogError("User with login {Login} already exists", newUser.Login);
       throw new UserAlreadyExistsException("Taki użytkownik  już istnieje");
     }
     try 
     {
       await _users.InsertOneAsync(newUser);
-      _logger.LogInformation("User {Login} created", newUser.login);
+      _logger.LogInformation("User {Login} created", newUser.Login);
 
     }
     catch(Exception  error)
@@ -49,27 +56,77 @@ public class UsersService
   public async Task LoginUserAsync(UsersModel existingUser)
   {
 
-    if(existingUser.login == null || existingUser.password == null)
+    if(existingUser.Login == null || existingUser.Password == null)
     {
       _logger.LogWarning("Data is missing");
       throw new ArgumentException("Brak danych");
     }
+    
 
     try
     {
-      var isUserExists = await _users.Find(user => user.login == existingUser.login).FirstOrDefaultAsync();
+      var isUserExists = await _users.Find(user => user.Login == existingUser.Login).FirstOrDefaultAsync();
 
-      bool validPassword =  BCrypt.Net.BCrypt.Verify(existingUser.password, isUserExists.password);
-      if(!validPassword == true)
+      if (isUserExists == null)
+      {
+        _logger.LogWarning("User with login {Login} does not exist", existingUser.Login);
+        throw new UserArentExistisException("Nie znaleziono użytkownika");
+      }
+
+      bool validPassword =  BCrypt.Net.BCrypt.Verify(existingUser.Password, isUserExists.Password);
+      if(!validPassword)
       {
         _logger.LogError("Error while verifying password");
         throw new Exception("Błąd przy weryfikacji hasła");
       }
+    }
+    catch(UserArentExistisException error)
+    {
+      _logger.LogWarning("User with login {Login} does not exist", existingUser.Login);
+      throw new UserArentExistisException("Nie znaleziono użytkownika");
     }
     catch(Exception error)
     {
       _logger.LogError("Error while logging in");
       throw new Exception("Błąd przy logowaniu" + " " + error);
     }
+  }
+  public async Task CreateUserWithDataOfMeals(string userEmail){
+    
+    if(string.IsNullOrEmpty(userEmail))
+    {
+      throw new Exception("Error: String is null or empty");
+    }
+
+    var existingUser = await _userData.Find(user => user.Email == userEmail).FirstOrDefaultAsync();
+    if(existingUser != null)
+    {
+      _logger.LogError("User with login {Login} already exists", userEmail);
+      throw new UserAlreadyExistsException("Taki użytkownik  już istnieje");
+    }
+
+    var newUser = new UserDataModel
+    {
+      Email = userEmail,
+      Weight = 0,
+      Height = 0,
+      Sex = "Unknown",
+      Age = 0,
+      MealsDetails = new Dictionary<string, List<Meal>>()
+    };
+    await _userData.InsertOneAsync(newUser);
+  }
+  public async Task<bool> AddMealAsync (string userEmail, Meal newMeal)
+  {
+    string today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+    var filter = Builders<UserDataModel>.Filter.Eq(u => u.Email, userEmail);
+
+    var update = Builders <UserDataModel>.Update
+      .Push($"mealsDeatails.{today}", newMeal);
+
+      var result = await _userData.UpdateOneAsync(filter, update);
+
+      return result.ModifiedCount > 0;
   }
 }

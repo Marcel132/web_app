@@ -67,9 +67,12 @@ export class AuthService {
 					if(error.status === 400){
 						errorMessage = "Błędne dane! " + error.error?.message + " (Status 400)" || "Błędne dane (400)"
 					}
-					else if(error.status === 409){
-						errorMessage =  error.error?.message + " (Status 409)" || "Taki użytkownik już istnieje (409)"
+					else if(error.status === 404){
+						errorMessage = error.error.message + " (Status 404)" || "Takie użytkownik nie istnieje (404)"
 					}
+					// else if(error.status === 409){
+					// 	errorMessage =  error.error?.message + " (Status 409)" || "Taki użytkownik już istnieje (409)"
+					// }
 					else if(error.status === 500){
 						errorMessage = "Błąd serwera! (Status 500)"
 					}

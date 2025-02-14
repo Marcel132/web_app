@@ -9,12 +9,12 @@ public class UsersModel
   public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
   [BsonElement("login")]
-  public string login { get; set;} = string.Empty;
+  public string? Login { get; set;}
 
   [BsonElement("password")]
-  public string password { get; set;} = string.Empty;
+  public string? Password { get; set;}
 
   [BsonElement("role")]
-  public string role { get; set;} = "Free";
+  public string Role { get; set;} = "Free";
 
 }
