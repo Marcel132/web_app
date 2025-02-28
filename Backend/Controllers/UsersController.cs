@@ -28,6 +28,7 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.RegisterUserAsync(newUser);
+        _logger.LogInformation("User {Role} created", newUser.Role);
         var authToken = _tokenService.GenerateAccessToken(newUser.Id, newUser.Role, newUser.Login);
         var refreshToken = _tokenService.GenerateRefreshToken();
         await _usersService.CreateUserWithDataOfMeals(newUser.Login);
@@ -67,6 +68,10 @@ public class UsersController : ControllerBase
     try
     {
         await _usersService.LoginUserAsync(existingUser);
+        _logger.LogInformation("Dane: {Data}", existingUser);
+        _logger.LogInformation("Login użytkownika: {Login}", existingUser.Login);
+        _logger.LogInformation("Rola użytkownika {Role}", existingUser.Role);
+
         var authToken = _tokenService.GenerateAccessToken(existingUser.Id, existingUser.Role, existingUser.Login);
         var refreshToken = _tokenService.GenerateRefreshToken();
         

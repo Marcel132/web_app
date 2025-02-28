@@ -79,6 +79,8 @@ public class UsersService
         _logger.LogError("Error while verifying password");
         throw new Exception("Błąd przy weryfikacji hasła");
       }
+
+      existingUser.Role = isUserExists.Role;
     }
     catch(UserArentExistisException error)
     {

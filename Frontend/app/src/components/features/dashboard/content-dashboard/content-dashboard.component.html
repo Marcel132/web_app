@@ -1,1 +1,11 @@
-<p>content-dashboard works!</p>
+<div class="content-box flex flex-col items-center justify-center">
+	<h3>Witamy w naszej aplikacji</h3>
+	<span>Co dziś wybierasz?</span>
+
+	<div class="list-of-items py-5 grid grid-cols-2 ">
+		<div class="item p-4"><a [routerLink]='["calculator"]'>Kalulator kalorii</a></div>
+		<div class="item p-4"><a [routerLink]='["stats"]'>Wykresy</a></div>
+		<div class="item p-4"><a [routerLink]='["account"]'>Konto</a></div>
+		<div class="item p-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
+	</div>
+</div>
