@@ -4,6 +4,7 @@ import { FooterComponent } from "../../shared/footer/footer.component";
 import { UserService } from '../../../services/user.service';
 import { UserModule } from './user.module';
 import { RouterModule } from '@angular/router';
+import { TokenService } from '../../../services/token.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,14 @@ import { RouterModule } from '@angular/router';
 export class DashboardComponent {
 
 	constructor(
-		private userService: UserService
+		private userService: UserService,
+		private tokenService: TokenService,
 	){}
-	
+
+	ngOnInit(): void {
+		if(typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'){
+			this.tokenService.setRoleSubject()
+		}
+	}
+
 }

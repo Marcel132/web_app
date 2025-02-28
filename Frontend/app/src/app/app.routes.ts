@@ -7,6 +7,8 @@ import { CalculatorComponent } from '../components/features/dashboard/content-da
 import { AuthContainerComponent } from '../components/features/auth-container/auth-container.component';
 import { ContentDashboardComponent } from '../components/features/dashboard/content-dashboard/content-dashboard.component';
 import { AccountDashboardComponent } from '../components/features/dashboard/content-dashboard/account-dashboard/account-dashboard.component';
+import { GraphComponent } from '../components/features/dashboard/content-dashboard/graph/graph.component';
+import { SettingsComponent } from '../components/features/dashboard/content-dashboard/settings/settings.component';
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -26,7 +28,9 @@ export const routes: Routes = [
 		[
 			{path: '', component: ContentDashboardComponent, children: [
 				{path: 'calculator', component: CalculatorComponent},
-				{path: 'account', component: AccountDashboardComponent}
+				{path: 'account', component: AccountDashboardComponent},
+				{path: 'graph', component: GraphComponent},
+				{path: 'settings', component: SettingsComponent}
 			]},
 		]
 	}

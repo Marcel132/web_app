@@ -1,10 +1,10 @@
 
 <div class="w-full h-full flex flex-col md:flex-row relative">
-	<div class="sidebar w-full">
-		<div class="list-of-items py-5 flex flex-col items-center justify-center">
-			<img src="../../../../../assets/img/list.svg" alt="menu" class='block md:hidden'>
+	<div class="sidebar w-full md:w-[150px] flex items-center justify-start flex-col lg:pt-10 relative">
+		<img src="../../../../assets/img/list.svg" alt="menu" class='w-[30px] cursor-pointer left-0' (click)="toggleMenu()">
+		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
 			<div class="item p-4"><a [routerLink]='["calculator"]'>Kalkulator</a></div>
-			<div class="item p-4"><a [routerLink]='["stats"]'>Wykresy</a></div>
+			<div class="item p-4" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
 			<div class="item p-4"><a [routerLink]='["account"]'>Konto</a></div>
 			<div class="item p-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
 		</div>
