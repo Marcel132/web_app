@@ -19,12 +19,19 @@ export class AccountDashboardComponent {
 		private tokenService: TokenService,
 	) {}
 
-	isLogged!: boolean
+	isLogged: boolean = false
+	user = {
+		email: '',
+		role: ''
+	}
 
 	ngOnInit(): void {
-		//Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-		//Add 'implements OnInit' to the class.
-		this.isLogged = this.tokenService.getTokenSubjectValue() != null
+		const email = this.tokenService.getEmailValue()
+		if(email != null && email != ''){
+			this.isLogged = true
+			this.user.email = email
+			this.user.role = this.tokenService.getRoleValue()
+		}
 	}
 
 }

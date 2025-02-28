@@ -25,8 +25,7 @@ export class AuthContainerComponent {
 	async ngOnInit() {
 		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
 			try {
-				const token = this.tokenService.getRoleSubjectValue()
-				console.log("Token: " + token)
+				const token = this.tokenService.getTokenSubjectValue()
 				if(token != null){
 					this.routes.navigate(['/home'])
 				}
