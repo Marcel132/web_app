@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
+import { UserService } from '../../../../../services/user.service';
 import { error } from 'console';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../../modules/shared.module';
+import { SharedModule } from '../../../../../modules/shared.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
