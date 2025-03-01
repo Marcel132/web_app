@@ -8,19 +8,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 	const tokenService = inject(TokenService)
 	const route = inject(Router)
 
-	let localStorageToken
+	let sessionStorageToken
 	try {
-		localStorageToken= tokenService.getTokenStorage("token%auth")
+		sessionStorageToken = tokenService.getTokenStorage("token%auth")
 	} catch (error) {
-		localStorageToken = null
+		sessionStorageToken = null
 		route.navigate(['/home'])
 	}
 
-	console.log(localStorageToken)
+	console.log("Token Inter: " + sessionStorageToken)
 
   const modifiedReq = req.clone({
     setHeaders: {
-			Authorization: `Bearer ${localStorageToken}`,
+			Authorization: `Bearer ${sessionStorageToken}`,
 			'Cache-Control': 'no-cache'
 		 },
   });

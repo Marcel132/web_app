@@ -62,6 +62,7 @@ export class LoginComponent {
 				if(this.tokenService.getTokenSubjectValue() != null){
 					setTimeout(() => {
 						this.routes.navigate(['/home'])
+						window.location.reload()
 					}, 2500);
 				}
 

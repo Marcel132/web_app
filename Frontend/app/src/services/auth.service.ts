@@ -70,9 +70,6 @@ export class AuthService {
 					else if(error.status === 404){
 						errorMessage = error.error.message + " (Status 404)" || "Takie użytkownik nie istnieje (404)"
 					}
-					// else if(error.status === 409){
-					// 	errorMessage =  error.error?.message + " (Status 409)" || "Taki użytkownik już istnieje (409)"
-					// }
 					else if(error.status === 500){
 						errorMessage = "Błąd serwera! (Status 500)"
 					}

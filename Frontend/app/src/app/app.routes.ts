@@ -12,21 +12,24 @@ import { SettingsComponent } from '../components/features/dashboard/content-dash
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
-	{
-		path: '',
-		component: AuthContainerComponent,
-		children:
-		[
-			{path: 'login', component: LoginComponent},
-			{path: 'register', component: RegisterComponent}
-		]
-	},
+	// {
+	// 	path: '',
+	// 	component: AuthContainerComponent,
+	// 	children:
+	// 	[
+
+	// 	]
+	// },
 	{
 		path: 'home',
 		component: DashboardComponent,
 		children:
 		[
 			{path: '', component: ContentDashboardComponent, children: [
+				{path: 'forms', component: AuthContainerComponent, children: [
+					{path: 'register', component: RegisterComponent},
+					{path: 'login', component: LoginComponent},
+				]},
 				{path: 'calculator', component: CalculatorComponent},
 				{path: 'account', component: AccountDashboardComponent},
 				{path: 'graph', component: GraphComponent},
