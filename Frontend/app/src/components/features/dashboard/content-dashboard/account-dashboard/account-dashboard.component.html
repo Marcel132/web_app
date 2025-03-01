@@ -10,9 +10,25 @@
 	</div>
 </ng-template>
 <ng-template #AccountDashboard>
-	<div class="">
-		<b>Witaj użytkowniku </b>{{user.email}} <br>
-		<b>Twoja rola to</b> {{user.role}}
+	<div class="account-dashboard">
+		<div class="capitalize flex flex-col">
+			<h3 class='text-center py-6'>Dane użytkownika</h3>
+			<span>Adres email: <i class='normal-case'>{{user.email}}</i></span>
+			<span>Pakiet: <i class="normal-case">{{user.role}}</i></span>
+		</div>
+		<div class='flex flex-col' *ngIf="user.role == 'Premium'">
+			<h3 class='text-center py-6'>Konfigurator</h3>
+
+			<label for="customFontUrl">Wklej link do czcionki: </label>
+			<input type="text" [(ngModel)]="customFontUrl" name="customFontUrl" id="customFontUrl" placeholder='https://fonts.google.com/'>
+			<button (click)="saveFont()">Zainstaluj</button>
+			<span *ngIf="!validationInfo.fontValid">{{validationInfo.fontError}}</span>
+
+			<!-- <span>Ważność pakietu: <i class='normal-case'>{{user.premiumPackage.expirationDate}}</i></span>
+			<span>Limit formularzy: <i class='normal-case'>{{user.premiumPackage.limit}}</i></span>
+			<span>Formularze: <i class='normal-case'>{{user.premiumPackage.forms}}</i></span> -->
+
+		</div>
 	</div>
 </ng-template>
 
