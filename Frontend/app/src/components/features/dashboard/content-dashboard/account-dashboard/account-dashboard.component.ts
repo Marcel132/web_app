@@ -61,6 +61,7 @@ export class AccountDashboardComponent {
 			return false
 		}
 		else if(url.includes("https://fonts.googleapis.com/")){
+			this.validationInfo.fontError = ''
 			this.validationInfo.fontValid = true
 			return true
 		}
