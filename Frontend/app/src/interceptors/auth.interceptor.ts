@@ -16,7 +16,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 		route.navigate(['/home'])
 	}
 
-	console.log("Token Inter: " + sessionStorageToken)
+	// console.log("Token Inter: " + sessionStorageToken)
 
   const modifiedReq = req.clone({
     setHeaders: {
@@ -28,7 +28,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(modifiedReq).pipe(
 		tap((event) => {
 			if(event instanceof HttpResponse) {
-				console.log('Intercepting response:', event);
+				// console.log('Intercepting response:', event);
 			}
 		}),
 		catchError((error)=> {
