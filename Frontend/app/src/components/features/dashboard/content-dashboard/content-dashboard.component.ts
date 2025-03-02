@@ -21,10 +21,12 @@ export class ContentDashboardComponent {
 	){}
 
 	toggleMenuVariable: boolean = true;
-	roleSubject: string = ""
+	roleSubject: string | null = null
 
 	ngOnInit(): void {
-		this.roleSubject = this.tokenService.getRoleValue()
+		this.tokenService.getRoleSubject().subscribe((role) => {
+			this.roleSubject = role
+		})
 	}
 
 	toggleMenu(){

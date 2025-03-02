@@ -60,7 +60,6 @@ export class AuthService {
 				tap(response => {
 					this.tokenService.setTokenSubject(response.authToken)
 					this.tokenService.setTokenStorage("token%auth", response.authToken)
-
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"

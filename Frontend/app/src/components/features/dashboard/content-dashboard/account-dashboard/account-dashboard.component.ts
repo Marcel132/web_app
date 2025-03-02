@@ -23,7 +23,7 @@ export class AccountDashboardComponent {
 		private tokenService: TokenService,
 	) {	}
 
-	customFontUrl: string = localStorage.getItem('customFontUrl') || ''
+	customFontUrl: string =''
 	isLogged: boolean = false
 	user = {
 		email: '',
@@ -36,11 +36,20 @@ export class AccountDashboardComponent {
 	}
 
 	ngOnInit(): void {
-		const email = this.tokenService.getEmailValue()
+		this.tokenService.getEmailSubject().subscribe((email) => {
+			this.user.email = email
+			this.tokenService.getRoleSubject().subscribe((role) => {
+				this.user.role = role
+			})
+		})
+
+		const email = this.tokenService.getEmailSubjectValue()
 		if(email != null && email != ''){
 			this.isLogged = true
-			this.user.email = email
-			this.user.role = this.tokenService.getRoleValue()
+		}
+
+		if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
+			const customFontUrl = localStorage.getItem('customFontUrl')
 		}
 	}
 

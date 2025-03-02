@@ -31,10 +31,21 @@ export class AppComponent {
 
 	ngOnInit(): void {
 		if(typeof window !== 'undefined'){
-			if(!this.tokenService.getTokenSubjectValue()){
+			const token = this.tokenService.getTokenStorage("token%auth")
+			// Update value of token in BehaviorSubject
+			if(!token){
 				console.log("Refresh Token Checking... ")
 				this.tokenService.refreshToken()
 			}
+
+			// When user has token in storage, add data to BehaviorSubject's to update the state
+			if( token && !this.tokenService.getTokenSubjectValue()){
+				this.tokenService.setTokenSubject(token)
+				this.tokenService.setEmailSubject()
+				this.tokenService.setRoleSubject()
+			}
+			
+			// Load custom font if it was set
 			const customFontUrl = localStorage.getItem('customFontUrl')
 			if(customFontUrl){
 				this.loadFont(customFontUrl)

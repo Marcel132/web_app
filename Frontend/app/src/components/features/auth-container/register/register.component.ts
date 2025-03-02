@@ -62,8 +62,13 @@ export class RegisterComponent {
 
 				this.message = ['Pomyślnie zarejestrowano użytkownika']
 
-				if(this.tokenService.getTokenSubjectValue() != null){
+				const token = this.tokenService.getTokenStorage("token%auth")
+
+				if(token){
+					this.tokenService.setTokenSubject(token)
 					setTimeout(() => {
+						this.tokenService.setEmailSubject()
+						this.tokenService.setRoleSubject()
 						this.routes.navigate(['/home'])
 					}, 2500);
 				}
