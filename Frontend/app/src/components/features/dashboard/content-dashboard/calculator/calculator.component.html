@@ -14,15 +14,15 @@
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Białka:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.proteins }}g <span class='tooltiptext'>Białko</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.proteins.toFixed(1) }}g <span class='tooltiptext'>Białko</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Tłuszcze:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.fats }}g <span class='tooltiptext'>Tłuszcze</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.fats.toFixed(1) }}g <span class='tooltiptext'>Tłuszcze</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Węgle:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.carbohydrates }}g <span class='tooltiptext'>Węgle</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.carbohydrates.toFixed(1) }}g <span class='tooltiptext'>Węgle</span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -32,7 +32,7 @@
 	<div class='w-full'>
 		<form [formGroup]="formProductCalculator" class='flex flex-col items-center justify-center'>
 
-			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer' max="5" >
+			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer' >
 				<option [ngValue]='null' selected disabled>Wybierz produkt:</option>
 				<option *ngFor="let product of products" [value]="product.name">{{product.name}}</option>
 			</select>

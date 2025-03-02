@@ -11,11 +11,13 @@
 </ng-template>
 <ng-template #AccountDashboard>
 	<div class="account-dashboard">
+
 		<div class="capitalize flex flex-col">
 			<h3 class='text-center py-6'>Dane użytkownika</h3>
 			<span>Adres email: <i class='normal-case'>{{user.email}}</i></span>
-			<span>Pakiet: <i class="normal-case">{{user.role}}</i></span>
+			<span>Pakiet: <i class="normal-case">{{user.role | translate }}</i></span>
 		</div>
+
 		<div class='flex flex-col' *ngIf="user.role == 'Premium'">
 			<h3 class='text-center py-6'>Konfigurator</h3>
 

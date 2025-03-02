@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -10,7 +11,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
 		CommonModule,
 		RouterModule,
-		FormsModule
+		FormsModule,
+		TranslatePipe,
 	],
   templateUrl: './account-dashboard.component.html',
   styleUrl: './account-dashboard.component.scss'
