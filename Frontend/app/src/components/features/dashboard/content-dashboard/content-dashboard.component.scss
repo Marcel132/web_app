@@ -5,3 +5,20 @@
 .disableMenu {
 	display: none;
 }
+.item {
+	text-align: center;
+	&:hover{
+		background-color: #ff000010;
+		border-radius: 40px
+	}
+
+}
+.logout {
+color: #cc0000;
+	border-radius: 40px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ff000010;
+	}
+}
