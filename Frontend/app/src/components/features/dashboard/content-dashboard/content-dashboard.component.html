@@ -8,11 +8,11 @@
 		(click)="toggleMenu()"
 		>
 		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
-			<div class="item p-4"><a [routerLink]='["calculator"]'>Kalkulator</a></div>
-			<div class="item p-4" *ngIf="roleSubject != ''"><a [routerLink]='["graph"]'>Wykresy</a></div>
-			<div class="item p-4"><a [routerLink]='["account"]'>Konto</a></div>
-			<div class="item p-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
-			<div class="item p-4 logout" (click)="logout()">Wyloguj się</div>
+			<div class="item px-2 py-4"><a [routerLink]='["calculator"]'>Kalkulator</a></div>
+			<div class="item px-2 py-4" *ngIf="roleSubject != ''"><a [routerLink]='["graph"]'>Wykresy</a></div>
+			<div class="item px-2 py-4"><a [routerLink]='["account"]'>Konto</a></div>
+			<div class="item px-2 py-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
+			<div class="item px-2 py-4 logout" (click)="logout()">Wyloguj się</div>
 		</div>
 	</div>
 	<div class="content-box w-full py-4 flex items-center justify-center">
