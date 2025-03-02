@@ -12,14 +12,6 @@ import { SettingsComponent } from '../components/features/dashboard/content-dash
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
-	// {
-	// 	path: '',
-	// 	component: AuthContainerComponent,
-	// 	children:
-	// 	[
-
-	// 	]
-	// },
 	{
 		path: 'home',
 		component: DashboardComponent,

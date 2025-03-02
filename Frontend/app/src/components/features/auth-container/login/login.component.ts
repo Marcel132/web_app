@@ -33,7 +33,7 @@ export class LoginComponent {
 
 	changeMode()
 	{
-		this.routes.navigate(['/register']);
+		this.routes.navigate(['/home/forms/register']);
 	}
 
 	async sendFormValue()

@@ -44,7 +44,7 @@ export class AppComponent {
 				this.tokenService.setEmailSubject()
 				this.tokenService.setRoleSubject()
 			}
-			
+
 			// Load custom font if it was set
 			const customFontUrl = localStorage.getItem('customFontUrl')
 			if(customFontUrl){

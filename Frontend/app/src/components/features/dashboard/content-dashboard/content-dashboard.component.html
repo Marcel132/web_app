@@ -12,10 +12,20 @@
 			<div class="item p-4" *ngIf="roleSubject != ''"><a [routerLink]='["graph"]'>Wykresy</a></div>
 			<div class="item p-4"><a [routerLink]='["account"]'>Konto</a></div>
 			<div class="item p-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
+			<div class="item p-4 logout" (click)="logout()">Wyloguj się</div>
 		</div>
 	</div>
 	<div class="content-box w-full py-4 flex items-center justify-center">
-		<router-outlet></router-outlet>
+		<div *ngIf="isHomeRoute then HomeContent else RouteContent"></div>
 	</div>
 </div>
+
+
+<ng-template #HomeContent>
+	<p>Witamy</p>
+</ng-template>
+
+<ng-template #RouteContent>
+	<router-outlet></router-outlet>
+</ng-template>
 

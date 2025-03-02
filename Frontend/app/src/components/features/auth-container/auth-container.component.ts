@@ -22,22 +22,22 @@ export class AuthContainerComponent {
 		private routes: Router
 	){}
 
-	async ngOnInit() {
-		if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-			try {
-				const token = this.tokenService.getTokenSubjectValue()
-				if(token != null){
-					this.routes.navigate(['/home'])
-					
-				}
-			}
-			catch(error){
-				console.warn("Error while getting a token" + error)
-			}
-		}
-		else {
-			console.warn('Session storage is not available in this environment.');
-		}
-	}
+	// async ngOnInit() {
+	// 	if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+	// 		try {
+	// 			const token = this.tokenService.getTokenSubjectValue()
+	// 			if(token != null){
+	// 				this.routes.navigate(['/home'])
+
+	// 			}
+	// 		}
+	// 		catch(error){
+	// 			console.warn("Error while getting a token" + error)
+	// 		}
+	// 	}
+	// 	else {
+	// 		console.warn('Session storage is not available in this environment.');
+	// 	}
+	// }
 
 }
