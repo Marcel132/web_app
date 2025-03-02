@@ -28,6 +28,7 @@ export class AuthContainerComponent {
 				const token = this.tokenService.getTokenSubjectValue()
 				if(token != null){
 					this.routes.navigate(['/home'])
+					
 				}
 			}
 			catch(error){
