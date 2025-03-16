@@ -4,6 +4,18 @@ import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
+import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
+
+export interface PacksPackage {
+	email: string;
+	purchaseDate: Date;
+	expirationDate: Date;
+	paymentMethod: string;
+	price: number;
+	status: string;
+	lastPaymentStatus: string;
+	recurringPayment: boolean;
+}
 
 @Component({
   selector: 'app-account-dashboard',
@@ -13,6 +25,7 @@ import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 		RouterModule,
 		FormsModule,
 		TranslatePipe,
+		BooleanHandlerPipe
 	],
   templateUrl: './account-dashboard.component.html',
   styleUrl: './account-dashboard.component.scss'
@@ -29,8 +42,8 @@ export class AccountDashboardComponent {
 	user = {
 		email: '',
 		role: '',
-		package: ''
 	}
+	package: PacksPackage | null = null
 
 	validationInfo = {
 		fontValid: true,
@@ -43,9 +56,7 @@ export class AccountDashboardComponent {
 			this.tokenService.getRoleSubject().subscribe((role) => {
 				this.user.role = role
 			})
-			this.tokenService.getPacksPackageSubject().subscribe((pack) => {
-				this.user.package = pack
-			})
+			this.package = this.tokenService.getPacksPackageSubjectValue()
 
 		})
 

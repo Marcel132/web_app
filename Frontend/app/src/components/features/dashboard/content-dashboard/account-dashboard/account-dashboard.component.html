@@ -32,14 +32,19 @@
 
 		</div>
 
-		<div class="flex flex-col">
+		<div class="flex flex-col normal-case">
 			<h3 class='text-center py-6'>Subskrypcja</h3>
 			<div *ngIf="user.role == 'Free'">
 				<p>Aktualnie posiadasz plan darmowy</p>
 				<span>Kup premium: <button (click)="buyPremium()">Kup</button></span>
 			</div>
-			<div *ngIf="user.role == 'Premium'">
-				
+			<div *ngIf="user.role == 'Premium'" class='flex flex-col '>
+				<p>Aktualnie posiadasz plan premium</p>
+				<span>Data zakupu: {{ package?.purchaseDate | date: 'dd/MM/yyyy'}}</span>
+				<span>Data ważności: {{package?.expirationDate | date: 'dd/MM/yyyy'}}</span>
+				<span>Status subskrypcji: {{package?.status ?? "" | translate }}</span>
+				<span>Metoda płatności: {{package?.paymentMethod}}</span>
+				<span>Rozliczenia cykliczne: {{package?.recurringPayment | booleanHandler }}</span>
 			</div>
 		</div>
 	</div>
