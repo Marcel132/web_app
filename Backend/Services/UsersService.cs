@@ -15,11 +15,13 @@ public class UsersService
 {
  private readonly IMongoCollection<UsersModel> _users;
  private readonly IMongoCollection<UserDataModel> _userData;
+ private readonly IMongoCollection<PacksPackageModel> _packs;
  private readonly ILogger<UsersService> _logger;
 
   public UsersService(MongoDBContext context, ILogger<UsersService> logger){
     _users = context.GetCollection<UsersModel>("Users");
     _userData = context.GetCollection<UserDataModel>("UserData");
+    _packs = context.GetCollection<PacksPackageModel>("PacksPackage");
     _logger = logger;
   } 
 
@@ -53,6 +55,7 @@ public class UsersService
       throw new Exception("Błąd przy tworzeniu użytkownika" + " " + error);
     }
   } 
+  
   public async Task LoginUserAsync(UsersModel existingUser)
   {
 
@@ -93,6 +96,7 @@ public class UsersService
       throw new Exception("Błąd przy logowaniu" + " " + error);
     }
   }
+  
   public async Task CreateUserWithDataOfMeals(string userEmail){
     
     if(string.IsNullOrEmpty(userEmail))
@@ -118,6 +122,7 @@ public class UsersService
     };
     await _userData.InsertOneAsync(newUser);
   }
+  
   public async Task<bool> AddMealAsync (string userEmail, Meal newMeal)
   {
     string today = DateTime.UtcNow.ToString("yyyy-MM-dd");
@@ -131,6 +136,7 @@ public class UsersService
 
       return result.ModifiedCount > 0;
   }
+  
   public async Task UpdateUserData (string userEmail, UserDataModel newData)
   {
     if(string.IsNullOrEmpty(userEmail))
@@ -161,5 +167,18 @@ public class UsersService
     {
       throw;
     }
+  }
+
+  public async Task<PacksPackageModel> GetPacksPackage(string email)
+  {
+    var user = await _packs.Find(user => user.Email == email).FirstOrDefaultAsync();
+    _logger.LogInformation("User: {User}", user);
+    if(user == null)
+    {
+      _logger.LogError("User with login {Login} does not exist", email);
+      throw new UserArentExistisException("Nie znaleziono użytkownika");
+    }
+
+    return user;
   }
 }

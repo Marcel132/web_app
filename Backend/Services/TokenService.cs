@@ -38,6 +38,35 @@ public class TokenService
     return new JwtSecurityTokenHandler().WriteToken(authToken);
   }
 
+  public string GeneratePacksPackageToken(PacksPackageModel package)
+  {
+    
+    var claims = new[]
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, package.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("purchase_date", package.Purchase_date.Value.ToString("o")),
+        new Claim("expiration_date", package.Expiration_date.Value.ToString("o")),
+        new Claim("payment_method", package.Payment_method),
+        new Claim("price", package.Price.ToString()),
+        new Claim("status", package.Status),
+        new Claim("last_payment_status", package.Last_payment_status),
+        new Claim("recurring_payment", package.Reccuring_payment.ToString()),
+    };
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var authToken = new JwtSecurityToken(
+        issuer: "http://foodcalories/",
+        audience: "http://foodcalories/",
+        claims: claims,
+        expires: DateTime.Now.AddMinutes(15),
+        signingCredentials: creds
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(authToken); 
+  } 
   public string GenerateRefreshToken()
   {
     var randomNumber = new byte[32];

@@ -103,4 +103,27 @@ public class UsersController : ControllerBase
         return StatusCode(500, new { message = "An unexpected error occurred" });
     }
   }
+
+  [HttpGet("package/{email}")]
+  public async Task<IActionResult> GetPackage([FromRoute] string email)
+  {
+    try
+    {
+      var package = await _usersService.GetPacksPackage(email);
+
+      if(package == null)
+      {
+          return NotFound(new { message = "Package not found" });
+      } 
+
+      var token = _tokenService.GeneratePacksPackageToken(package);
+      return Ok(new { token });
+
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError("Unexpected error: {Error}", ex.Message);
+        return StatusCode(500, new { message = "An unexpected error occurred" });
+    }
+  }
 }
