@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center justify-center ">
 		<!-- Producs data -->
-		<div class="overflow-x-auto max-w-[310px] text-xs sm:max-w-[400px] sm:text-sm md:max-w-[500px] lg:max-w-[750px]">
+		<div class="product-table">
 			<table class="border-collapse">
 				<tbody>
 					<!-- Nagłówek -->
@@ -28,7 +28,7 @@
 			</table>
 		</div>
 
-	<!-- Kalkulator -->
+	<!-- Calculator -->
 	<div class='w-full'>
 		<form [formGroup]="formProductCalculator" class='flex flex-col items-center justify-center'>
 
@@ -40,7 +40,7 @@
 			<input formControlName='weight' name='weight' type="number" min='0' placeholder="Waga" class=' p-2 outline-none cursor-pointer ' />
 
 			<div class="button-group w-full flex justify-center items-center py-4 gap-4">
-				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="addValue()">Dodaj Produkt</button>
+				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="addValue()">Dodaj</button>
 				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="sum()">Policz Kcal</button>
 				<button class='w-[100px] h-[30px] custom-button-red' (click)="reset()"> Wyczyść</button>
 			</div>
