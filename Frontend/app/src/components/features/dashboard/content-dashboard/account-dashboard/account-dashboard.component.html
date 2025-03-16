@@ -31,6 +31,17 @@
 			<span>Formularze: <i class='normal-case'>{{user.premiumPackage.forms}}</i></span> -->
 
 		</div>
+
+		<div class="flex flex-col">
+			<h3 class='text-center py-6'>Subskrypcja</h3>
+			<div *ngIf="user.role == 'Free'">
+				<p>Aktualnie posiadasz plan darmowy</p>
+				<span>Kup premium: <button (click)="buyPremium()">Kup</button></span>
+			</div>
+			<div *ngIf="user.role == 'Premium'">
+				
+			</div>
+		</div>
 	</div>
 </ng-template>
 

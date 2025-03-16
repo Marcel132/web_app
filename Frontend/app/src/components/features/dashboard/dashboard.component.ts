@@ -29,9 +29,11 @@ export class DashboardComponent {
 		if(typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'){
 			this.tokenService.setEmailSubject()
 			this.tokenService.setRoleSubject()
+			this.tokenService.setPacksPackageSubject()
 
 			console.log("Role: " + this.tokenService.getRoleSubjectValue())
 			console.log("Email: " + this.tokenService.getEmailSubjectValue())
+			console.log("PacksPackage: " + this.tokenService.getPacksPackageSubjectValue())
 		}
 	}
 

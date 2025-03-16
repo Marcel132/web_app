@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
@@ -21,13 +21,15 @@ export class AccountDashboardComponent {
 
 	constructor(
 		private tokenService: TokenService,
+		private route: Router,
 	) {	}
 
 	customFontUrl: string =''
 	isLogged: boolean = false
 	user = {
 		email: '',
-		role: ''
+		role: '',
+		package: ''
 	}
 
 	validationInfo = {
@@ -41,6 +43,10 @@ export class AccountDashboardComponent {
 			this.tokenService.getRoleSubject().subscribe((role) => {
 				this.user.role = role
 			})
+			this.tokenService.getPacksPackageSubject().subscribe((pack) => {
+				this.user.package = pack
+			})
+
 		})
 
 		const email = this.tokenService.getEmailSubjectValue()
@@ -82,6 +88,10 @@ export class AccountDashboardComponent {
 			return false
 		}
 
+	}
+
+	buyPremium(){
+		this.route.navigate(['/buy-premium'])
 	}
 
 }
