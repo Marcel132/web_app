@@ -9,6 +9,7 @@ export class TranslatePipe implements PipeTransform {
 	private translations : { [key: string]: string } = {
 		"free": "Darmowy",
 		"premium": "Premium",
+		'active': 'Aktywny',
 	}
 
 	transform(value: string): string {
