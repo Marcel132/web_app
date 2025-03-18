@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
 
-interface Product {
+export interface Product {
   _id: string;
   id_prod: number;
   name: string;
@@ -18,13 +18,23 @@ interface Product {
   providedIn: 'root'
 })
 export class UserService {
+  private productsSubject = new BehaviorSubject<Product[] | null>(null);
+  products$ = this.productsSubject.asObservable();
 
-	constructor(
-		private http: HttpClient
-	) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-	getProductsData(): Observable<Product[]> {
-		const url = "https://localhost:5000/api/v01/products"
-		return this.http.get<Product[]>(url)
-	}
+  fetchProductsData(): void {
+    const url = "https://localhost:5000/api/v01/products";
+    this.http.get<Product[]>(url).pipe(
+      tap(products => this.productsSubject.next(products)),
+      catchError(this.handleError)
+    ).subscribe();
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
 }
