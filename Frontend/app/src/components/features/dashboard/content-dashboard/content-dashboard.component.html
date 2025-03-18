@@ -1,5 +1,5 @@
 
-<div class="w-full min-h-[500px] h-full flex flex-col md:flex-row relative">
+<div class="w-full min-h-[500px] h-full flex flex-col md:flex-row relative bg-white">
 	<div class="sidebar w-full md:w-[150px] flex items-center justify-start flex-col lg:pt-10 relative">
 		<img
 		src="../../../../assets/img/list.svg"
@@ -9,13 +9,14 @@
 		>
 		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
 			<div class="item px-2 py-4"><a [routerLink]='["calculator"]'>Kalkulator</a></div>
-			<div class="item px-2 py-4" *ngIf="roleSubject != ''"><a [routerLink]='["graph"]'>Wykresy</a></div>
+			<div class="item px-2 py-4" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div>
+			<div class="item px-2 py-4" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
 			<div class="item px-2 py-4"><a [routerLink]='["account"]'>Konto</a></div>
 			<div class="item px-2 py-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
 			<div class="item px-2 py-4 logout" (click)="logout()">Wyloguj się</div>
 		</div>
 	</div>
-	<div class="content-box w-full py-4 flex items-center justify-center">
+	<div class="w-full pt-4 flex flex-col items-center justify-start relative ">
 		<div *ngIf="isHomeRoute then HomeContent else RouteContent"></div>
 	</div>
 </div>
