@@ -33,7 +33,7 @@ export class DashboardComponent {
 
 			console.log("Role: " + this.tokenService.getRoleSubjectValue())
 			console.log("Email: " + this.tokenService.getEmailSubjectValue())
-			console.log("PacksPackage: " + this.tokenService.getPacksPackageSubjectValue())
+			console.log("PacksPackage: " + JSON.stringify(this.tokenService.getPacksPackageSubjectValue()))
 		}
 	}
 

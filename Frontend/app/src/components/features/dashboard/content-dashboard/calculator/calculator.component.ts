@@ -38,10 +38,12 @@ export class CalculatorComponent {
 	}
 
 	async ngOnInit() {
-	  this.userService.getProductsData().subscribe((data) => {
-			this.products = data
-		}, (error) => {
-			console.error(error)
+		this.userService.products$.subscribe(products => {
+			if(products == null){
+				this.userService.fetchProductsData();
+			} else {
+				this.products = products
+			}
 		})
 	}
 

@@ -9,6 +9,7 @@ import { ContentDashboardComponent } from '../components/features/dashboard/cont
 import { AccountDashboardComponent } from '../components/features/dashboard/content-dashboard/account-dashboard/account-dashboard.component';
 import { GraphComponent } from '../components/features/dashboard/content-dashboard/graph/graph.component';
 import { SettingsComponent } from '../components/features/dashboard/content-dashboard/settings/settings.component';
+import { MealsComponent } from '../components/features/dashboard/content-dashboard/meals/meals.component';
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -23,8 +24,9 @@ export const routes: Routes = [
 					{path: 'login', component: LoginComponent},
 				]},
 				{path: 'calculator', component: CalculatorComponent},
-				{path: 'account', component: AccountDashboardComponent},
+				{path: 'meals', component: MealsComponent},
 				{path: 'graph', component: GraphComponent},
+				{path: 'account', component: AccountDashboardComponent},
 				{path: 'settings', component: SettingsComponent}
 			]},
 		]
