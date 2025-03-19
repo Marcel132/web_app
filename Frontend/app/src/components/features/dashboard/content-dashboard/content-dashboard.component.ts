@@ -27,7 +27,7 @@ export class ContentDashboardComponent {
 	isHomeRoute: boolean = true
 
 	ngOnInit(): void {
-		this.tokenService.getRoleSubject().subscribe((role) => {
+		this.tokenService.userRoleSubject$.subscribe((role) => {
 			this.roleSubject = role
 		})
 

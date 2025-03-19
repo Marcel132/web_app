@@ -39,10 +39,10 @@ export class AppComponent {
 			}
 
 			// When user has token in storage, add data to BehaviorSubject's to update the state
-			if( token && !this.tokenService.getTokenSubjectValue()){
-				this.tokenService.setTokenSubject(token)
-				this.tokenService.setEmailSubject()
-				this.tokenService.setRoleSubject()
+			if( token && !this.tokenService.getAccessToken()){
+				this.tokenService.setAccessToken(token)
+				this.tokenService.setUserEmail()
+				this.tokenService.setUserRole()
 			}
 
 			// Load custom font if it was set

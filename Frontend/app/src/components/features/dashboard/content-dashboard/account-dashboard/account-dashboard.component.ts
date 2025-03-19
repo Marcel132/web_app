@@ -5,17 +5,7 @@ import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
-
-export interface PacksPackage {
-	email: string;
-	purchaseDate: Date;
-	expirationDate: Date;
-	paymentMethod: string;
-	price: number;
-	status: string;
-	lastPaymentStatus: string;
-	recurringPayment: boolean;
-}
+import { SubscriptionInterface } from '../../../../../interfaces/subscription.details';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -43,7 +33,7 @@ export class AccountDashboardComponent {
 		email: '',
 		role: '',
 	}
-	package: PacksPackage | null = null
+	package!: SubscriptionInterface | null
 
 	validationInfo = {
 		fontValid: true,
@@ -51,16 +41,17 @@ export class AccountDashboardComponent {
 	}
 
 	ngOnInit(): void {
-		this.tokenService.getEmailSubject().subscribe((email) => {
+		this.tokenService.userEmailSubject$.subscribe((email) => {
 			this.user.email = email
-			this.tokenService.getRoleSubject().subscribe((role) => {
+			this.tokenService.userRoleSubject$.subscribe((role) => {
 				this.user.role = role
 			})
-			this.package = this.tokenService.getPacksPackageSubjectValue()
+			this.package = this.tokenService.getSubscriptionDetails()
+			console.log(this.package)
 
 		})
 
-		const email = this.tokenService.getEmailSubjectValue()
+		const email = this.tokenService.getUserEmail()
 		if(email != null && email != ''){
 			this.isLogged = true
 		}

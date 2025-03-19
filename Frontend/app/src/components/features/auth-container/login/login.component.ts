@@ -62,10 +62,10 @@ export class LoginComponent {
 				const token = this.tokenService.getTokenStorage("token%auth")
 
 				if(token){
-					this.tokenService.setTokenSubject(token)
+					this.tokenService.setAccessToken(token)
 					setTimeout(() => {
-						this.tokenService.setEmailSubject()
-						this.tokenService.setRoleSubject()
+						this.tokenService.setUserEmail()
+						this.tokenService.setUserRole()
 						this.routes.navigate(['/home'])
 					}, 2500);
 				}

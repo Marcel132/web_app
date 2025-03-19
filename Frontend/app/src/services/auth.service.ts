@@ -58,8 +58,10 @@ export class AuthService {
 		try {
 			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					this.tokenService.setTokenSubject(response.authToken)
+					this.tokenService.setAccessToken(response.authToken)
 					this.tokenService.setTokenStorage("token%auth", response.authToken)
+					// this.tokenService.setUserRole()
+					// this.tokenService.setSubscriptionDetails()
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -92,8 +94,10 @@ export class AuthService {
 		try {
 			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					this.tokenService.setTokenSubject(response.authToken)
+					this.tokenService.setAccessToken(response.authToken)
 					this.tokenService.setTokenStorage("token%auth", response.authToken)
+					// this.tokenService.setUserRole()
+					// this.tokenService.setSubscriptionDetails()
 				}),
 				catchError((error: HttpErrorResponse) => {
 					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -116,7 +120,7 @@ export class AuthService {
 	}
 
 	isAuthenticated(): boolean{
-		let token = this.tokenService.getTokenSubjectValue()
+		let token = this.tokenService.getAccessToken()
 		console.log(token !== null || token !== "undefined" || token !== "")
 		return token !== null
 

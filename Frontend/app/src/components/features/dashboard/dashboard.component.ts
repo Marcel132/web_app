@@ -27,13 +27,9 @@ export class DashboardComponent {
 
 	ngOnInit(): void {
 		if(typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'){
-			this.tokenService.setEmailSubject()
-			this.tokenService.setRoleSubject()
-			this.tokenService.setPacksPackageSubject()
-
-			console.log("Role: " + this.tokenService.getRoleSubjectValue())
-			console.log("Email: " + this.tokenService.getEmailSubjectValue())
-			console.log("PacksPackage: " + JSON.stringify(this.tokenService.getPacksPackageSubjectValue()))
+			const useEma = this.tokenService.setUserEmail()
+			const useRole =  this.tokenService.setUserRole()
+			const subDet = this.tokenService.setSubscriptionDetails()
 		}
 	}
 
