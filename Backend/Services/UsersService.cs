@@ -1,5 +1,7 @@
 using MongoDB.Driver;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.NetworkInformation;
 
 public class UserAlreadyExistsException : Exception
 {
@@ -58,16 +60,34 @@ public class UsersService
       throw new Exception("Error: String is null or empty");
     }
 
-    var newUser = new UserDataModel
+    var existingData = await _userDataModel.Find(user => user.Email == userEmail).FirstOrDefaultAsync();
+
+    if(existingData != null)
     {
-      Email = userEmail,
-      Weight = 0,
-      Height = 0,
-      Sex = "Unknown",
-      Age = 0,
-      MealsDetails = new Dictionary<string, List<Meal>>()
-    };
-    await _userDataModel.InsertOneAsync(newUser);
+      return;
+    } 
+    else
+    {
+
+      try
+      {
+
+        var newUser = new UserDataModel
+        {
+          Email = userEmail,
+          Weight = 0,
+          Height = 0,
+          Sex = "Unknown",
+          Age = 0,
+          MealsDetails = new Dictionary<string, List<Meal>>()
+        };
+        await _userDataModel.InsertOneAsync(newUser);
+      }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.Message);
+      }
+    }
   }
   public async Task LoginUserAsync(UsersModel data)
   {
