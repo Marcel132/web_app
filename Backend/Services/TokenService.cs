@@ -8,9 +8,11 @@ public class TokenService
 {
 
   private readonly string _key;
+  private readonly ILogger<TokenService> _logger;
 
-  public TokenService(IConfiguration configuration)
+  public TokenService(IConfiguration configuration, ILogger<TokenService> logger)
   {
+    _logger = logger;
     _key = configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key is missing in configuration");
   }
 
@@ -38,13 +40,15 @@ public class TokenService
     return new JwtSecurityTokenHandler().WriteToken(authToken);
   }
 
-  public string GeneratePacksPackageToken(SubscriptionDetailsModel package)
+  public string GenerateSubscriptionToken(SubscriptionDetailsModel package)
   {
 
     if(string.IsNullOrEmpty(package.Email)){
       throw new Exception("Paczka nie ma wartości" + package.Email);
     }
-    
+
+    _logger.LogInformation("Generating token for email: {Email}", package.Email);
+
     var claims = new[]
     {
         new Claim(JwtRegisteredClaimNames.Sub, package.Email),

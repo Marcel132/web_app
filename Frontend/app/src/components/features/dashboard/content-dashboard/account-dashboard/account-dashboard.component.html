@@ -40,6 +40,7 @@
 			</div>
 			<div *ngIf="user.role == 'Premium'" class='flex flex-col '>
 				<p>Aktualnie posiadasz plan premium</p>
+				<span>Email: {{package?.email}}</span>
 				<span>Data zakupu: {{ package?.purchaseDate | date: 'dd/MM/yyyy'}}</span>
 				<span>Data ważności: {{package?.expirationDate | date: 'dd/MM/yyyy'}}</span>
 				<span>Status subskrypcji: {{package?.status ?? "" | translate }}</span>

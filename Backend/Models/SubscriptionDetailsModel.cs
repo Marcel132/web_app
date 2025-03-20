@@ -9,7 +9,6 @@ public class SubscriptionDetailsModel
   public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
   [BsonElement("email")]
-  [EmailAddress]
   public string? Email { get; set;}
 
   [BsonElement("purchase_date")]
