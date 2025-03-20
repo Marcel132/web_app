@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Product, UserService } from '../../../../../services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-meals',
   standalone: true,
   imports: [
-		CommonModule
+		CommonModule,
+		FormsModule,
 	],
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.scss'
@@ -15,7 +17,8 @@ export class MealsComponent {
 
 	products: Product[] = []
 	meals: any[] = []
-
+	selectedProductId: number | null = null
+	selectedProduct: Product | null = null
 	showAddMealCard: boolean = false
 
 	constructor(
@@ -43,5 +46,9 @@ export class MealsComponent {
 
 	openDeleteMeal(meal: any): void {
 		console.log("openDeleteMeal")
+	}
+
+	onProductChange(){
+		this.selectedProduct = this.products.find(prod => prod.id_prod == this.selectedProductId) || null;
 	}
 }
