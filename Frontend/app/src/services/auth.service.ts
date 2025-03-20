@@ -59,7 +59,6 @@ export class AuthService {
 			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.authToken)
-					console.log(this.tokenService.getAccessToken())
 					this.tokenService.setTokenStorage("token%auth", response.authToken)
 					// console.log(this.tokenService.getTokenStorage("token%auth"))
 					this.tokenService.setUserEmail()
@@ -101,7 +100,6 @@ export class AuthService {
 			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.authToken)
-					console.log(this.tokenService.getAccessToken())
 					this.tokenService.setTokenStorage("token%auth", response.authToken)
 					// console.log(this.tokenService.getTokenStorage("token%auth"))
 					this.tokenService.setUserEmail()
