@@ -9,7 +9,7 @@ public class UserDataModel
   public string? Id { get; set; }
 
   [BsonElement("email")]
-  public string Email { get; set; }
+  public string? Email { get; set; }
 
   [BsonElement("weight")]
   public float Weight { get; set; }
@@ -30,7 +30,7 @@ public class UserDataModel
 public class Meal
 {
     [BsonElement("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [BsonElement("calories")]
     public int Calories { get; set; }

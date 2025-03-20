@@ -38,8 +38,12 @@ public class TokenService
     return new JwtSecurityTokenHandler().WriteToken(authToken);
   }
 
-  public string GeneratePacksPackageToken(PacksPackageModel package)
+  public string GeneratePacksPackageToken(SubscriptionDetailsModel package)
   {
+
+    if(string.IsNullOrEmpty(package.Email)){
+      throw new Exception("Paczka nie ma wartości" + package.Email);
+    }
     
     var claims = new[]
     {

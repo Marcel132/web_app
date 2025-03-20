@@ -20,7 +20,7 @@ import { TokenService } from '../../../../services/token.service';
 })
 export class RegisterComponent {
 
-	login: string = '';
+	email: string = '';
 	password: string = '';
 	validData?: boolean;
 	changeColor: boolean = false;
@@ -38,13 +38,13 @@ export class RegisterComponent {
 	}
 
 	async sendFormValue() {
-		let checkData = this.authService.checkFormsDataValidation(this.login, this.password)
+		let checkData = this.authService.checkFormsDataValidation(this.email, this.password)
 
 		this.validData = checkData.valid;
 		this.message = checkData.message;
 
 		let data = {
-			login: this.login,
+			email: this.email,
 			password: this.password
 		}
 
@@ -57,6 +57,8 @@ export class RegisterComponent {
 			try {
 				this.message = ['Trwa rejestracja...']
 
+				console.log(this.email)
+
 				await this.authService.register(data)
 
 
@@ -65,11 +67,10 @@ export class RegisterComponent {
 				const token = this.tokenService.getTokenStorage("token%auth")
 
 				if(token){
-					this.tokenService.setAccessToken(token)
+					// this.tokenService.setAccessToken(token)
 					setTimeout(() => {
-						this.tokenService.setUserEmail()
-						this.tokenService.setUserRole()
 						this.routes.navigate(['/home'])
+						window.location.reload()
 					}, 2500);
 				}
 			} catch (error: any){

@@ -3,7 +3,7 @@
 	<form class="w3/4 flex flex-col items-center justify-center p-4 mt-5">
 		<input type="email"
 		placeholder="Email"
-		[(ngModel)]="login"
+		[(ngModel)]="email"
 		name='login'
 		class='input'
 		id='login'
@@ -21,7 +21,7 @@
 	<div *ngIf="!validData"   class="p-4" [ngClass]="{'inCorrect': !changeColor, 'correct': changeColor}">
 		{{message}}
 	</div>
-	
+
 	<div class="text-center">
 		<button (click)="changeMode()">Nie masz konta? Zarejestruj się</button>
 	</div>

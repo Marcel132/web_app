@@ -43,14 +43,14 @@ export class AccountDashboardComponent {
 	ngOnInit(): void {
 		this.tokenService.userEmailSubject$.subscribe((email) => {
 			this.user.email = email
-			this.tokenService.userRoleSubject$.subscribe((role) => {
-				this.user.role = role
-			})
-			this.package = this.tokenService.getSubscriptionDetails()
-			console.log(this.package)
+		})
+		this.package = this.tokenService.getSubscriptionDetails()
 
+		this.tokenService.userRoleSubject$.subscribe((role) => {
+			this.user.role = role
 		})
 
+		console.log(this.package)
 		const email = this.tokenService.getUserEmail()
 		if(email != null && email != ''){
 			this.isLogged = true

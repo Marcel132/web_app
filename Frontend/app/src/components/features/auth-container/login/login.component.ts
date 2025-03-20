@@ -19,7 +19,7 @@ import { TokenService } from '../../../../services/token.service';
 })
 export class LoginComponent {
 
-	login: string = '';
+	email: string = '';
 	password: string = '';
 	validData?: boolean;
 	message?: string[];
@@ -38,13 +38,13 @@ export class LoginComponent {
 
 	async sendFormValue()
 	{
-		let checkData = this.authService.checkFormsDataValidation(this.login, this.password)
+		let checkData = this.authService.checkFormsDataValidation(this.email, this.password)
 
 		this.validData = checkData.valid
 		this.message = checkData.message
 
 		let data = {
-			login: this.login,
+			email: this.email,
 			password: this.password
 		}
 
@@ -62,11 +62,10 @@ export class LoginComponent {
 				const token = this.tokenService.getTokenStorage("token%auth")
 
 				if(token){
-					this.tokenService.setAccessToken(token)
+					// this.tokenService.setAccessToken(token)
 					setTimeout(() => {
-						this.tokenService.setUserEmail()
-						this.tokenService.setUserRole()
 						this.routes.navigate(['/home'])
+						window.location.reload()
 					}, 2500);
 				}
 

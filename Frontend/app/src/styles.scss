@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+	font-family: "Montserrat", sans-serif;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;
