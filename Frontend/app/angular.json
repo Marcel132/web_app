@@ -44,6 +44,7 @@
           },
           "configurations": {
             "production": {
+
               "budgets": [
                 {
                   "type": "initial",
@@ -56,7 +57,11 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+							"optimization": {
+								"scripts": true,
+								"styles": true
+							}
             },
             "development": {
               "optimization": false,

@@ -23,8 +23,8 @@ export const routes: Routes = [
 					{path: 'register', component: RegisterComponent},
 					{path: 'login', component: LoginComponent},
 				]},
-				{path: 'calculator', component: CalculatorComponent},
-				{path: 'meals', component: MealsComponent},
+				{path: 'calculator', loadComponent: () => import('../components/features/dashboard/content-dashboard/calculator/calculator.component').then(m => m.CalculatorComponent)},
+				{path: 'meals', loadComponent: () => import('../components/features/dashboard/content-dashboard/meals/meals.component').then(m => m.MealsComponent)},
 				{path: 'graph', component: GraphComponent},
 				{path: 'account', component: AccountDashboardComponent},
 				{path: 'settings', component: SettingsComponent}
