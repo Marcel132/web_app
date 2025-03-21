@@ -1,11 +1,11 @@
-<div class="flex flex-col items-center justify-center relative">
+<div class="meals-container">
 
-	<div class="text-center">
-		<h2 class='py-5 text-xl'>Posiłki</h2>
+	<div class="header">
+		<h2>Posiłki</h2>
 		<button class="btn btn-add" (click)="openAddMeal()">Dodaj Posiłek</button>
 	</div>
 
-	<div class="add-meal-card flex flex-col justify-center" *ngIf="showAddMealCard">
+	<div class="add-meal-card" *ngIf="showAddMealCard">
 		<div class="meal-card-box">
 			<label for="meal-header">Tytuł</label>
 			<input
@@ -24,7 +24,7 @@
 			[(ngModel)]="description"
 			>
 		</div>
-		<div class="meal-card-box flex-col md:flex-row">
+		<div class="meal-card-box additional">
 			<select
 			name="select-product"
 			id="select-product"
@@ -41,9 +41,10 @@
 			[(ngModel)]="productWeight"
 			min='0'
 			placeholder='Waga produktu'
-			class='text-center'>
+			class='text-center'
+			>
 		</div>
-		<div class="meal-card-box flex-col md:flex-row" *ngIf="selectedProduct">
+		<div class="meal-card-box additional" *ngIf="selectedProduct">
 			<!-- Description -->
 			<span>Kalorie: {{selectedProduct.details.kcal}}</span>
 			<span>Węgle: {{selectedProduct.details.carbohydrates}}</span>

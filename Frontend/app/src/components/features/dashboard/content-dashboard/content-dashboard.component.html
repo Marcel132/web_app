@@ -5,15 +5,17 @@
 		src="../../../../assets/img/list.svg"
 		alt="menu"
 		class='w-[30px] cursor-pointer left-0'
+		loading='lazy'
 		(click)="toggleMenu()"
 		>
 		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
-			<div class="item px-2 py-4"><a [routerLink]='["calculator"]'>Kalkulator</a></div>
-			<div class="item px-2 py-4" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div>
-			<div class="item px-2 py-4" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
-			<div class="item px-2 py-4"><a [routerLink]='["account"]'>Konto</a></div>
-			<div class="item px-2 py-4"><a [routerLink]='["settings"]'>Ustawienia</a></div>
-			<div class="item px-2 py-4 logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div>
+			<div class="item text-wrap " ><a [routerLink]='["/home"]'>Strona Główna</a></div>
+			<div class="item" ><a [routerLink]='["calculator"]'>Kalkulator</a></div>
+			<div class="item" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div>
+			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
+			<div class="item"><a [routerLink]='["account"]'>Konto</a></div>
+			<div class="item"><a [routerLink]='["settings"]'>Ustawienia</a></div>
+			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div>
 		</div>
 	</div>
 	<div class="flex items-center justify-center w-full py-4">
