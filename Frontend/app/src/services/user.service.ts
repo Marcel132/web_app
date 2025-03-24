@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
+import { MealsTable } from '../interfaces/meals-table';
 
 export interface Product {
   _id: string;
@@ -21,6 +22,9 @@ export class UserService {
   private productsSubject = new BehaviorSubject<Product[] | null>(null);
   products$ = this.productsSubject.asObservable();
 
+	private mealsSubject = new BehaviorSubject<MealsTable[] | null>(null);
+	meals$ = this.mealsSubject.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
@@ -33,8 +37,31 @@ export class UserService {
     ).subscribe();
   }
 
+	fetchMealsData(): void {
+		const url = "https://localhost:5000/api/v01/meals";
+		this.http.get<MealsTable[]>(url).pipe(
+			tap(meals => this.mealsSubject.next(meals)),
+			catchError(this.handleError)
+		).subscribe();
+	}
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('An error occurred:', error);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+	async saveUserMeal(title: string, description: string, meals: MealsTable[]){
+		const url = "https://localhost:5000/api/v01/meals";
+		const body = {
+			title,
+			description,
+			meals
+		}
+		this.http.post(url, body, {withCredentials: true}).pipe(
+			tap((response) => {
+				console.log(response)
+			}),
+			catchError(this.handleError)
+		).subscribe();
+	}
 }

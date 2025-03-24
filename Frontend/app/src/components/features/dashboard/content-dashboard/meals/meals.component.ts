@@ -2,20 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Product, UserService } from '../../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
-
-export interface MealsTable {
-	id_prod: number,
-	name: string,
-	weight: number,
-	details: {
-		kcal: number,
-		proteins: number,
-		fats: number,
-		carbohydrates: number,
-	}
-	showDescription?: boolean
-	editMode?: boolean
-}
+import { MealsTable } from '../../../../../interfaces/meals-table';
 
 @Component({
   selector: 'app-meals',
@@ -117,5 +104,9 @@ export class MealsComponent {
 
 	toggleEditMode(index: number): void {
 		this.mealsTable[index].editMode = !this.mealsTable[index].editMode
+	}
+
+	saveMeal(){
+		this.userService.saveUserMeal(this.title, this.description, this.mealsTable)
 	}
 }

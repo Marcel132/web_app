@@ -52,7 +52,7 @@
 			<span>Białka: {{selectedProduct.details.proteins}}</span> <br>
 		</div>
 
-		<button (click)="addMealToTable()">Dodaj</button>
+		<button class='btn btn-add' (click)="addMealToTable()">Dodaj</button>
 
 		<div class='py-5'>
 			<h4 class='tracking-wide'>{{title}}</h4>
@@ -62,7 +62,7 @@
 		<div class='meals-table' *ngFor="let product of mealsTable; let i = index">
 			<p>Produkt: {{product.name}}</p>
 			<div class='meals-table-item'>
-				<span class='cursor-pointer font-semibold text-sm' (click)="toggleDescription(i)">Szczegóły: </span>
+				<span class='cursor-pointer font-semibold text-sm' (click)="toggleDescription(i)">Szczegóły: [g]</span>
 				<div  class='grid grid-cols-5' *ngIf="product.showDescription">
 					<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
 					<p class='meal-description'>Kcal: {{product.details.kcal.toFixed(2)}}</p>
@@ -87,6 +87,8 @@
 				<button class='btn btn-save' (click)="editMealFromTable(i)">Zapisz</button>
 			</div>
 		</div>
+
+		<button class="btn" (click)="saveMeal()">Zatwierdź</button>
 	</div>
 
 
