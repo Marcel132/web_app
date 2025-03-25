@@ -50,6 +50,7 @@ builder.Services.AddSingleton<AuthService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddScoped<FoodService>();
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<MealsService>();
 
 var app = builder.Build();
 
