@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
 import { MealsTable } from '../interfaces/meals-table';
+import { apiUrl } from '../env/env.route';
 
 export interface Product {
   _id: string;
@@ -30,7 +31,7 @@ export class UserService {
   ) { }
 
   fetchProductsData(): void {
-    const url = "https://localhost:5000/api/v01/products";
+    const url = apiUrl.products;
     this.http.get<Product[]>(url).pipe(
       tap(products => this.productsSubject.next(products)),
       catchError(this.handleError)
@@ -38,7 +39,7 @@ export class UserService {
   }
 
 	fetchMealsData(): void {
-		const url = "https://localhost:5000/api/v01/meals";
+		const url = apiUrl.meals;
 		this.http.get<MealsTable[]>(url).pipe(
 			tap(meals => this.mealsSubject.next(meals)),
 			catchError(this.handleError)
@@ -51,7 +52,7 @@ export class UserService {
   }
 
 	async saveUserMeal(title: string, description: string, meals: MealsTable[]){
-		const url = "https://localhost:5000/api/v01/meals";
+		const url = apiUrl.meals;
 		const body = {
 			title,
 			description,

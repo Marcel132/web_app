@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, firstValueFrom, tap, throwError } from 'rxjs';
 import { TokenService } from './token.service';
+import { apiUrl } from '../env/env.route';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class AuthService {
 	}
 
 	async login(data: any){
-		const url = "https://localhost:5000/api/v01/users/login"
+		const url = apiUrl.api_login
 		const body = {
 			email: data.email,
 			password: data.password
@@ -90,7 +91,7 @@ export class AuthService {
 
 	async register(data: any)
 	{
-		const url = 'https://localhost:5000/api/v01/users/register';
+		const url = apiUrl.api_register;
 		const body = {
 			email: data.email,
 			password: data.password
