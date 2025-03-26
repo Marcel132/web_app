@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-public class FoodModel
+public class ProductModel
 {
   [BsonId]
   [BsonRepresentation(BsonType.ObjectId)]
@@ -16,10 +16,10 @@ public class FoodModel
   public string? Name { get; set; }
 
   [BsonElement("details")]
-  public FoodDetalis? Details { get; set;}
+  public ProductDetails? ProductDetails { get; set;}
 }
 
-public class FoodDetalis 
+public class ProductDetails
 {
   [BsonElement("kcal")]
   [Range(0, float.MaxValue)]
@@ -27,12 +27,12 @@ public class FoodDetalis
 
   [BsonElement("proteins")]
   [Range(0, float.MaxValue)]
-  public double? Proteins { get; set; } 
+  public double? Proteins { get; set; }
 
   [BsonElement("fats")]
   [Range(0, float.MaxValue)]
   public double? Fats { get; set; }
-
+    
   [BsonElement("carbohydrates")]
   [Range(0, float.MaxValue)]
   public double? Carbohydrates { get; set; }

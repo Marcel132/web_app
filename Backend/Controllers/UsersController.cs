@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 
 [ApiController]
 [Route("api/v01/users")]
 
-public class UsersController : ControllerBase
+public class UsersController : ControllerBase 
 {
   private readonly UsersService _usersService;
   private readonly TokenService _tokenService;
@@ -26,54 +24,46 @@ public class UsersController : ControllerBase
       _logger.LogError("BadRequest: newUser is missing");
       return BadRequest(new {state = false, message = "Błędne dane!"});
     }
-
     if(string.IsNullOrEmpty(request.Email))
     {
-      _logger.LogError("BadRequest: Email is missing");
-      return BadRequest(new {state = false, message = "Błąd! Email jest niepoprawny"});
-    }
-
-    if(string.IsNullOrEmpty(request.Password))
-    {
-      _logger.LogError("BadRequest: Password is missing");
-      return BadRequest(new {state = false, message = "Błąd! Hasło jest niepoprawny"});
-    } 
-
-    if(string.IsNullOrEmpty(request.Role))
-    {
-      _logger.LogError("BadRequest: Role is missing");
-      return BadRequest(new {state = false, message = "Błąd! Brak roli"});
+      throw new ArgumentException("Błąd: Email jest pusty");
     }
 
     try {
       await _usersService.RegisterUserAsync(request);
-      var authToken = _tokenService.GenerateAccessToken(request.Id, request.Role, request.Email);
+
+      var accessToken = _tokenService.GenerateAccessToken(request.Id, request.Role, request.Email);
       var refreshToken = _tokenService.GenerateRefreshToken();
 
-      await _usersService.CreatedUserDataOfMealsAsync(request.Email);
       Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.Now.AddDays(7)
-        });
+      {
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.None,
+        Expires = DateTime.Now.AddDays(7)
+      });
 
-        return Ok(new { authToken });
-
+      return Ok(new {state = true, message = "Użytkownik został zarejestrowany", accessToken});
     }
-    catch(UserAlreadyExistsException ex){
-      _logger.LogError("Conflict: User already exists");
-      return Conflict(new {state = false, message = ex.Message });
-    }
-    catch(ArgumentException ex){
-      _logger.LogError("BadRequest: Argument is missing");
-      return BadRequest(new {state = false, message = ex.Message});
-    }
-    catch(Exception ex)
+    catch(UserAlreadyExistsException error)
     {
-      _logger.LogError("Unexpected error: {Error}", ex.Message);
-      return StatusCode(500, new { message = ex.Message });
+      _logger.LogError("User with login {Login} already exists", request.Email + " " + error);
+      return Conflict(new {state = false, message = error.Message});
+    }
+    catch(ArgumentException error)
+    {
+      _logger.LogError("Error while creating a user");
+      return BadRequest(new {state = false, message = error.Message});
+    }
+    catch(UserNotFoundException error)
+    {
+      _logger.LogError("User with login {Login} not found", request.Email);
+      return NotFound(new {state = false, message = error.Message});
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error with data" + error);
+      return BadRequest(new {state = false, message = error.Message});
     }
   }
 
@@ -83,121 +73,95 @@ public class UsersController : ControllerBase
     if(request == null)
     {
       _logger.LogError("BadRequest: newUser is missing");
-      return BadRequest(new {state = false, message = "Błąd! "});
+      return BadRequest(new {state = false, message = "Brak danych!"});
     }
 
     if(string.IsNullOrEmpty(request.Email))
     {
-      _logger.LogError("BadRequest: Email is missing");
-      return BadRequest(new {state = false, message = "Email jest niepoprawny"});
+      throw new ArgumentException("Błąd: Email jest pusty");
     }
-
     if(string.IsNullOrEmpty(request.Password))
     {
-      _logger.LogError("BadRequest: Password is missing");
-      return BadRequest(new {state = false, message = "Hasło jest niepoprawny"});
-    } 
-
-    if(string.IsNullOrEmpty(request.Role))
-    {
-      _logger.LogError("BadRequest: Role is missing");
-      return BadRequest(new {state = false, message = "Brak roli"});
+      throw new ArgumentException("Błąd: Hasło jest puste");
     }
 
-    try
+    try 
     {
       await _usersService.LoginUserAsync(request);
-      var authToken = _tokenService.GenerateAccessToken(request.Id, request.Role, request.Email);
+
+      var accessToken = _tokenService.GenerateAccessToken(request.Id, request.Role, request.Email);
       var refreshToken = _tokenService.GenerateRefreshToken();
 
       Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.Now.AddDays(7)
-        });
+      {
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.None,
+        Expires = DateTime.Now.AddDays(7)
+      });
 
-        return Ok(new { authToken });
+      return Ok(new {state = true, message = "Użytkownik został zalogowany", accessToken});
     }
-    catch(ArgumentException ex)
+        catch(ArgumentException error)
     {
-      _logger.LogError("BadRequest: Argument is missing", ex.Message );
-      return BadRequest(new {state = false, message = "Błąd argumentu"});
+      _logger.LogError("Error while creating a user");
+      return BadRequest(new {state = false, message = error.Message});
     }
-    catch(UserNotFoundException ex)
+    catch(UserNotFoundException error)
     {
-     _logger.LogError("BadRequest: User not found", ex.Message );
-      return BadRequest(new {state = false, message = "Nie znaleziono użytkownika o takim emailu"});
+      _logger.LogError("User with login {Login} not found", request.Email);
+      return NotFound(new {state = false, message = error.Message});
     }
-    catch(Exception ex)
+    catch(Exception error)
     {
-      _logger.LogError("Unexpected error: {Error}", ex.Message);
-      return StatusCode(500, new { message = ex.Message });
+      _logger.LogError("Error while creating a user");
+      return BadRequest(new {state = false, message = "Błąd przy tworzeniu użytkownika" + " " + error});
     }
   }
 
   [HttpPost("subscription")]
-  public async Task<IActionResult> GetSubscriptionInfo([FromBody] SubscriptionRequest request)
+  public async Task<IActionResult> GetSubscriptionDetails([FromBody] SubscriptionRequest request)
   {
-    if(request == null) 
+    if(request == null)
     {
-      _logger.LogError("BadRequest. Request is null ");
-      return BadRequest(new {state = false, message = "Błędne zapytanie"});
+      _logger.LogError("BadRequest: Request is missing");
+      return BadRequest(new {state = false, message = "Brak danych!"});
     }
     if(string.IsNullOrEmpty(request.Email))
     {
-      _logger.LogError("BadRequest. is null ");
-      return BadRequest(new {state = false, message = ""});
+      _logger.LogError("BadRequest: Email is missing");
+      throw new ArgumentException("Błąd: Email jest pusty");
     }
     if(string.IsNullOrEmpty(request.Role))
     {
-      _logger.LogError("BadRequest. is null ");
-      return BadRequest(new {state = false, message = ""});
+      _logger.LogError("BadRequest: Role is missing");
+      throw new ArgumentException("Błąd: Rola jest pusta");
     }
 
     try
     {
-      var subscriptionDetails = await _usersService.GetSubscriptionDetails(request.Email);
-      var token = _tokenService.GenerateSubscriptionToken(subscriptionDetails);
-      return Ok(new {token});
+      var subscriptionDetails = await _usersService.GetSubscriptionDetailsModelAsync(request.Email);
+
+      var subscriptionToken = _tokenService.GenerateSubscriptionToken(subscriptionDetails);
+
+      return Ok(new {state = true, message = "Dane subskrypcji", subscriptionToken});
     }
-    catch (System.Exception)
+    catch(ArgumentException error)
     {
-      
-      throw;
+      _logger.LogError("Error while getting subscription details");
+      return BadRequest(new {state = false, message = error.Message});
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error while getting subscription details");
+      return BadRequest(new {state = false, message = "Błąd przy pobieraniu danych subskrypcji" + " " + error});
     }
   }
-
 }
-//   [HttpGet("package/{email}")]
-//   public async Task<IActionResult> GetPackage([FromRoute] string email)
-//   {
-//     _logger.LogCritical("{Email}", email );
-//     try
-//     {
-//       var package = await _usersService.GetSubscriptionDetails(email);
 
-//       if(package == null)
-//       {
-//           return NotFound(new { message = "Package not found" });
-//       } 
 
-//       _logger.LogInformation(package.Email);
-
-//       var token = _tokenService.GeneratePacksPackageToken(package);
-//       return Ok(new { token });
-
-//     }
-//     catch (Exception ex)
-//     {
-//         _logger.LogError("Unexpected error: {Error}", ex.Message);
-//         return StatusCode(500, new { message = "An unexpected error occurred" });
-//     }
-//   }
-// }
-
-public class SubscriptionRequest {
-  public string? Email { get; set;}
-  public string? Role { get; set;}
+public class SubscriptionRequest 
+{
+  public string? Email { get; set; }
+  public string? Role { get; set; }
 }

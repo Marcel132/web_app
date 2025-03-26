@@ -46,11 +46,14 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<JwtSettings>>
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<MongoDBContext>();
-builder.Services.AddSingleton<AuthService>();
+builder.Services.AddSingleton<MealsService>();
+builder.Services.AddSingleton<ProductsService>();
 builder.Services.AddSingleton<TokenService>();
-builder.Services.AddScoped<FoodService>();
-builder.Services.AddScoped<UsersService>();
-builder.Services.AddScoped<MealsService>();
+builder.Services.AddSingleton<UsersService>();
+// builder.Services.AddSingleton<AuthService>();
+// builder.Services.AddScoped<FoodService>();
+// builder.Services.AddScoped<UsersService>();
+// builder.Services.AddScoped<MealsService>();
 
 var app = builder.Build();
 

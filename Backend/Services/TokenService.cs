@@ -2,11 +2,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
 
 public class TokenService
 {
-
   private readonly string _key;
   private readonly ILogger<TokenService> _logger;
 
@@ -20,68 +18,83 @@ public class TokenService
   {
     var claims = new[]
     {
-        new Claim(JwtRegisteredClaimNames.Sub, userId),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(ClaimTypes.Role, role),
-        new Claim(ClaimTypes.Email, email)
+      new Claim(JwtRegisteredClaimNames.Sub, userId),
+      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("role", role),
+      new Claim("email", email)
     };
 
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-    var authToken = new JwtSecurityToken(
-        issuer: "http://foodcalories/",
-        audience: "http://foodcalories/",
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(15),
-        signingCredentials: creds
+    var accessToken = new JwtSecurityToken(
+      issuer: "http://foodcalories/",
+      audience: "http://foodcalories/",
+      claims: claims,
+      expires: DateTime.Now.AddMinutes(15),
+      signingCredentials: creds
     );
 
-    return new JwtSecurityTokenHandler().WriteToken(authToken);
+    return new JwtSecurityTokenHandler().WriteToken(accessToken);
   }
 
-  public string GenerateSubscriptionToken(SubscriptionDetailsModel package)
+  public string GenerateSubscriptionToken(SubscriptionDetailsModel request)
   {
-
-    if(string.IsNullOrEmpty(package.Email)){
-      throw new Exception("Paczka nie ma wartości" + package.Email);
+    if(string.IsNullOrEmpty(request.Email)){
+      throw new Exception("Package has no value" + request.Email);
     }
 
-    _logger.LogInformation("Generating token for email: {Email}", package.Email);
+    _logger.LogInformation("Generating token for email: {Email}", request.Email);
 
     var claims = new[]
     {
-        new Claim(JwtRegisteredClaimNames.Sub, package.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim("purchase_date", package.Purchase_date.Value.ToString("o")),
-        new Claim("expiration_date", package.Expiration_date.Value.ToString("o")),
-        new Claim("payment_method", package.Payment_method),
-        new Claim("price", package.Price.ToString()),
-        new Claim("status", package.Status),
-        new Claim("last_payment_status", package.Last_payment_status),
-        new Claim("recurring_payment", package.Reccuring_payment.ToString()),
+      new Claim(JwtRegisteredClaimNames.Sub, request.Email),
+      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("email", request.Email),
+      new Claim("purchase_date", request.Purchase_date.Value.ToString("o")),
+      new Claim("expiration_date", request.Expiration_date.Value.ToString("o")),
+      new Claim("payment_method", request.Payment_method),
+      new Claim("price", request.Price.ToString()),
+      new Claim("status", request.Status),
+      new Claim("last_payment_status", request.Last_payment_status),
+      new Claim("recurring_payment", request.Reccuring_payment.ToString()),
+      new Claim("payment_history", request.Payment_history.ToString())
     };
 
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-    var authToken = new JwtSecurityToken(
-        issuer: "http://foodcalories/",
-        audience: "http://foodcalories/",
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(15),
-        signingCredentials: creds
+    var subscriptionToken = new JwtSecurityToken(
+      issuer: "http://foodcalories/",
+      audience: "http://foodcalories/",
+      claims: claims,
+      expires: DateTime.Now.AddMinutes(15),
+      signingCredentials: creds
     );
 
-    return new JwtSecurityTokenHandler().WriteToken(authToken); 
-  } 
+    return new JwtSecurityTokenHandler().WriteToken(subscriptionToken);
+  }
+
   public string GenerateRefreshToken()
   {
-    var randomNumber = new byte[32];
-    using (var rng = RandomNumberGenerator.Create())
+    var claims = new Claim[]
     {
-        rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
-    }
+      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("type", "refresh_token")
+    };
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var refreshToken = new JwtSecurityToken(
+      issuer: "http://foodcalories/",
+      audience: "http://foodcalories/",
+      claims: claims,
+      expires: DateTime.Now.AddDays(7),
+      signingCredentials: creds
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(refreshToken);
   }
+
 }
