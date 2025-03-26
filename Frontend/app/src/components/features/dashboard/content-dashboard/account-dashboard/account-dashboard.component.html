@@ -25,11 +25,6 @@
 			<input type="text" [(ngModel)]="customFontUrl" name="customFontUrl" id="customFontUrl" placeholder='https://fonts.google.com/'>
 			<button (click)="saveFont()">Zainstaluj</button>
 			<span *ngIf="!validationInfo.fontValid">{{validationInfo.fontError}}</span>
-
-			<!-- <span>Ważność pakietu: <i class='normal-case'>{{user.premiumPackage.expirationDate}}</i></span>
-			<span>Limit formularzy: <i class='normal-case'>{{user.premiumPackage.limit}}</i></span>
-			<span>Formularze: <i class='normal-case'>{{user.premiumPackage.forms}}</i></span> -->
-
 		</div>
 
 		<div class="flex flex-col normal-case">

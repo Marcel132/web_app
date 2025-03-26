@@ -10,19 +10,19 @@
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Kcal:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.kcal }} kcal<span class='tooltiptext'>Kalorie</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.productDetails.kcal }} kcal<span class='tooltiptext'>Kalorie</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Białka:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.proteins.toFixed(1) }}g <span class='tooltiptext'>Białko</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.productDetails.proteins.toFixed(1) }}g <span class='tooltiptext'>Białko</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Tłuszcze:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.fats.toFixed(1) }}g <span class='tooltiptext'>Tłuszcze</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.productDetails.fats.toFixed(1) }}g <span class='tooltiptext'>Tłuszcze</span></td>
 					</tr>
 					<tr>
 						<th class="p-2 text-left custom-pointer">Węgle:</th>
-						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.details.carbohydrates.toFixed(1) }}g <span class='tooltiptext'>Węgle</span></td>
+						<td *ngFor="let product of products" class="border p-2 custom-pointer tooltip">{{ product.productDetails.carbohydrates.toFixed(1) }}g <span class='tooltiptext'>Węgle</span></td>
 					</tr>
 				</tbody>
 			</table>

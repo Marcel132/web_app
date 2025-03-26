@@ -46,10 +46,10 @@
 		</div>
 		<div class="meal-card-box additional" *ngIf="selectedProduct">
 			<!-- Description -->
-			<span>Kalorie: {{selectedProduct.details.kcal}}</span>
-			<span>Węgle: {{selectedProduct.details.carbohydrates}}</span>
-			<span>Tłuszcze: {{selectedProduct.details.fats}}</span>
-			<span>Białka: {{selectedProduct.details.proteins}}</span> <br>
+			<span>Kalorie: {{selectedProduct.productDetails.kcal}}</span>
+			<span>Węgle: {{selectedProduct.productDetails.carbohydrates}}</span>
+			<span>Tłuszcze: {{selectedProduct.productDetails.fats}}</span>
+			<span>Białka: {{selectedProduct.productDetails.proteins}}</span> <br>
 		</div>
 
 		<button class='btn btn-add' (click)="addMealToTable()">Dodaj</button>
@@ -65,10 +65,10 @@
 				<span class='cursor-pointer font-semibold text-sm' (click)="toggleDescription(i)">Szczegóły: [g]</span>
 				<div  class='grid grid-cols-5' *ngIf="product.showDescription">
 					<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
-					<p class='meal-description'>Kcal: {{product.details.kcal.toFixed(2)}}</p>
-					<p class='meal-description'>Węgle: {{product.details.carbohydrates.toFixed(2)}}</p>
-					<p class='meal-description'>Tłuszcze: {{product.details.fats.toFixed(2)}}</p>
-					<p class='meal-description'>Białka: {{product.details.proteins.toFixed(2)}}</p>
+					<p class='meal-description'>Kcal: {{product.productDetails.kcal.toFixed(2)}}</p>
+					<p class='meal-description'>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}</p>
+					<p class='meal-description'>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}</p>
+					<p class='meal-description'>Białka: {{product.productDetails.proteins.toFixed(2)}}</p>
 				</div>
 				<div>
 					<button class='btn btn-delete my-2 mx-4 p-2' (click)="deleteMealFromTable(i)">Usuń</button>

@@ -57,17 +57,13 @@ export class AuthService {
 		}
 
 		try {
-			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
+			const response = await firstValueFrom(this.http.post<{accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					this.tokenService.setAccessToken(response.authToken)
-					this.tokenService.setTokenStorage("token%auth", response.authToken)
-					// console.log(this.tokenService.getTokenStorage("token%auth"))
+					this.tokenService.setAccessToken(response.accessToken)
+					this.tokenService.setTokenStorage("token%auth", response.accessToken)
 					this.tokenService.setUserEmail()
-					// console.log(this.tokenService.getUserEmail())
 					this.tokenService.setUserRole()
-					// console.log(this.tokenService.getUserRole())
 					this.tokenService.setSubscriptionDetails()
-					// console.log(this.tokenService.getSubscriptionDetails())
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -98,10 +94,10 @@ export class AuthService {
 		}
 
 		try {
-			const response = await firstValueFrom(this.http.post<{authToken: string}>(url, body, {withCredentials: true }).pipe(
+			const response = await firstValueFrom(this.http.post<{accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
-					this.tokenService.setAccessToken(response.authToken)
-					this.tokenService.setTokenStorage("token%auth", response.authToken)
+					this.tokenService.setAccessToken(response.accessToken)
+					this.tokenService.setTokenStorage("token%auth", response.accessToken)
 					// console.log(this.tokenService.getTokenStorage("token%auth"))
 					this.tokenService.setUserEmail()
 					// console.log(this.tokenService.getUserEmail())

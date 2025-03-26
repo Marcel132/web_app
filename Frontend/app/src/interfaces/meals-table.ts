@@ -2,7 +2,7 @@ export interface MealsTable {
 	id_prod: number,
 	name: string,
 	weight: number,
-	details: {
+	productDetails: {
 		kcal: number,
 		proteins: number,
 		fats: number,

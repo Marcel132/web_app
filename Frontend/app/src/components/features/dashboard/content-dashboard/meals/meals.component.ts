@@ -68,11 +68,11 @@ export class MealsComponent {
 			id_prod: this.selectedProduct.id_prod,
 			name: this.selectedProduct.name,
 			weight: this.productWeight,
-			details: {
-				kcal: this.selectedProduct.details.kcal * this.productWeight / 100,
-				proteins: this.selectedProduct.details.proteins * this.productWeight / 100,
-				fats: this.selectedProduct.details.fats * this.productWeight / 100,
-				carbohydrates: this.selectedProduct.details.carbohydrates * this.productWeight / 100,
+			productDetails: {
+				kcal: this.selectedProduct.productDetails.kcal * this.productWeight / 100,
+				proteins: this.selectedProduct.productDetails.proteins * this.productWeight / 100,
+				fats: this.selectedProduct.productDetails.fats * this.productWeight / 100,
+				carbohydrates: this.selectedProduct.productDetails.carbohydrates * this.productWeight / 100,
 			},
 			showDescription: false,
 			editMode: false
@@ -91,11 +91,11 @@ export class MealsComponent {
 		this.toggleEditMode(index)
 		this.mealsTable[index].weight = this.updateProductWeight
 		if (this.selectedProduct) {
-			this.mealsTable[index].details = {
-				kcal: this.selectedProduct.details.kcal * this.updateProductWeight / 100,
-				proteins: this.selectedProduct.details.proteins * this.updateProductWeight / 100,
-				fats: this.selectedProduct.details.fats * this.updateProductWeight / 100,
-				carbohydrates: this.selectedProduct.details.carbohydrates * this.updateProductWeight / 100,
+			this.mealsTable[index].productDetails = {
+				kcal: this.selectedProduct.productDetails.kcal * this.updateProductWeight / 100,
+				proteins: this.selectedProduct.productDetails.proteins * this.updateProductWeight / 100,
+				fats: this.selectedProduct.productDetails.fats * this.updateProductWeight / 100,
+				carbohydrates: this.selectedProduct.productDetails.carbohydrates * this.updateProductWeight / 100,
 			}
 		}
 		console.log("Index: " +  JSON.stringify(this.mealsTable[index]))

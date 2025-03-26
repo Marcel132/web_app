@@ -44,13 +44,27 @@ export class AccountDashboardComponent {
 		this.tokenService.userEmailSubject$.subscribe((email) => {
 			this.user.email = email
 		})
-		this.package = this.tokenService.getSubscriptionDetails()
 
 		this.tokenService.userRoleSubject$.subscribe((role) => {
 			this.user.role = role
 		})
 
+		this.tokenService.setSubscriptionDetails().then((response)=> {
+			console.log(response)
+			if(response.state){
+				this.tokenService.subscriptionDetailsSubject$.subscribe((details) => {
+					this.package = details
+				})
+			}
+			else {
+				this.package = null
+			}
+		})
+
 		console.log(this.package)
+
+
+
 		const email = this.tokenService.getUserEmail()
 		if(email != null && email != ''){
 			this.isLogged = true
