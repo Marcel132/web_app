@@ -10,6 +10,9 @@ export class TranslatePipe implements PipeTransform {
 		"free": "Darmowy",
 		"premium": "Premium",
 		'active': 'Aktywny',
+		"inactive": "Nieaktywny",
+		"unpaid": "Nieopłacone",
+		"paid": "Opłacone",
 	}
 
 	transform(value: string): string {
