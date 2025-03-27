@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TokenService } from '../../../../services/token.service';
+import { StateService } from '../../../../services/state.service';
 
 @Component({
   selector: 'app-content-dashboard',
@@ -17,7 +17,7 @@ export class ContentDashboardComponent {
 
 
 	constructor(
-		private tokenService: TokenService,
+		private stateService: StateService,
 		private router: Router,
 		private route: ActivatedRoute,
 	){}
@@ -27,8 +27,8 @@ export class ContentDashboardComponent {
 	isHomeRoute: boolean = true
 
 	ngOnInit(): void {
-		this.tokenService.userRoleSubject$.subscribe((role) => {
-			this.roleSubject = role
+		this.stateService.userRoleSubject$.subscribe(response => {
+			this.roleSubject = response
 		})
 
 		this.router.events.subscribe(() => {
@@ -42,6 +42,8 @@ export class ContentDashboardComponent {
 	}
 
 	logout(){
-		this.tokenService.logout()
+		this.stateService.logout()
+		this.router.navigate(["/home"])
+		window.location.reload
 	}
 }

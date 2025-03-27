@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Product, UserService } from '../../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { MealsTable } from '../../../../../interfaces/meals-table';
+import { StateService } from '../../../../../services/state.service';
 
 @Component({
   selector: 'app-meals',
@@ -32,10 +33,11 @@ export class MealsComponent {
 
 	constructor(
 		private userService: UserService,
+		private stateService: StateService,
 	){}
 
 	ngOnInit(): void {
-		this.userService.products$.subscribe(products => {
+		this.stateService.products$.subscribe(products => {
 			if(products == null){
 				this.userService.fetchProductsData()
 			} else {

@@ -4,6 +4,7 @@ import { error } from 'console';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../../modules/shared.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StateService } from '../../../../../services/state.service';
 
 @Component({
   selector: 'app-calculator',
@@ -29,6 +30,7 @@ export class CalculatorComponent {
 
 	constructor(
 		private userService: UserService,
+		private stateService: StateService,
 		private fb: FormBuilder
 	){
 		this.formProductCalculator = this.fb.group({
@@ -38,7 +40,7 @@ export class CalculatorComponent {
 	}
 
 	async ngOnInit() {
-		this.userService.products$.subscribe(products => {
+		this.stateService.products$.subscribe(products => {
 			if(products == null){
 				this.userService.fetchProductsData();
 			} else {

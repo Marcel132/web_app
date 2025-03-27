@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
 import { SubscriptionInterface } from '../../../../../interfaces/subscription.details';
+import { SubscriptionService } from '../../../../../services/subscription.service';
+import { StateService } from '../../../../../services/state.service';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -24,6 +26,8 @@ export class AccountDashboardComponent {
 
 	constructor(
 		private tokenService: TokenService,
+		private subscriptionService : SubscriptionService,
+		private stateService: StateService,
 		private route: Router,
 	) {	}
 
@@ -41,34 +45,25 @@ export class AccountDashboardComponent {
 	}
 
 	ngOnInit(): void {
-		this.tokenService.userEmailSubject$.subscribe((email) => {
+		this.stateService.userEmailSubject$.subscribe((email) => {
 			this.user.email = email
 		})
 
-		this.tokenService.userRoleSubject$.subscribe((role) => {
+		this.stateService.userRoleSubject$.subscribe((role) => {
 			this.user.role = role
 		})
 
-		this.tokenService.setSubscriptionDetails().then((response)=> {
-			console.log(response)
-			if(response.state){
-				this.tokenService.subscriptionDetailsSubject$.subscribe((details) => {
-					this.package = details
-				})
-			}
-			else {
-				this.package = null
-			}
+		this.subscriptionService.setSubscriptionDetails().then((response)=> {
+			this.stateService.subscriptionDetailsSubject$.subscribe((details) => {
+				this.package = details
+			})
 		})
 
-		console.log(this.package)
-
-
-
-		const email = this.tokenService.getUserEmail()
-		if(email != null && email != ''){
-			this.isLogged = true
-		}
+		this.stateService.userEmailSubject$.subscribe((email) => {
+			if(email){
+				this.isLogged = true
+			}
+		})
 
 		if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
 			const customFontUrl = localStorage.getItem('customFontUrl')

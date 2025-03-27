@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../shared/header/header.component";
 import { UserService } from '../../../services/user.service';
 import { UserModule } from './user.module';
 import { RouterModule } from '@angular/router';
@@ -9,7 +8,6 @@ import { TokenService } from '../../../services/token.service';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    HeaderComponent,
 		UserModule,
 		RouterModule,
 ],

@@ -1,11 +1,11 @@
 import { Component, Renderer2 } from '@angular/core';
 import { AppModule } from '../modules/app.module';
-import { AuthContainerComponent } from '../components/features/auth-container/auth-container.component';
 import { AuthService } from '../services/auth.service';
-import { DashboardComponent } from "../components/features/dashboard/dashboard.component";
 import { UserService } from '../services/user.service';
 import { RouterModule } from '@angular/router';
 import { TokenService } from '../services/token.service';
+import { SubscriptionService } from '../services/subscription.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,8 @@ import { TokenService } from '../services/token.service';
 ],
 	providers: [
 		AuthService,
-		UserService
+		UserService,
+		SubscriptionService,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -26,12 +27,14 @@ export class AppComponent {
 
 	constructor(
 		private tokenService: TokenService,
+		private stateService: StateService,
+		private subscriptionService: SubscriptionService,
 		private renderer: Renderer2
 	) {}
 
 	ngOnInit(): void {
 		if(typeof window !== 'undefined'){
-			const token = this.tokenService.getTokenStorage("token%auth")
+			const token = this.tokenService.getToken("token%auth")
 			// Update value of token in BehaviorSubject
 			if(!token){
 				console.log("Refresh Token Checking... ")
@@ -39,7 +42,7 @@ export class AppComponent {
 			}
 
 			// When user has token in storage, add data to BehaviorSubject's to update the state
-			if( token && !this.tokenService.getAccessToken()){
+			if( token && !this.stateService.accessTokenSubject$){
 				this.tokenService.setAccessToken(token)
 				this.tokenService.setUserEmail()
 				this.tokenService.setUserRole()

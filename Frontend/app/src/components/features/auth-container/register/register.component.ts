@@ -64,7 +64,7 @@ export class RegisterComponent {
 
 				this.message = ['Pomyślnie zarejestrowano użytkownika']
 
-				const token = this.tokenService.getTokenStorage("token%auth")
+				const token = this.tokenService.getToken("token%auth")
 
 				if(token){
 					// this.tokenService.setAccessToken(token)
