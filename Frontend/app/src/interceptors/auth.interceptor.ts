@@ -10,7 +10,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 	let sessionStorageToken
 	try {
-		sessionStorageToken = tokenService.getTokenStorage("token%auth")
+		sessionStorageToken = tokenService.getToken("token%auth")
+		// console.log(sessionStorageToken)
 	} catch (error) {
 		sessionStorageToken = null
 		route.navigate(['/home'])
