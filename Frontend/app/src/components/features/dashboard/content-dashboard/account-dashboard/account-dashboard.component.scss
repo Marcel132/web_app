@@ -29,8 +29,14 @@
 		}
 
 		span{
-			padding: .5rem 0;
+			padding: .5rem 0 0 0;
 
 		}
 	}
+}
+
+.subscription-details {
+	display: flex;
+	flex-direction: column;
+
 }
