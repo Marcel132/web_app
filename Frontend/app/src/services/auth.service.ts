@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, firstValueFrom, tap, throwError } from 'rxjs';
 import { TokenService } from './token.service';
 import { apiUrl } from '../env/env.route';
+import { SubscriptionService } from './subscription.service';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,9 @@ export class AuthService {
 
   constructor(
 		private http: HttpClient,
-		private tokenService: TokenService
+		private tokenService: TokenService,
+		private subscriptionService: SubscriptionService,
+		private stateService: StateService,
 	) { }
 
 	checkEmailValidation(email: string): boolean {
@@ -60,10 +64,14 @@ export class AuthService {
 			const response = await firstValueFrom(this.http.post<{accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.accessToken)
-					this.tokenService.setTokenStorage("token%auth", response.accessToken)
-					this.tokenService.setUserEmail()
-					this.tokenService.setUserRole()
-					this.tokenService.setSubscriptionDetails()
+					this.stateService.accessTokenSubject$.subscribe(accessToken => {
+						if(accessToken){
+							this.tokenService.saveToken("token%auth", accessToken)
+							this.tokenService.setUserEmail()
+							this.tokenService.setUserRole()
+							this.subscriptionService.setSubscriptionDetails()
+						}
+					})
 				}),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -97,14 +105,10 @@ export class AuthService {
 			const response = await firstValueFrom(this.http.post<{accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.accessToken)
-					this.tokenService.setTokenStorage("token%auth", response.accessToken)
-					// console.log(this.tokenService.getTokenStorage("token%auth"))
+					this.tokenService.saveToken("token%auth", response.accessToken)
 					this.tokenService.setUserEmail()
-					// console.log(this.tokenService.getUserEmail())
 					this.tokenService.setUserRole()
-					// console.log(this.tokenService.getUserRole())
-					this.tokenService.setSubscriptionDetails()
-					// console.log(this.tokenService.getSubscriptionDetails())
+					this.subscriptionService.setSubscriptionDetails()
 				}),
 				catchError((error: HttpErrorResponse) => {
 					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
@@ -127,10 +131,14 @@ export class AuthService {
 	}
 
 	isAuthenticated(): boolean{
-		let token = this.tokenService.getAccessToken()
-		console.log(token !== null || token !== "undefined" || token !== "")
-		return token !== null
-
+		this.stateService.accessTokenSubject$.subscribe((accessToken) => {
+			if(accessToken){
+				return true
+			} else {
+				return false
+			}
+		})
+		return false
 	}
 
 }

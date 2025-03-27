@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
 import { MealsTable } from '../interfaces/meals-table';
 import { apiUrl } from '../env/env.route';
+import { StateService } from './state.service';
 
 export interface Product {
   _id: string;
@@ -20,20 +21,17 @@ export interface Product {
   providedIn: 'root'
 })
 export class UserService {
-  private productsSubject = new BehaviorSubject<Product[] | null>(null);
-  products$ = this.productsSubject.asObservable();
 
-	private mealsSubject = new BehaviorSubject<MealsTable[] | null>(null);
-	meals$ = this.mealsSubject.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+		private stateService: StateService
   ) { }
 
   fetchProductsData(): void {
     const url = apiUrl.products;
     this.http.get<Product[]>(url).pipe(
-      tap(products => this.productsSubject.next(products)),
+      tap(products => this.stateService.setProducts(products)),
       catchError(this.handleError)
     ).subscribe();
   }
@@ -41,7 +39,7 @@ export class UserService {
 	fetchMealsData(): void {
 		const url = apiUrl.meals;
 		this.http.get<MealsTable[]>(url).pipe(
-			tap(meals => this.mealsSubject.next(meals)),
+			tap(meals => this.stateService.setMeals(meals)),
 			catchError(this.handleError)
 		).subscribe();
 	}
