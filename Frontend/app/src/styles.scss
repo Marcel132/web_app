@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-	font-family: "Montserrat", sans-serif;
+body {
+  font-family: "Montserrat", Arial, sans-serif;
 }
 
 a {
@@ -15,3 +15,12 @@ a {
 // .no-scroll {
 // 	overflow: hidden;
 // }
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/fonts/Montserrat-Medium.ttf") format(".ttf"),
+       url("./assets/fonts/Montserrat-Medium.ttf") format(".ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

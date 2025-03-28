@@ -1,27 +1,17 @@
 <div>
-	<header class='flex flex-col p-3 lg:flex-row justify-center items-center'>
-		<div class='w-1/5'>
-			<div id="logo" class=' flex justify-center p-2'>
-				<h1 class='text-md lg:text-lg max-lg:xl'>FoodCalories</h1>
-			</div>
+	<header class='header'>
+		<div class='header-logo'>
+				<h1 class='logo-font'>FoodCalories</h1>
 		</div>
 
-		<div id='header' class='w-4/5 text-xl p-2'>
-			<ul class='flex justify-center gap-8 items-center'>
-				<!-- <li><a [routerLink]='["/home"]'>Strona Główna</a></li> -->
-				<!-- <li><a [routerLink]='["/home/calculator"]'>Kalkulator</a></li>
-				<li><a [routerLink]="['/home/account']">Konto</a></li> -->
-			</ul>
-		</div>
+		<div class='header-width'></div>
 	</header>
 
-	<div class="w-full custom-height relative bg-slate-50">
+	<div class="custom-height">
 		<router-outlet></router-outlet>
 	</div>
 
-	<div class="block">
-		<div class="footer">
-			2024 - 2025 - All rights reserved
-		</div>
-	</div>
+	<footer class="footer">
+		2024 - 2025 - All rights reserved
+	</footer>
 </div>
