@@ -20,7 +20,6 @@ export class SubscriptionService {
 		private stateService: StateService,
 		private tokenService: TokenService,
 	){
-		console.log("Subscription service initialized")
 		this.setSubscriptionDetails()
 		stateService.subscriptionDetailsSubject$.pipe(take(1)).subscribe(data => {
 			this.subscriptionDetails = data;
@@ -94,9 +93,9 @@ export class SubscriptionService {
 		const expirationDate = new Date(this.subscriptionDetails.expirationDate);
 
 		if(currentDate < expirationDate){
-			console.log("Subscription is active")
+			// console.log("Subscription is active")
 		} else if(currentDate >= expirationDate){
-			console.log("Subscription is expired")
+			// console.log("Subscription is expired")
 			this.subscriptionDetails.status = "Inactive"
 			this.stateService.setSubscriptionDetails(this.subscriptionDetails)
 			this.stateService.subscriptionDetailsSubject$.pipe(take(1)).subscribe(response => {console.log("After func: " + response.status)})

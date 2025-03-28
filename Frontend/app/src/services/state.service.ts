@@ -10,7 +10,6 @@ import { MealsTable } from '../interfaces/meals-table';
 export class StateService {
 
   constructor() {
-		console.log("StateService initialize")
 	}
 
 	private accessToken = new BehaviorSubject<string | null>(null)
