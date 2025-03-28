@@ -30,6 +30,10 @@ export class MealsComponent {
 
 	mealsTable: MealsTable[] = []
 
+	handler = {
+		state: false,
+		message: ""
+	}
 
 	constructor(
 		private userService: UserService,
@@ -52,11 +56,9 @@ export class MealsComponent {
 	}
 
 	openEditMeal(meal: any): void {
-		console.log("openEditMeal")
 	}
 
 	openDeleteMeal(meal: any): void {
-		console.log("openDeleteMeal")
 	}
 
 	onProductChange(){
@@ -79,8 +81,6 @@ export class MealsComponent {
 			showDescription: false,
 			editMode: false
 		})
-		console.log(this.mealsTable.length)
-		console.log(this.mealsTable)
 	}
 
 	toggleDescription(index: number): void {
@@ -100,8 +100,6 @@ export class MealsComponent {
 				carbohydrates: this.selectedProduct.productDetails.carbohydrates * this.updateProductWeight / 100,
 			}
 		}
-		console.log("Index: " +  JSON.stringify(this.mealsTable[index]))
-		console.log("Tablica: " + JSON.stringify(this.mealsTable))
 	}
 
 	toggleEditMode(index: number): void {
@@ -110,5 +108,11 @@ export class MealsComponent {
 
 	saveMeal(){
 		this.userService.saveUserMeal(this.title, this.description, this.mealsTable)
+		.then(response => {
+			if(response) {
+				this.handler.state = response.state
+				this.handler.message = response.message
+			}
+		})
 	}
 }

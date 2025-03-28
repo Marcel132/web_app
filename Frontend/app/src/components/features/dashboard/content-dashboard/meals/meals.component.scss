@@ -94,8 +94,13 @@
 	margin-bottom: 0.5rem;
 	text-align: center;
 
-	&.additional {
+	&.additional-select {
 		flex-direction: column;
+	}
+
+	&.additional-details {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 	}
 
 	label {
@@ -134,8 +139,20 @@
 .meals-table-item{
 	display: flex;
 	flex-direction: column;
+
+	& .product-details {
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr;
+		p {
+			padding: 4px 3px;
+		}
+	}
 }
 
+.handler-style{
+	font-size: 0.8rem;
+	font-style: italic;
+}
 
 
 @media screen and (min-width: 450px) {

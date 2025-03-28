@@ -49,18 +49,56 @@ export class UserService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-	async saveUserMeal(title: string, description: string, meals: MealsTable[]){
+	async saveUserMeal(title: string, description: string, meals: MealsTable[]): Promise<{ state: boolean, message: string} >{
+		let email: string | undefined;
+		await firstValueFrom(this.stateService.userEmailSubject$).then(data => {
+			if (data) {
+				email = data;
+			}
+		});
+
 		const url = apiUrl.meals;
 		const body = {
-			title,
-			description,
-			meals
+			email: email,
+			details: [
+				{
+					title: title,
+					description: description,
+					date:  new Date().toISOString,
+					meals: meals.map(meal => ({
+						id_prod: meal.id_prod,
+						name: meal.name,
+						weight: meal.weight,
+						productDetails: meal.productDetails
+				}))
+				}
+			]
 		}
-		this.http.post(url, body, {withCredentials: true}).pipe(
-			tap((response) => {
-				console.log(response)
-			}),
-			catchError(this.handleError)
-		).subscribe();
+
+		return firstValueFrom(
+			this.http.post<{ state: boolean, message: string }>(url, body, { withCredentials: true }).pipe(
+				tap(response => {}),
+				catchError(this.handleError)
+			)
+		).then(response => {
+			if (response.state) {
+				return { state: true, message: response.message };
+			} else {
+				return { state: false, message: response.message };
+			}
+		}).catch(error => {
+			console.error(error);
+			return { state: false, message: 'An error occurred while saving the meal.' };
+		});
+		// this.http.post<{state: boolean, message: string}>(url, body, {withCredentials: true}).pipe(
+		// 	tap((response) => {
+		// 		// if(response && response.success){
+		// 		// 	return {state: true, message: "Zapisano posiłek"}
+		// 		// } else {
+		// 		// 	return {state: false, message: "Błąd przy zapisaniu! Spróbuj ponownie później"}
+		// 		// }
+		// 	}),
+		// 	catchError(this.handleError)
+		// ).subscribe();
 	}
 }

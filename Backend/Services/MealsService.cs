@@ -16,6 +16,14 @@ public class MealsService
 
   public async Task SaveData(MealModel meals)
   {
+    if(string.IsNullOrEmpty(meals.Email))
+    {
+      throw new ArgumentException("Email jest pusty");
+    }
+    if(meals.Details == null)
+    {
+      throw new ArgumentException("Szczegóły posiłku są puste");
+    }
     try
     {
       var user = await _mealModel.Find(user => user.Email == meals.Email).FirstOrDefaultAsync();

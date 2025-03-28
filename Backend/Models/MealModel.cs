@@ -42,7 +42,7 @@ public class SavedProducts
   public double? Weight { get; set; }
 
   [BsonElement("details")]
-  public ProductDetails Details { get; set; } = new();
+  public ProductDetails? ProductDetails { get; set; } = new();
 }
 
 

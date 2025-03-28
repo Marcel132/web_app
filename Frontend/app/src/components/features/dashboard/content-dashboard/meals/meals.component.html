@@ -24,7 +24,7 @@
 			[(ngModel)]="description"
 			>
 		</div>
-		<div class="meal-card-box additional">
+		<div class="meal-card-box additional-select">
 			<select
 			name="select-product"
 			id="select-product"
@@ -44,7 +44,7 @@
 			class='text-center'
 			>
 		</div>
-		<div class="meal-card-box additional" *ngIf="selectedProduct">
+		<div class="meal-card-box additional-details" *ngIf="selectedProduct">
 			<!-- Description -->
 			<span>Kalorie: {{selectedProduct.productDetails.kcal}}</span>
 			<span>Węgle: {{selectedProduct.productDetails.carbohydrates}}</span>
@@ -54,16 +54,16 @@
 
 		<button class='btn btn-add' (click)="addMealToTable()">Dodaj</button>
 
-		<div class='py-5'>
+		<!-- <div class='py-5'>
 			<h4 class='tracking-wide'>{{title}}</h4>
 			<p>{{description}}</p>
-		</div>
+		</div> -->
 
 		<div class='meals-table' *ngFor="let product of mealsTable; let i = index">
 			<p>Produkt: {{product.name}}</p>
 			<div class='meals-table-item'>
 				<span class='cursor-pointer font-semibold text-sm' (click)="toggleDescription(i)">Szczegóły: [g]</span>
-				<div  class='grid grid-cols-5' *ngIf="product.showDescription">
+				<div  class='product-details' *ngIf="product.showDescription">
 					<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
 					<p class='meal-description'>Kcal: {{product.productDetails.kcal.toFixed(2)}}</p>
 					<p class='meal-description'>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}</p>
@@ -89,6 +89,10 @@
 		</div>
 
 		<button class="btn" (click)="saveMeal()">Zatwierdź</button>
+
+		<div *ngIf="handler.state">
+			<span class='handler-style'>{{handler.message}}</span>
+		</div>
 	</div>
 
 
