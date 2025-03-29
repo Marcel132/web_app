@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SubscriptionInterface } from '../interfaces/subscription.details';
-import { Product } from './user.service';
 import { MealsTable } from '../interfaces/meals-table';
+import { Product } from '../interfaces/product';
+import { Meals } from '../interfaces/meals';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,9 @@ export class StateService {
 	private productsSubject = new BehaviorSubject<Product[] | null>(null);
 	products$ = this.productsSubject.asObservable();
 
+	private userMealsSubject = new BehaviorSubject<Meals | null>(null);
+	userMealsSubject$ = this.userMealsSubject.asObservable();
+
 	private mealsSubject = new BehaviorSubject<MealsTable[] | null>(null);
 	meals$ = this.mealsSubject.asObservable();
 
@@ -54,6 +58,9 @@ export class StateService {
 	}
 	setMeals(meals: MealsTable[]){
 		this.mealsSubject.next(meals)
+	}
+	setUserMeals(meals: Meals){
+		this.userMealsSubject.next(meals)
 	}
 
 	clearAccessToken(){
