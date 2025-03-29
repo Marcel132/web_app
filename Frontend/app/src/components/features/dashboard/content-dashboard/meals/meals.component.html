@@ -13,6 +13,8 @@
 			id='meal-header'
 			class='custom-input'
 			[(ngModel)]="title"
+			placeholder='Max. 80 znaków'
+			maxlength="80"
 			>
 		</div>
 		<div class="meal-card-box">
@@ -22,6 +24,8 @@
 			id='meal-description'
 			class='custom-input'
 			[(ngModel)]="description"
+			placeholder='Max. 250 znaków'
+			maxlength='250'
 			>
 		</div>
 		<div class="meal-card-box additional-select">
@@ -38,7 +42,7 @@
 			<input
 			type="number"
 			id='weight'
-			[(ngModel)]="productWeight"
+			[(ngModel)]="weight"
 			min='0'
 			placeholder='Waga produktu'
 			class='text-center'
@@ -80,7 +84,7 @@
 				<input
 				type="number"
 				id='weight'
-				[(ngModel)]="updateProductWeight"
+				[(ngModel)]="editWeight"
 				min='0'
 				placeholder='Waga produktu'
 				class='text-center'>
@@ -95,6 +99,26 @@
 		</div>
 	</div>
 
+	<div class='meal-table' *ngIf="userMeals">
+			<div *ngFor="let meal of userMeals.details; let i = index" class='meal-table-item'>
+				<p class='date'>{{meal.date | date:'yyyy/MM/dd'}}</p>
+				<h4 class='title'>{{meal.title}}</h4>
+				<p class='description' max='10'>{{meal.description}}</p>
+				<button class='btn btn-show' (click)="toggleDetails(i)"> {{visibleIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
+				<div *ngFor="let product of meal.meals" class='item-details'>
+					<div>
+						<p class='name'>Nazwa: {{product.name}}</p>
+						<p class='weight'>Waga: {{product.weight}}g</p>
+						<span class='product-details'  *ngIf="visibleIndex === i">
+							<p>Kcal: {{product.productDetails.kcal.toFixed(2)}}g</p>
+							<p>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}g</p>
+							<p>Białko: {{product.productDetails.proteins.toFixed(2)}}g</p>
+							<p>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}g</p>
+						</span>
+					</div>
+				</div>
+			</div>
+	</div>
 
 </div>
 
