@@ -39,4 +39,37 @@ public class MealsController : ControllerBase
     }
   }
 
+  [HttpPost]
+  public async Task<IActionResult> GetMealsData([FromBody] GetMealsRequest request)
+  {
+    if(string.IsNullOrEmpty(request.Email))
+    {
+      _logger.LogError("Error: Email is null or empty");
+      return BadRequest(new {state = false, message = "Brak emaila"});
+    }
+    if(string.IsNullOrEmpty(request.Role))
+    {
+      _logger.LogError("Error: Role is null or empty");
+      return BadRequest(new {state = false, message = "Zaloguj się ponownie"});
+    }
+
+    try {
+      var data = await _mealsService.GetUserMeal(request.Email);
+      return Ok( new {state = true, response = data});
+    }
+    catch(ArgumentException error)
+    {
+      _logger.LogError("Error: " + error.Message);
+      return BadRequest(new {state = false, message = error.Message});
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error: " + error.Message);
+      return BadRequest(new {state = false, message = error.Message});
+    }
+  }
+}
+public class GetMealsRequest {
+  public string? Email { get; set;}
+  public string? Role { get; set;}
 }

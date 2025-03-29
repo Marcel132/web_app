@@ -47,4 +47,24 @@ public class MealsService
       throw new Exception("Błąd przy zapisywaniu danych o posiłku" + " " + error);
     }
   }
+
+  public async Task<MealModel> GetUserMeal(string email)
+  {
+    try
+    {
+      var user = await _mealModel.Find(user => user.Email == email ).FirstOrDefaultAsync();
+      if(user != null)
+      {
+        return user;
+      }
+      else {
+        throw new Exception("Nie znaleziono użytkownika");
+      }
+    }
+    catch (Exception error)
+    {
+      _logger.LogError(error.Message);
+      throw new Exception(error.Message);
+    }
+  }
 }
