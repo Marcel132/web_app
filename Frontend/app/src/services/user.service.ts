@@ -1,21 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, firstValueFrom, Observable, tap, throwError } from 'rxjs';
+import { catchError, firstValueFrom, Observable, take, tap, throwError } from 'rxjs';
 import { MealsTable } from '../interfaces/meals-table';
 import { apiUrl } from '../env/env.route';
 import { StateService } from './state.service';
-
-export interface Product {
-  _id: string;
-  id_prod: number;
-  name: string;
-  productDetails: {
-    kcal: number;
-    proteins: number;
-    fats: number;
-    carbohydrates: number;
-  };
-}
+import { Product } from '../interfaces/product';
+import { Meals } from '../interfaces/meals';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +21,7 @@ export class UserService {
   fetchProductsData(): void {
     const url = apiUrl.products;
     this.http.get<Product[]>(url).pipe(
+			take(1),
       tap(products => this.stateService.setProducts(products)),
       catchError(this.handleError)
     ).subscribe();
@@ -39,6 +30,7 @@ export class UserService {
 	fetchMealsData(): void {
 		const url = apiUrl.meals;
 		this.http.get<MealsTable[]>(url).pipe(
+			take(1),
 			tap(meals => this.stateService.setMeals(meals)),
 			catchError(this.handleError)
 		).subscribe();
@@ -100,5 +92,28 @@ export class UserService {
 		// 	}),
 		// 	catchError(this.handleError)
 		// ).subscribe();
+	}
+
+	fetchUserMealsData(){
+		let email
+		this.stateService.userEmailSubject$.subscribe( data => data ? email = data : null)
+		let role
+		this.stateService.userRoleSubject$.subscribe( data => data ? role = data : null)
+
+		const url = apiUrl.userMeals
+		const body = {
+			email,
+			role
+		}
+		this.http.post<{state: boolean, response: Meals}>(url, body, {withCredentials: true})
+		.pipe(
+			tap( response => {
+				if(response != null){
+					console.log(response.response)
+					this.stateService.setUserMeals(response.response)
+				}
+			}),
+			catchError(this.handleError)
+		).subscribe()
 	}
 }
