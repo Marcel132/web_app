@@ -1,1 +1,11 @@
-<p>graph works!</p>
+<div class="graph-container">
+	<div class="canva">
+		<div>
+			<app-calories-chart
+			*ngIf="transformedMealsData && transformedMealsData.length > 0"
+			[dailyCalorieNeeds]="dailyCalorieNeeds"
+			[mealData]="transformedMealsData">
+			</app-calories-chart>
+		</div>
+	</div>
+</div>
