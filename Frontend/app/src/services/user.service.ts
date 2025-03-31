@@ -109,7 +109,6 @@ export class UserService {
 		.pipe(
 			tap( response => {
 				if(response != null){
-					console.log(response.response)
 					this.stateService.setUserMeals(response.response)
 				}
 			}),

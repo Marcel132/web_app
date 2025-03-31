@@ -58,7 +58,6 @@ export class MealsComponent {
 				this.userService.fetchUserMealsData()
 			} else {
 				this.userMeals = meals;
-				console.log("userMeals:", this.userMeals);
 			}
 		})
 	}
@@ -66,7 +65,7 @@ export class MealsComponent {
 	onProductChange(){
 		this.selectedProduct = this.products.find(prod => prod.id_prod == this.selectedProductById) || null;
 	}
-	
+
 	addMealToTable(){
 		if(this.selectedProduct == null || this.weight == 0){
 			return
