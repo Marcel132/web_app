@@ -63,20 +63,10 @@ export class MealsComponent {
 		})
 	}
 
-	openAddMeal(): void {
-		this.showAddMealCard = !this.showAddMealCard
-		this.showAddMealCard == true ? document.body.classList.add("no-scroll") : document.body.classList.remove("no-scroll")
-	}
-
-	openEditMeal(meal: any): void {
-	}
-
-	openDeleteMeal(meal: any): void {
-	}
-
 	onProductChange(){
 		this.selectedProduct = this.products.find(prod => prod.id_prod == this.selectedProductById) || null;
 	}
+	
 	addMealToTable(){
 		if(this.selectedProduct == null || this.weight == 0){
 			return
@@ -96,17 +86,12 @@ export class MealsComponent {
 		})
 	}
 
-	toggleDetails(index: number): void {
-		this.visibleIndex = this.visibleIndex === index ? null : index
-	}
-	toggleDescription(index: number): void {
-		this.mealsTable[index].showDescription = !this.mealsTable[index].showDescription
-	}
+
 	deleteMealFromTable(index: number): void {
 		this.mealsTable.splice(index, 1)
 	}
 	editMealFromTable(index: number): void {
-		this.toggleEditMode(index)
+		this.toggleList('edit-mode', index)
 		this.mealsTable[index].weight = this.editWeight
 		if (this.selectedProduct) {
 			this.mealsTable[index].productDetails = {
@@ -118,9 +103,6 @@ export class MealsComponent {
 		}
 	}
 
-	toggleEditMode(index: number): void {
-		this.mealsTable[index].editMode = !this.mealsTable[index].editMode
-	}
 
 	saveMeal(){
 		if(this.title.length > 80 || this.title.length == 0){
@@ -146,4 +128,27 @@ export class MealsComponent {
 			}
 		}
 	}
+
+	toggleList(select: string, index: number){
+		switch(select)
+		{
+			case 'description':
+			this.mealsTable[index].showDescription = !this.mealsTable[index].showDescription
+			break;
+
+			case 'details':
+			this.visibleIndex = this.visibleIndex === index ? null : index
+			break;
+
+			case 'edit-mode':
+			this.mealsTable[index].editMode = !this.mealsTable[index].editMode
+			break;
+
+			case 'add-meal':
+			this.showAddMealCard = !this.showAddMealCard
+			break;
+		}
+	}
+
+
 }

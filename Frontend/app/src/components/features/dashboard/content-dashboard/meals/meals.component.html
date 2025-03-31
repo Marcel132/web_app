@@ -2,7 +2,7 @@
 
 	<div class="header">
 		<h2>Posiłki</h2>
-		<button class="btn btn-add" (click)="openAddMeal()">Dodaj Posiłek</button>
+		<button class="btn btn-add" (click)="toggleList('add-meal', 0)">Dodaj Posiłek</button>
 	</div>
 
 	<div class="add-meal-card" *ngIf="showAddMealCard">
@@ -66,7 +66,7 @@
 		<div class='meals-table' *ngFor="let product of mealsTable; let i = index">
 			<p>Produkt: {{product.name}}</p>
 			<div class='meals-table-item'>
-				<span class='cursor-pointer font-semibold text-sm' (click)="toggleDescription(i)">Szczegóły: [g]</span>
+				<span class='cursor-pointer font-semibold text-sm' (click)="toggleList('description', i)">Szczegóły: [g]</span>
 				<div  class='product-details' *ngIf="product.showDescription">
 					<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
 					<p class='meal-description'>Kcal: {{product.productDetails.kcal.toFixed(2)}}</p>
@@ -76,7 +76,7 @@
 				</div>
 				<div>
 					<button class='btn btn-delete my-2 mx-4 p-2' (click)="deleteMealFromTable(i)">Usuń</button>
-					<button class='btn btn-edit my-2 mx-4 p-2' (click)="toggleEditMode(i)">Edytuj</button>
+					<button class='btn btn-edit my-2 mx-4 p-2' (click)="toggleList('edit-mode', i)">Edytuj wagę</button>
 				</div>
 			</div>
 
@@ -104,7 +104,7 @@
 				<p class='date'>{{meal.date | date:'yyyy/MM/dd'}}</p>
 				<h4 class='title'>{{meal.title}}</h4>
 				<p class='description' max='10'>{{meal.description}}</p>
-				<button class='btn btn-show' (click)="toggleDetails(i)"> {{visibleIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
+				<button class='btn btn-show' (click)="toggleList('details',i)"> {{visibleIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
 				<div *ngFor="let product of meal.meals" class='item-details'>
 					<div>
 						<p class='name'>Nazwa: {{product.name}}</p>
