@@ -1,4 +1,5 @@
 <div class="graph-container">
+
 	<div class="canva">
 		<div>
 			<app-calories-chart
@@ -8,4 +9,68 @@
 			</app-calories-chart>
 		</div>
 	</div>
+
+	<div class="base-metabolic-rate-calculator">
+		<h4>Oblicz swoją przemianę materii: </h4>
+		<form [formGroup]="formUserData" class='form'>
+
+			<div class="form-data">
+				<label for="sex">Płeć</label>
+				<select formControlName="sex" id="sex">
+					<option selected disabled>-Wybierz płeć- </option>
+					<option value='male'>Mężczyzna</option>
+					<option value='female'>Kobieta</option>
+				</select>
+			</div>
+
+			<div class="form-data">
+				<label for="age">Wiek</label>
+				<input
+				type="number"
+				formControlName='age'
+				name="age"
+				id="age"
+				placeholder='Wiek'
+				min='1'
+				class='custom-input'
+				>
+			</div>
+
+			<div class="form-data">
+				<label for="weight">Waga</label>
+				<input
+				type="number"
+				formControlName='weight'
+				name="weight"
+				id="weight"
+				placeholder='Waga'
+				min='1'
+				class='custom-input'
+				>
+			</div>
+			<div class="form-data">
+				<label for="height">Wzrost</label>
+				<input
+				type="number"
+				formControlName='height'
+				name="height"
+				id="height"
+				placeholder='Wzrost'
+				min='1'
+				class='custom-input'
+				>
+			</div>
+			<button (click)="calculateBmiAndBaseMetabolic()">Oblicz</button>
+		</form>
+
+		<span>Twoja przemiana materii wynosi ok. {{baseMetabolicRate}}</span>
+		<span>Twoja BMI wynosi {{bmi}}</span>
+
+		<button (click)="saveData()">Zapisz</button>
+
+		<div class="error-handler" *ngIf="errorHandler.state">
+			<p>{{errorHandler.message}}</p>
+		</div>
+	</div>
+
 </div>
