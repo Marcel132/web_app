@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
-import { error } from 'console';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../../../modules/shared.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StateService } from '../../../../../services/state.service';
 
@@ -23,10 +21,11 @@ export class CalculatorComponent {
 
 	products:any = [];
 	data:any = [];
-	proteins = 0
-	fats = 0
-	carbohydrates = 0
-	kcal = 0;
+
+	proteins: number = 0
+	fats: number = 0
+	carbohydrates: number = 0
+	kcal: number = 0;
 
 	constructor(
 		private userService: UserService,
@@ -63,8 +62,6 @@ export class CalculatorComponent {
 		} else {
 			existingProduct.weight = weight
 		}
-
-		console.log("Dane: " + JSON.stringify(this.data))
 	}
 
 	sum() {
@@ -76,9 +73,15 @@ export class CalculatorComponent {
 		this.carbohydrates = 0;
 
 		for (let i = 0; i < this.data.length; i++) {
-			let product = this.data[i].name;
+			let product = this.data[i].name.name;
 			let weight = this.data[i].weight;
-			let details = product.details;
+			let details = this.data[i].name.productDetails;
+
+			console.group("Dodane produkty")
+			console.log("Dane: " + this.data[i])
+			console.log("Nazwa: " + JSON.stringify(product) )
+			console.log("Waga: " + JSON.stringify(weight) )
+			console.log("Szczegóły:  " + JSON.stringify(details) )
 
 			if(details){
 				this.kcal += details.kcal * weight / 100;
@@ -88,14 +91,13 @@ export class CalculatorComponent {
 			}
 		}
 
-		console.group('Total');
-		console.info("Kcal: " + this.kcal.toFixed(2));
-		console.info("Proteins: " + this.proteins.toFixed(2));
-		console.info("Fats: " + this.fats.toFixed(2));
-		console.info("Carbohydrates: " + this.carbohydrates.toFixed(2));
-		console.groupEnd();
+		// console.group('W sumie');
+		// console.info("Kcal: " + this.kcal.toFixed(2));
+		// console.info("Proteiny: " + this.proteins.toFixed(2));
+		// console.info("Tłuszcze: " + this.fats.toFixed(2));
+		// console.info("Węgle: " + this.carbohydrates.toFixed(2));
+		// console.groupEnd();
 
-		return
 	}
 
 	deleteItem(number: number){
