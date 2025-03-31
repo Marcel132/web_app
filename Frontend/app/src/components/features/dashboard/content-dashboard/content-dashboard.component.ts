@@ -27,6 +27,7 @@ export class ContentDashboardComponent {
 	isHomeRoute: boolean = true
 
 	ngOnInit(): void {
+
 		this.stateService.userRoleSubject$.subscribe(response => {
 			this.roleSubject = response
 		})
@@ -44,6 +45,6 @@ export class ContentDashboardComponent {
 	logout(){
 		this.stateService.logout()
 		this.router.navigate(["/home"])
-		window.location.reload
+		window.location.reload()
 	}
 }
