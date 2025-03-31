@@ -50,8 +50,8 @@ public class UsersService
     }
     catch(Exception error)
     {
-      _logger.LogError("Error while creating a user");
-      throw new Exception("Błąd przy tworzeniu użytkownika" + " " + error);
+      _logger.LogError("Error while creating a user: {Error}", error.Message);
+      throw;
     }
   }
 
@@ -88,8 +88,8 @@ public class UsersService
     }
     catch(Exception error)
     {
-      _logger.LogError("Error while logging in");
-      throw new Exception("Błąd przy logowaniu" + " " + error);
+      _logger.LogError("Error while logging in {Error}", error.Message);
+      throw;
     }
   }
 
@@ -114,8 +114,8 @@ public class UsersService
     }
     catch(Exception error)
     {
-      _logger.LogError("Error while getting subscription details");
-      throw new Exception("Błąd przy pobieraniu szczegółów subskrypcji" + " " + error);
+      _logger.LogError("Error while getting subscription details {Error}", error.Message);
+      throw;
     }
   }
 }

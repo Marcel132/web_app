@@ -22,11 +22,15 @@ public class UsersController : ControllerBase
     if(request == null)
     {
       _logger.LogError("BadRequest: newUser is missing");
-      return BadRequest(new {state = false, message = "Błędne dane!"});
+      return  StatusCode(400,new {state = false, message = "Błędne dane!"});
     }
     if(string.IsNullOrEmpty(request.Email))
     {
-      throw new ArgumentException("Błąd: Email jest pusty");
+      return  StatusCode(400,new {state = false, message = "Błędne dane! Email jest pusty"});
+    }
+    if(string.IsNullOrEmpty(request.Role))
+    {
+      request.Role = "Free";
     }
 
     try {
@@ -43,27 +47,27 @@ public class UsersController : ControllerBase
         Expires = DateTime.Now.AddDays(7)
       });
 
-      return Ok(new {state = true, message = "Użytkownik został zarejestrowany", accessToken});
+      return StatusCode(204, new {state = true, message = "Użytkownik został zarejestrowany", accessToken});
     }
     catch(UserAlreadyExistsException error)
     {
       _logger.LogError("User with login {Login} already exists", request.Email + " " + error);
-      return Conflict(new {state = false, message = error.Message});
+      return StatusCode(409, new {state = false, message = "Taki użytkownik już istnieje"});
     }
     catch(ArgumentException error)
     {
-      _logger.LogError("Error while creating a user");
-      return BadRequest(new {state = false, message = error.Message});
+      _logger.LogError("Error while creating a user" + error.Message);
+      return StatusCode(400, new {state = false, message = error.Message});
     }
     catch(UserNotFoundException error)
     {
-      _logger.LogError("User with login {Login} not found", request.Email);
-      return NotFound(new {state = false, message = error.Message});
+      _logger.LogError("User with login {Login} not found", request.Email + error.Message);
+      return StatusCode(404, new {state = false, message = "Nie znaleziono użytkownika"});
     }
     catch(Exception error)
     {
       _logger.LogError("Error with data" + error);
-      return BadRequest(new {state = false, message = error.Message});
+      return StatusCode(500, new {state = false, message = "Błąd, spróbuj ponownie poźniej lub skontaktuj sięz administratorem"});
     }
   }
 
@@ -78,12 +82,17 @@ public class UsersController : ControllerBase
 
     if(string.IsNullOrEmpty(request.Email))
     {
-      throw new ArgumentException("Błąd: Email jest pusty");
+      return BadRequest(new {state = false, message = "Błąd: Email jest pusty"});
     }
     if(string.IsNullOrEmpty(request.Password))
     {
-      throw new ArgumentException("Błąd: Hasło jest puste");
+      return BadRequest(new {state = false, message = "Błąd: Hasło jest puste"});
     }
+    if(string.IsNullOrEmpty(request.Role))
+    {
+      request.Role = "Free";
+    }
+
 
     try 
     {
@@ -102,20 +111,20 @@ public class UsersController : ControllerBase
 
       return Ok(new {state = true, message = "Użytkownik został zalogowany", accessToken});
     }
-        catch(ArgumentException error)
+    catch(ArgumentException error)
     {
-      _logger.LogError("Error while creating a user");
+      _logger.LogError("Error while creating a user" + error.Message);
       return BadRequest(new {state = false, message = error.Message});
     }
     catch(UserNotFoundException error)
     {
-      _logger.LogError("User with login {Login} not found", request.Email);
-      return NotFound(new {state = false, message = error.Message});
+      _logger.LogError("User with login {Login} not found", request.Email + error.Message);
+      return NotFound(new {state = false, message = "Nie znaleziono użytkownika o takim emailu"});
     }
     catch(Exception error)
     {
-      _logger.LogError("Error while creating a user");
-      return BadRequest(new {state = false, message = "Błąd przy tworzeniu użytkownika" + " " + error});
+      _logger.LogError("Error while creating a user" + error.Message);
+      return StatusCode(500, new {state = false, message = "Błąd przy tworzeniu użytkownika"});
     }
   }
 
@@ -129,13 +138,11 @@ public class UsersController : ControllerBase
     }
     if(string.IsNullOrEmpty(request.Email))
     {
-      _logger.LogError("BadRequest: Email is missing");
-      throw new ArgumentException("Błąd: Email jest pusty");
+      return BadRequest(new {state = false, message = "Błąd: Email jest pusty"});
     }
     if(string.IsNullOrEmpty(request.Role))
     {
-      _logger.LogError("BadRequest: Role is missing");
-      throw new ArgumentException("Błąd: Rola jest pusta");
+      request.Role = "Free";
     }
 
     try
@@ -148,13 +155,13 @@ public class UsersController : ControllerBase
     }
     catch(ArgumentException error)
     {
-      _logger.LogError("Error while getting subscription details");
-      return BadRequest(new {state = false, message = error.Message});
+      _logger.LogError("Error while getting subscription details" + error.Message);
+      return BadRequest(new {state = false, message = "Błędne dane"});
     }
     catch(Exception error)
     {
-      _logger.LogError("Error while getting subscription details");
-      return BadRequest(new {state = false, message = "Błąd przy pobieraniu danych subskrypcji" + " " + error});
+      _logger.LogError("Error while getting subscription details" + error.Message);
+      return StatusCode(500, new {state = false, message = "Błąd przy pobieraniu danych subskrypcji"});
     }
   }
 }
