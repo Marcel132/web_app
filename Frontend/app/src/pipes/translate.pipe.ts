@@ -13,6 +13,8 @@ export class TranslatePipe implements PipeTransform {
 		"inactive": "Nieaktywny",
 		"unpaid": "Nieopłacone",
 		"paid": "Opłacone",
+		"male": "Mężczyzna",
+		"female": "Kobieta",
 	}
 
 	transform(value: string): string {
