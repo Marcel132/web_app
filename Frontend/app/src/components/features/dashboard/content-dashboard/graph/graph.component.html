@@ -60,13 +60,17 @@
 				class='custom-input'
 				>
 			</div>
-			<button (click)="calculateBmiAndBaseMetabolic()">Oblicz</button>
 		</form>
 
-		<span>Twoja przemiana materii wynosi ok. {{baseMetabolicRate}}</span>
-		<span>Twoja BMI wynosi {{bmi}}</span>
+		<div class='result-box'>
+			<button class='btn btn-calculate'(click)="calculateBmiAndBaseMetabolic()">Oblicz</button>
 
-		<button (click)="saveData()">Zapisz</button>
+			<span class='metabolic-block'>Twoje PPM wynosi <p>{{baseMetabolicRate}}</p>kcal</span>
+
+			<button class='btn btn-save' (click)="saveData()">Zapisz</button>
+
+			<span class='bmi-block'>Twoja BMI wynosi <p>{{bmi}}</p></span>
+		</div>
 
 		<div class="error-handler" *ngIf="errorHandler.state">
 			<p>{{errorHandler.message}}</p>

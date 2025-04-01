@@ -14,7 +14,7 @@
 			<div class="item"><a [routerLink]='["account"]'>Konto</a></div>
 			<div class="item" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div>
 			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
-			<div class="item"><a [routerLink]='["settings"]'>Ustawienia</a></div>
+			<div class="item"  *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div>
 			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div>
 		</div>
 	</div>

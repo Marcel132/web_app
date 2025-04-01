@@ -4,7 +4,7 @@
 
 
 <ng-template #UserForms>
-	<div  class='flex w-full h-full'>
+	<div  class='account-container'>
 		<div class="account-button"><a [routerLink]='["/home/forms/login"]'>Logowanie</a></div>
 		<div class="account-button"><a [routerLink]='["/home/forms/register"]'>Rejestracja</a></div>
 	</div>
@@ -16,6 +16,10 @@
 			<h3 class='text-center py-6'>Dane użytkownika</h3>
 			<span>Adres email: <i class='normal-case'>{{user.email}}</i></span>
 			<span>Pakiet: <i class="normal-case">{{user.role | translate }}</i></span>
+			<span>Płeć: <i class="normal-case">{{userDetails.sex | translate}}</i></span>
+			<span>Wiek: <i class="normal-case">{{userDetails.age}}</i></span>
+			<span>Wzrost: <i class="normal-case">{{userDetails.height}}</i></span>
+			<span>Waga: <i class="normal-case">{{userDetails.weight}}</i></span>
 		</div>
 
 		<div class='flex flex-col' *ngIf="user.role == 'Premium'">
