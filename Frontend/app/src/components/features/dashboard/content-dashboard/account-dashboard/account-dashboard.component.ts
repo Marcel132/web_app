@@ -37,6 +37,12 @@ export class AccountDashboardComponent {
 		email: '',
 		role: '',
 	}
+	userDetails = {
+		sex: '',
+		weight: '',
+		height: '',
+		age: ''
+	}
 	package!: SubscriptionInterface | null
 
 	validationInfo = {
@@ -67,6 +73,15 @@ export class AccountDashboardComponent {
 
 		if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
 			const customFontUrl = localStorage.getItem('customFontUrl')
+			const userDetails = localStorage.getItem("user%package_body_details")
+			if(userDetails){
+				const parseData = JSON.parse(userDetails)
+				// body {sex: string | null, age: number, weight: number, height: number}
+				this.userDetails.sex = parseData.sex
+				this.userDetails.age = parseData.age
+				this.userDetails.height = parseData.height
+				this.userDetails.weight = parseData.weight
+			}
 		}
 	}
 

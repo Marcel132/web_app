@@ -61,6 +61,21 @@ export class GraphComponent implements OnInit {
 			}
 		})
 
+		if(typeof window != null){
+			const storage = localStorage.getItem("user%package_body_details")
+			if(storage){
+				const parseData = JSON.parse(storage)
+				this.formUserData.value.sex = parseData.sex
+				console.log(this.formUserData.value.sex)
+				this.bmi = parseData.bmi
+				this.baseMetabolicRate = parseData.metabolicRate
+			}
+		} else {
+			this.errorHandler = {state: true, message: "Nie załadowano danych"}
+			setTimeout(() => {
+				this.errorHandler = {state: false, message: ''}
+			}, 10000);
+		}
 	}
 
 	private transformMealData() {
@@ -159,7 +174,9 @@ export class GraphComponent implements OnInit {
 		}
 
 		const calculateBmit = (body.weight / (body.height / 100)**2)
-		this.bmi = parseFloat(calculateBmit.toFixed(2))
+		if(calculateBmit != null && calculateBmit > 0){
+			this.bmi = parseFloat(calculateBmit.toFixed(2))
+		}
 	}
 
 	saveData() {
@@ -173,5 +190,6 @@ export class GraphComponent implements OnInit {
 		}
 
 		localStorage.setItem("user%package_body_details" , JSON.stringify(body))
+		return this.errorHandler = {state: true, message: "Zapisano dane"};
 	}
 }
