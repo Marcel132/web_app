@@ -54,7 +54,10 @@ export class StateService {
 		this.subscriptionDetails.next(details)
 	}
 	setProducts(products: Product[]){
-		this.productsSubject.next(products)
+		console.log('Otrzymane produkty:', products);
+		const sortedProducts = [...products].sort((a,b) => a.name.localeCompare(b.name))
+		this.productsSubject.next(sortedProducts)
+		console.log('Posortowane produkty:', sortedProducts);
 	}
 	setMeals(meals: MealsTable[]){
 		this.mealsSubject.next(meals)

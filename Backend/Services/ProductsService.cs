@@ -15,7 +15,10 @@ public class ProductsService
   }
   public async Task<List<ProductModel>> GetAllProductsAsync()
   {
-    return await _products.Find(product => true).ToListAsync();  
+    return await _products
+    .Find(product => true)
+    .SortBy(product => product.Name)
+    .ToListAsync();  
   }
 
   public async Task<ProductModel?> GetProductByIdAsync(string id)
