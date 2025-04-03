@@ -9,16 +9,16 @@
 		(click)="toggleMenu()"
 		>
 		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
-			<div class="item text-wrap " ><a [routerLink]='["/home"]'>Strona Główna</a></div>
-			<div class="item" ><a [routerLink]='["calculator"]'>Kalkulator</a></div>
-			<div class="item"><a [routerLink]='["account"]'>Konto</a></div>
-			<div class="item" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div>
-			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div>
-			<div class="item"  *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div>
-			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div>
+			<div class="item text-wrap " ><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
+			<div class="item" ><a [routerLink]='["calculator"]'>Kalkulator</a></div> <!-- For everyone-->
+			<div class="item" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div> <!-- For logged-->
+			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
+			<div class="item"><a [routerLink]='["account"]'>Konto</a></div> <!--For everybode (to login or singup) and for logged-->
+			<div class="item"  *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div> <!-- For logged-->
+			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div> <!-- For logged-->
 		</div>
 	</div>
-	<div class="flex items-center justify-center w-full py-4">
+	<div class="flex flex-col h-full w-full py-4">
 		<div *ngIf="isHomeRoute then HomeContent else RouteContent"></div>
 	</div>
 </div>
