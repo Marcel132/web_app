@@ -47,7 +47,7 @@ public class UsersController : ControllerBase
         Expires = DateTime.Now.AddDays(7)
       });
 
-      return StatusCode(204, new {state = true, message = "Użytkownik został zarejestrowany", accessToken});
+      return Ok(new {state = true, message = "Użytkownik został zarejestrowany", accessToken});
     }
     catch(UserAlreadyExistsException error)
     {
