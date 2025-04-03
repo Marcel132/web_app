@@ -10,162 +10,167 @@
 	</div>
 </ng-template>
 <ng-template #AccountDashboard>
+	<div class="account-dashboard">
 
-<div class="account-dashboard">
-
-	<div class="dashboard-data">
-
-		<h3>Dane użytkownika</h3>
-
-		<div class="data">
-
-			<span class="items">Adres email:
-				<span class='items-value'>{{user.email }}</span>
-			</span>
-
-			<span class="items">Pakiet:
-				<span class='items-value'>{{user.role | translate}}</span>
-			</span>
-
-			<span class="items">Płeć:
-				<span class='items-value'>
-					{{userDetails.sex | translate}}
-					<button class='btn-edit' (click)="toggleEditMode('sex')">Edytuj</button>
+		<div class="dashboard-data">
+			<h3>Dane użytkownika</h3>
+			<div class="data">
+				<span class="items">Adres email:
+					<span class='items-value'>{{user.email }}</span>
 				</span>
-				<div *ngIf="handlerList.editSex" class='edit-mode'>
-					<select [(ngModel)]="updateDataList.sex">
-						<option selected disabled>-Wybierz płeć-</option>
-						<option value='male'>Mężczyzna</option>
-						<option value='female'>Kobieta</option>
-					</select>
-					<button (click)="updateDetailsValue('sex')">Zapisz</button>
-				</div>
-				<span class="error-message">{{handlerErrorMessage.sex}}</span>
-			</span>
 
-			<span class="items">Wiek:
-				<span class='items-value'>
-					{{userDetails.age}}
-					<button class='btn-edit' (click)="toggleEditMode('age')">Edytuj</button>
+				<span class="items">Pakiet:
+					<span class='items-value'>{{user.role | translate}}</span>
 				</span>
-				<div *ngIf="handlerList.editAge" class='edit-mode'>
+
+				<span class="items">Płeć:
+					<span class='items-value'>
+						{{userDetails.sex | translate}}
+						<button class='btn-edit' (click)="toggleEditMode('sex')">Edytuj</button>
+					</span>
+
+					<div *ngIf="handlerList.editSex" class='edit-mode'>
+						<select [(ngModel)]="updateDataList.sex">
+							<option selected disabled>-Wybierz płeć-</option>
+							<option value='male'>Mężczyzna</option>
+							<option value='female'>Kobieta</option>
+						</select>
+						<button (click)="updateDetailsValue('sex')">Zapisz</button>
+					</div>
+
+					<span class="error-message">{{handlerErrorMessage.sex}}</span>
+				</span>
+
+				<span class="items">Wiek:
+					<span class='items-value'>
+						{{userDetails.age}}
+						<button class='btn-edit' (click)="toggleEditMode('age')">Edytuj</button>
+					</span>
+
+					<div *ngIf="handlerList.editAge" class='edit-mode'>
+						<input
+						type="number"
+						[(ngModel)]="updateDataList.age"
+						>
+						<button (click)="updateDetailsValue('age')">Zapisz</button>
+					</div>
+
+					<span class="error-message">{{handlerErrorMessage.age}}</span>
+				</span>
+
+				<span class="items">Wzrost:
+					<span class='items-value'>
+						{{userDetails.height}}
+						<button class='btn-edit' (click)="toggleEditMode('height')">Edytuj</button>
+					</span>
+
+					<div *ngIf="handlerList.editHeight" class='edit-mode'>
+						<input
+						type="number"
+						[(ngModel)]="updateDataList.height"
+						>
+						<button (click)="updateDetailsValue('height')">Zapisz</button>
+					</div>
+
+					<span class="error-message">{{handlerErrorMessage.height}}</span>
+				</span>
+
+				<span class="items">Waga:
+
+					<span class='items-value'>
+						{{userDetails.weight}}
+						<button class='btn-edit' (click)="toggleEditMode('weight')">Edytuj</button>
+					</span>
+
+					<div *ngIf="handlerList.editWeight" class='edit-mode'>
+						<input
+						type="number"
+						[(ngModel)]="updateDataList.weight"
+						>
+						<button (click)="updateDetailsValue('weight')">Zapisz</button>
+					</div>
+					<span class="error-message">{{handlerErrorMessage.weight}}</span>
+				</span>
+
+				<!-- <span class="items"><span class='items-value'></span></span> -->
+			</div>
+		</div>
+
+		<div class="dashboard-data" *ngIf="user.role == 'Premium'">
+
+			<h3>Konfigurator</h3>
+
+			<div class="configurate-data">
+				<span class="items">
+
+					<label for="customFontUrl">Wklej link do czcionki: </label>
 					<input
-					type="number"
-					[(ngModel)]="updateDataList.age"
+					type="text"
+					[(ngModel)]="customFontUrl"
+					name="customFontUrl"
+					id="customFontUrl"
+					placeholder='https://fonts.google.com/'
 					>
-					<button (click)="updateDetailsValue('age')">Zapisz</button>
-				</div>
-				<span class="error-message">{{handlerErrorMessage.age}}</span>
-			</span>
 
-			<span class="items">Wzrost:
-
-				<span class='items-value'>
-					{{userDetails.height}}
-					<button class='btn-edit' (click)="toggleEditMode('height')">Edytuj</button>
+					<button (click)="saveFont()">Zainstaluj</button>
+					<span *ngIf="!validationInfo.fontValid">{{validationInfo.fontError}}</span>
 				</span>
 
-				<div *ngIf="handlerList.editHeight" class='edit-mode'>
-					<input
-					type="number"
-					[(ngModel)]="updateDataList.height"
-					>
-					<button (click)="updateDetailsValue('height')">Zapisz</button>
-				</div>
-				<span class="error-message">{{handlerErrorMessage.height}}</span>
-			</span>
 
-			<span class="items">Waga:
+			</div>
 
-				<span class='items-value'>
-					{{userDetails.weight}}
-					<button class='btn-edit' (click)="toggleEditMode('weight')">Edytuj</button>
-				</span>
-
-				<div *ngIf="handlerList.editWeight" class='edit-mode'>
-					<input
-					type="number"
-					[(ngModel)]="updateDataList.weight"
-					>
-					<button (click)="updateDetailsValue('weight')">Zapisz</button>
-				</div>
-				<span class="error-message">{{handlerErrorMessage.weight}}</span>
-			</span>
-
-			<!-- <span class="items"><span class='items-value'></span></span> -->
 		</div>
-	</div>
 
-	<div class="dashboard-data" *ngIf="user.role == 'Premium'">
+		<div class="dashboard-data">
+			<h3>Subskrypcja</h3>
+			<div class="subscription-data data" *ngIf="user.role == 'Free'">
 
-		<h3>Konfigurator</h3>
+				<span class="items">
+					<p>Aktualnie posiadasz plan darmowy</p>
+					<span class='items-value-buy'>Kup premium: <button class='btn-buy' (click)="buyPremium()">Kup</button></span>
+				</span>
 
-		<div class="configurate-data">
+			</div>
 
-			<span class="items">
-				<label for="customFontUrl">Wklej link do czcionki: </label>
-				<input
-				type="text"
-				[(ngModel)]="customFontUrl"
-				name="customFontUrl"
-				id="customFontUrl"
-				placeholder='https://fonts.google.com/'
-				>
-				<button (click)="saveFont()">Zainstaluj</button>
-				<span *ngIf="!validationInfo.fontValid">{{validationInfo.fontError}}</span>
-			</span>
+			<div class="subscription-data data active" *ngIf="user.role == 'Premium'">
+				<span class='items'> Email:
+					<span class='items-value'>{{user.email}}</span>
+				</span>
 
+				<span class='items'>Pakiet:
+					<span class="items-value">{{user.role}}</span>
+				</span>
 
+				<span class='items'>Data zakupu:
+					<span class="items-value">{{ package?.purchaseDate | date: 'dd/MM/yyyy'}}</span>
+				</span>
+
+				<span class='items'>Data ważności:
+					<span class="items-value">{{package?.expirationDate | date: 'dd/MM/yyyy'}}</span>
+				</span>
+
+				<span class='items'>Status subskrypcji:
+					<span class="items-value">{{package?.status ?? "" | translate }}</span>
+				</span>
+
+				<span class='items'>Metoda płatności:
+					<span class="items-value">{{package?.paymentMethod}}</span>
+				</span>
+
+				<span class='items'>Rozliczenia cykliczne:
+					<span class="items-value">{{package?.recurringPayment | booleanHandler }}</span>
+				</span>
+
+				<span class='items'>Status ostatniej płatności:
+					<span class="items-value">
+						{{package?.lastPaymentStatus ?? 'Brak danych' | translate}}
+					</span>
+				</span>
+
+			</div>
 		</div>
 
 	</div>
-
-	<div class="dashboard-data">
-
-		<h3>Subskrypcja</h3>
-
-		<div class="subscription-data data" *ngIf="user.role == 'Free'">
-
-			<span class="items">
-				<p>Aktualnie posiadasz plan darmowy</p>
-				<span class='items-value-buy'>Kup premium: <button class='btn-buy' (click)="buyPremium()">Kup</button></span>
-			</span>
-
-		</div>
-
-		<div class="subscription-data data active" *ngIf="user.role == 'Premium'">
-			<span class='items'> Email:
-				<span class='items-value'>{{user.email}}</span>
-			</span>
-			<span class='items'>Pakiet:
-				<span class="items-value">{{user.role}}</span>
-			</span>
-			<span class='items'>Data zakupu:
-				<span class="items-value">{{ package?.purchaseDate | date: 'dd/MM/yyyy'}}</span>
-			</span>
-			<span class='items'>Data ważności:
-				<span class="items-value">{{package?.expirationDate | date: 'dd/MM/yyyy'}}</span>
-			</span>
-			<span class='items'>Status subskrypcji:
-				<span class="items-value">{{package?.status ?? "" | translate }}</span>
-			</span>
-			<span class='items'>Metoda płatności:
-				<span class="items-value">{{package?.paymentMethod}}</span>
-			</span>
-			<span class='items'>Rozliczenia cykliczne:
-				<span class="items-value">{{package?.recurringPayment | booleanHandler }}</span>
-			</span>
-			<span class='items'>Status ostatniej płatności:
-				<span class="items-value">
-					{{package?.lastPaymentStatus ?? 'Brak danych' | translate}}
-				</span>
-			</span>
-		</div>
-
-	</div>
-
-</div>
-
 </ng-template>
 
 

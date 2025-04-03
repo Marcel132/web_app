@@ -25,28 +25,124 @@
 	}
 }
 
-
-
 .account-dashboard {
-	div {
+	width: 100%;
+	padding: 2rem;
+	min-height: 100%;
+
+	.dashboard-data{
+		display: flex;
+		flex-direction: column;
+		padding: 1rem 0;
+
 		h3 {
-			font-size: 20px;
-			margin: 0;
-			// text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-			text-transform: uppercase;
-			letter-spacing: 1.1px;
+			text-align: center;
 			font-weight: 600;
+			font-size: 2rem;
 		}
 
-		span{
-			padding: .5rem 0 0 0;
+		.data {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+		}
 
+		.configurate-data {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
 		}
 	}
 }
 
-.subscription-details {
-	display: flex;
-	flex-direction: column;
+.data .items {
+	position: relative;
+	padding: 0.5rem;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+	text-indent: 10px;
+	width: 100%;
+	max-width: 250px;
+	outline: none;
+	overflow: hidden;
+	white-space: wrap;
+	text-overflow: ellipsis;
 
+	@media screen and (min-width: 400px) {
+		max-width: 300px;
+	}
+	@media screen and (min-width: 450px) {
+		max-width: 350px;
+	}
+	@media screen and (min-width: 500px) {
+		max-width: 400px;
+	}
+	@media screen and (min-width: 550px) {
+		max-width: 450px;
+	}
+	@media screen and (min-width: 600px) {
+		max-width: 500px;
+	}
+	@media screen and (min-width: 650px) {
+		max-width: 600px;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 5px;
+		top: 10%;
+		height: 80%;
+		width: 2px;
+		border-radius: 50px;
+
+	}
+
+	.edit-mode {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.3rem 0;
+		input[type="number"], select {
+			margin-left: 15px;
+		}
+	}
+	.error-message {
+		display: block;
+		text-indent: 15px;
+		color: #f00;
+	}
+
+
+	.items-value {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		text-indent: 15px;
+	}
+
+	.items-value-buy {
+		display: flex;
+		width: 100%;
+		text-indent: 15px;
+
+		.btn-buy {
+			padding: 0 1rem;
+		}
+	}
 }
+.dashboard-data {
+	& .data .items::before{
+	background-color: #000;
+	}
+	& .subscription-data.data .items::before {
+		background-color: #f00;
+	}
+	& .subscription-data.data.active .items::before {
+		background-color: #0f0;
+	}
+}
+
+
