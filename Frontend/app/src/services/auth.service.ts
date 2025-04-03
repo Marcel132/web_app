@@ -102,7 +102,7 @@ export class AuthService {
 		}
 
 		try {
-			const response = await firstValueFrom(this.http.post<{accessToken: string}>(url, body, {withCredentials: true }).pipe(
+			const response = await firstValueFrom(this.http.post<{message: string, accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.accessToken)
 					this.tokenService.saveToken("token%auth", response.accessToken)
