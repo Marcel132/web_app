@@ -65,13 +65,25 @@ export class GraphComponent implements OnInit {
 			const storage = localStorage.getItem("user%package_body_details")
 			if(storage){
 				const parseData = JSON.parse(storage)
-				this.formUserData.value.sex = parseData.sex
-				console.log(this.formUserData.value.sex)
-				this.bmi = parseData.bmi
-				this.baseMetabolicRate = parseData.metabolicRate
+				const parseDataBody = {
+					sex: parseData.sex,
+					age: parseData.age,
+					weight: parseData.weight,
+					height: parseData.height
+				}
+				this.formUserData.setValue(parseDataBody)
+				console.log(this.formUserData.value)
+
+				this.calculateBmiAndBaseMetabolic()
+				if(this.bmi != parseData.bmi || this.baseMetabolicRate != parseData.metabolicRate){
+					this.saveData()
+				}
+			} else {
+				console.log("LocalStorage is null")
 			}
 		} else {
 			this.errorHandler = {state: true, message: "Nie załadowano danych"}
+			console.log(this.errorHandler.message)
 			setTimeout(() => {
 				this.errorHandler = {state: false, message: ''}
 			}, 10000);
@@ -89,10 +101,6 @@ export class GraphComponent implements OnInit {
 
     this.meals.details.forEach(detail => {
 
-			// let totalFats: number = 0
-			// let totalCarbohydrates: number = 0
-			// let totalProteins: number = 0
-
       const date = new Date(detail.date).toISOString().split('T')[0];
 			if (!Array.isArray(detail.meals)) return;
       const totalCalories = detail.meals.reduce((sum, meal) => sum + meal.productDetails.kcal, 0);
@@ -100,47 +108,34 @@ export class GraphComponent implements OnInit {
 			const totalFats = detail.meals.reduce((sum, meal) => sum + meal.productDetails.fats, 0)
 			const totalCarbohydrates = detail.meals.reduce((sum, meal) => sum + meal.productDetails.carbohydrates, 0)
 
+			if (!dailyCalories[date])
+			{
+				dailyCalories[date] = 0;
+			}
+			dailyCalories[date] += totalCalories;
 
-			// detail.meals.map(details => {
-				// 	totalFats += details.productDetails.fats
-				// })
-				// detail.meals.map(details => {
-					// 	totalProteins += details.productDetails.proteins
-					// })
-					// detail.meals.map(details => {
-						// 	totalCarbohydrates += details.productDetails.carbohydrates
-						// })
+			if(!dailyFats[date])
+			{
+				dailyFats[date] = 0
+			}
+			dailyFats[date] += totalFats
 
-						if (!dailyCalories[date])
-							{
-								dailyCalories[date] = 0;
-							}
-							dailyCalories[date] += totalCalories;
+			if(!dailyProteins[date])
+			{
+				dailyProteins[date] = 0
+			}
+			dailyProteins[date] += totalProteins
 
-							if(!dailyFats[date])
-								{
-									dailyFats[date] = 0
-								}
-								dailyFats[date] += totalFats
+			if(!dailyCarbohydrates[date])
+			{
+				dailyCarbohydrates[date] = 0
+			}
+			dailyCarbohydrates[date] += totalCarbohydrates
+		});
 
-								if(!dailyProteins[date])
-									{
-										dailyProteins[date] = 0
-									}
-									dailyProteins[date] += totalProteins
-
-									if(!dailyCarbohydrates[date])
-										{
-											dailyCarbohydrates[date] = 0
-										}
-										dailyCarbohydrates[date] += totalCarbohydrates
-
-
-									});
-
-									this.transformedMealsData = Object.keys(dailyCalories).map(date => ({
-										date,
-										totalCalories: dailyCalories[date],
+		this.transformedMealsData = Object.keys(dailyCalories).map(date => ({
+			date,
+			totalCalories: dailyCalories[date],
 			totalFats: dailyFats[date],
 			totalProteins: dailyProteins[date],
 			totalCarbohydrates: dailyCarbohydrates[date],
@@ -155,7 +150,6 @@ export class GraphComponent implements OnInit {
 			weight: this.formUserData.value.weight,
 			height: this.formUserData.value.height
 		}
-		console.log(body)
 
 		if(body.sex == null) this.errorHandler = {state: true, message: 'Nie wybrano płci'}
 		else { this.errorHandler = {state: false, message: '' } }
