@@ -50,6 +50,27 @@ export class AccountDashboardComponent {
 		fontError: ''
 	}
 
+
+	updateDataList = {
+		sex: '',
+		age: 0,
+		height: 0,
+		weight: 0,
+	}
+
+	handlerErrorMessage = {
+		sex: '',
+		age: '',
+		height: '',
+		weight: ''
+	}
+	handlerList = {
+		editSex: false,
+		editWeight: false,
+		editHeight: false,
+		editAge: false
+	}
+
 	ngOnInit(): void {
 		this.stateService.userEmailSubject$.subscribe((email) => {
 			this.user.email = email
@@ -85,9 +106,59 @@ export class AccountDashboardComponent {
 		}
 	}
 
+	updateDetailsValue(select: string) {
+		const storage = localStorage.getItem("user%package_body_details")
+		if(storage){
+			const storageParse = JSON.parse(storage)
+			switch(select){
+				case 'sex':
+					if(this.updateDataList.sex == null || this.updateDataList.sex == ''){
+						this.handlerErrorMessage.sex = "Musisz wybrać płeć"
+						break;
+					} else {
+						storageParse.sex = this.updateDataList.sex
+						this.handlerErrorMessage.sex = ''
+					}
+				break;
+				case 'age':
+					if(this.updateDataList.age <= 0){
+						this.handlerErrorMessage.age = "Wiek musi być większy niż 0"
+						break
+					} else {
+						storageParse.age = this.updateDataList.age
+						this.handlerErrorMessage.age = ''
+					}
+				break;
+				case 'height':
+					if(this.updateDataList.height <= 0){
+						this.handlerErrorMessage.height = "Wzrost musi być większy niż 0"
+						break
+					} else {
+						storageParse.height = this.updateDataList.height
+						this.handlerErrorMessage.height = ''
+					}
+				break;
+				case 'weight':
+					if(this.updateDataList.weight <= 0){
+						this.handlerErrorMessage.weight = "Waga musi być większa niż 0"
+						break
+					} else {
+						storageParse.weight = this.updateDataList.weight
+						this.handlerErrorMessage.weight = ''
+					}
+				break;
+			}
+			const storageString = JSON.stringify(storageParse)
+			localStorage.setItem("user%package_body_details", storageString)
+		}
+
+	}
+
+
+
 	saveFont() {
-    if (this.validFontUrl(this.customFontUrl.trim())) {
-      localStorage.setItem('customFontUrl', this.customFontUrl);
+		if (this.validFontUrl(this.customFontUrl.trim())) {
+			localStorage.setItem('customFontUrl', this.customFontUrl);
       alert('Font zapisany! Odśwież stronę, aby zobaczyć efekt.');
     }
   }
@@ -120,4 +191,23 @@ export class AccountDashboardComponent {
 		this.route.navigate(['/buy-premium'])
 	}
 
+	toggleEditMode(select: string){
+		this.handlerErrorMessage = {sex: '', age: '', height: '', weight: ''}
+		this.updateDataList = {sex: '', age: 0, height: 0, weight: 0}
+		this.handlerList = {editSex: false, editAge: false, editHeight: false, editWeight: false}
+		switch(select) {
+			case "sex":
+				this.handlerList.editSex = !this.handlerList.editSex
+				break;
+			case "age":
+				this.handlerList.editAge = !this.handlerList.editAge
+				break;
+			case "height":
+				this.handlerList.editHeight = !this.handlerList.editHeight
+				break;
+			case "weight":
+				this.handlerList.editWeight = !this.handlerList.editWeight
+				break;
+		}
+	}
 }
