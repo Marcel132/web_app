@@ -1,4 +1,5 @@
 
+using BCrypt.Net;
 using MongoDB.Driver;
 
 public class UserAlreadyExistsException : Exception
@@ -33,9 +34,12 @@ public class UsersService
 
     try
     {
-      _logger.LogError(request.Role);
-      string password = request.Password;
-      password = BCrypt.Net.BCrypt.HashPassword(password);
+      string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+      if(string.IsNullOrEmpty(hashedPassword))
+      {
+        _logger.LogError("Cannot save password in db", hashedPassword);
+        throw new ArgumentException("Nie można zapisać hasła");
+      }
 
       var existingUser = await _usersModel.Find(user => user.Email == request.Email).FirstOrDefaultAsync();
 
@@ -45,6 +49,7 @@ public class UsersService
         throw new UserAlreadyExistsException("Taki użytkownik już istnieje");
       }
 
+      request.Password = hashedPassword;
       await _usersModel.InsertOneAsync(request);
       _logger.LogInformation("User {Email created}", request.Email);
     }
