@@ -1,111 +1,95 @@
+.graph-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
 .base-metabolic-rate-calculator {
-	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 0.5rem 0.4rem;
 
-	.form {
-		display: grid;;
-		grid-template-columns: 1fr;
+	h4 {
+		text-align: center;
+		font-size: 2rem;
+		font-weight: 600;
+	}
+}
 
-		gap: 0.5rem;
+.form {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.5rem;
 
-		@media screen and (min-width: 640px){
-			grid-template-columns: 1fr 1fr;
-		}
+	@media screen and (min-width: 550px) {
+		grid-template-columns: 1fr 1fr;
 	}
 
 	.form-data {
-		padding: 0.5rem 0.4rem;
-		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		padding: 1rem;
+		border-radius: 8px;
+		box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
 
-		select {
-			width: 80%;
-			position: relative;
-			text-align: left;
-			outline: none;
-			padding: .5rem;
-			margin: 0 10px;
-			font-size: 14px;
-			border-bottom: 1px solid transparent;
-			transition: border-bottom 0.3s ease-in-out;
-
-			&:focus{
-				border-bottom: 1px solid #080808;
-			}
+		input[type="number"], select {
+				display: block;
 		}
 	}
+}
+.result-box {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: 1fr;
+	justify-items: center;
+	gap: 1rem;
 
-	.result-box {
-		width: 100%;
-		display: grid;
-		padding: 1rem;
-		align-items: center;
-		justify-items: center;
-		grid-template-columns: 2fr 2fr ;
-		gap: .4rem;
-		grid-template-areas:
-		"calc metabolic "
-		"save bmi "
-		;
+	@media screen and (min-width: 550px) {
+		grid-template-columns: 1fr 1fr;
+	}
 
+	.btn {
+		width: 100px;
+		height: 30px;
+		text-align: center;
+		transition: background-color 0.5s ease-in-out;
+		transition: color 0.3s ease-in-out;
 
-		& > .btn-calculate {
-			grid-area: calc;
-		}
-		& > .btn-save {
-			grid-area: save;
-		}
-		& > .metabolic-block {
-			grid-area: metabolic;
-		}
-		& > .bmi-block {
-			grid-area: bmi;
-		}
-
-		@media screen and (min-width: 650px) {
-			gap: 1rem
-		}
-
-		.btn {
-			width: 70%;
-			height: 70%;
-			box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-			transform: scale(1);
+		&.btn-calculate {
+			box-shadow: 0px 2px 6px rgba(0,100,0.01);
+			// transition: background-color 0.5s ease-in-out;
+			// transition: color 0.5s ease-in-out;
 
 			&:hover {
-				transform: scale(1.1);
-			}
-
-			&.btn-calculate {
-				background-color: #0f0;
-			}
-			&.btn-save {
-				background-color: #00f;
-			}
-			&:hover {
-				opacity: .8;
+				background-color: rgba(0,100,0.01);
+				color: white;
 			}
 		}
 
-		span {
-			width: 100%;
-			height: 80px;
-			padding: 5px;
-			box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-			text-align: left;
-			align-content: center;
+		&.btn-save {
+			box-shadow: 0px 2px 6px rgba(0,100,100.01);
 
-			p {
-				font-size: 20px;
+			&:hover {
+				background-color: rgba(0,100,100.01);
+				color: white;
 			}
+		}
+
+	}
+
+	.metabolic-block, .bmi-block {
+		width: 157px;
+		height: 107px;
+		padding: 0.5rem;
+		box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.1);
+
+		p{
+			text-align: center;
+			font-size: 1.5rem;
+			color: rgba(0,0,0, 0.9)
 		}
 	}
 
 }
-
 .custom-input {
 	width: 80%;
 	position: relative;
@@ -123,9 +107,77 @@
 
 }
 
+// 	.result-box {
+// 		width: 80%;
+// 		display: grid;
+// 		padding: 1rem;
+// 		align-items: center;
+// 		justify-items: center;
+// 		grid-template-columns: 2fr 2fr ;
+// 		gap: .4rem;
+// 		grid-template-areas:
+// 		"calc metabolic "
+// 		"save bmi "
+// 		;
+
+
+// 		& > .btn-calculate {
+// 			grid-area: calc;
+// 		}
+// 		& > .btn-save {
+// 			grid-area: save;
+// 		}
+// 		& > .metabolic-block {
+// 			grid-area: metabolic;
+// 		}
+// 		& > .bmi-block {
+// 			grid-area: bmi;
+// 		}
+
+// 		@media screen and (min-width: 650px) {
+// 			gap: 1rem
+// 		}
+
+// 		.btn {
+// 			width: 50%;
+// 			height: 70%;
+// 			box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+// 			transform: scale(1);
+
+// 			&:hover {
+// 				transform: scale(1.1);
+// 			}
+
+// 			&.btn-calculate {
+// 				background-color: #0f0;
+// 			}
+// 			&.btn-save {
+// 				background-color: #00f;
+// 			}
+// 			&:hover {
+// 				opacity: .8;
+// 			}
+// 		}
+
+// 		span {
+// 			width: 100%;
+// 			height: 80px;
+// 			padding: 5px;
+// 			box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+// 			text-align: left;
+// 			align-content: center;
+
+// 			p {
+// 				font-size: 20px;
+// 			}
+// 		}
+// 	}
+
+// }
+
+
 .canva {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+	display: grid;
+	align-items: center;
+	justify-content: center;
 }

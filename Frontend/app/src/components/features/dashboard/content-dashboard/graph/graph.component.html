@@ -65,9 +65,10 @@
 		<div class='result-box'>
 			<button class='btn btn-calculate'(click)="calculateBmiAndBaseMetabolic()">Oblicz</button>
 
+			<button class='btn btn-save' (click)="saveData()">Zapisz</button>
+			
 			<span class='metabolic-block'>Twoje PPM wynosi <p>{{baseMetabolicRate}}</p>kcal</span>
 
-			<button class='btn btn-save' (click)="saveData()">Zapisz</button>
 
 			<span class='bmi-block'>Twoja BMI wynosi <p>{{bmi}}</p></span>
 		</div>

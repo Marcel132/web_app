@@ -1,9 +1,61 @@
-canvas {
-	width: 100%;
-	max-width: 600px;
-	height: auto;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  min-width: 320px;
+  padding-bottom: 75%; /* Proporcja 4:3 */
 }
 
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Media queries - tylko min-width, reszta jest automatyczna dzięki padding-bottom */
+@media screen and (min-width: 400px) {
+  .chart-container {
+    min-width: 400px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .chart-container {
+    min-width: 450px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .chart-container {
+    min-width: 500px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .chart-container {
+    min-width: 550px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .chart-container {
+    min-width: 650px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .chart-container {
+    min-width: 750px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .chart-container {
+    min-width: 800px;
+  }
+}
