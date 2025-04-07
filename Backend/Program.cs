@@ -4,15 +4,20 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var ipKey = Environment.GetEnvironmentVariable("IP_DEVICE_KEY_FRONTEND") ?? throw new ArgumentNullException("IP_DEVICE_KEY_FRONTEND is missing in environment variables");
 builder.Services.AddCors(options => 
 {
   options.AddPolicy("AllowFrontend", policy => 
   {
-    policy.WithOrigins("http://localhost:4200")
+    policy.WithOrigins(ipKey)
           .AllowAnyHeader()
           .AllowAnyMethod()
           .AllowCredentials();
   });
+});
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000); // HTTP
 });
 // builder.Services.AddAuthentication("Bearer")
 //     .AddJwtBearer("Bearer", options =>
@@ -50,10 +55,7 @@ builder.Services.AddSingleton<MealsService>();
 builder.Services.AddSingleton<ProductsService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<UsersService>();
-// builder.Services.AddSingleton<AuthService>();
-// builder.Services.AddScoped<FoodService>();
-// builder.Services.AddScoped<UsersService>();
-// builder.Services.AddScoped<MealsService>();
+
 
 var app = builder.Build();
 
