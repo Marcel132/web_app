@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -14,6 +15,18 @@ public class UsersController : ControllerBase
     _usersService = usersService;
     _tokenService = tokenService;
     _logger = logger;
+  }
+  [Authorize(Roles = "Admin")]
+  [HttpGet]
+  public async Task<IActionResult> GetAllUsers()
+  {
+    var users = await _usersService.GetAllUsersAsync();
+
+    if(users == null || users.Count == 0)
+    {
+      return NotFound("No users found.");
+    }
+    return Ok(users);
   }
 
   [HttpPost("register")]
@@ -164,6 +177,7 @@ public class UsersController : ControllerBase
       return StatusCode(500, new {state = false, message = "Błąd przy pobieraniu danych subskrypcji"});
     }
   }
+
 }
 
 

@@ -123,4 +123,12 @@ public class UsersService
       throw;
     }
   }
+
+  internal async Task<List<UsersModel>> GetAllUsersAsync()
+  {
+    return await _usersModel
+      .Find(user => true)
+      .SortBy(user => user.Email)
+      .ToListAsync();
+  }
 }
