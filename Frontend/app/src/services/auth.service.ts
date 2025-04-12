@@ -5,6 +5,7 @@ import { TokenService } from './token.service';
 import { apiUrl } from '../env/env.route';
 import { SubscriptionService } from './subscription.service';
 import { StateService } from './state.service';
+import { state } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -130,15 +131,17 @@ export class AuthService {
 		}
 	}
 
-	isAuthenticated(): boolean{
-		this.stateService.accessTokenSubject$.subscribe((accessToken) => {
-			if(accessToken){
-				return true
-			} else {
-				return false
-			}
+	isAuthenticated(): { state: boolean, token: string | null } {
+		let token = null;
+		const accessTokenValue = this.stateService.accessTokenSubject$.subscribe(accessToken => {
+			token = accessToken
 		})
-		return false
+		if(token){
+			return { state: true, token: token }
+		}
+		else {
+			return { state: false, token: null }
+		}
 	}
 
 }
