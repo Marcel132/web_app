@@ -10,6 +10,7 @@ import { AccountDashboardComponent } from '../components/features/dashboard/cont
 import { GraphComponent } from '../components/features/dashboard/content-dashboard/graph/graph.component';
 import { SettingsComponent } from '../components/features/dashboard/content-dashboard/settings/settings.component';
 import { MealsComponent } from '../components/features/dashboard/content-dashboard/meals/meals.component';
+import { AdminComponent } from '../components/features/admin/admin.component';
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -30,5 +31,10 @@ export const routes: Routes = [
 				{path: 'settings', component: SettingsComponent}
 			]},
 		]
+	},
+	{
+		path: 'admin',
+		component: AdminComponent,
+		canActivate: [authGuard],
 	}
 ];
