@@ -20,8 +20,8 @@ public class TokenService
     {
       new Claim(JwtRegisteredClaimNames.Sub, userId),
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-      new Claim("role", role),
-      new Claim("email", email)
+      new Claim(ClaimTypes.Role, role),
+      new Claim(ClaimTypes.Email, email)
     };
 
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));

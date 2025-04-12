@@ -45,7 +45,7 @@ export class TokenService {
 			if(accessToken){
 				try {
 					const payload = this.decodeToken(accessToken)
-					this.stateService.setUserRole(payload.role)
+					this.stateService.setUserRole(payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
 					return { state: true, message: " Role BS set" };
 				} catch (error) {
 					console.error(error)
@@ -62,7 +62,7 @@ export class TokenService {
 			if(accessToken){
 				try {
 					const payload = this.decodeToken(accessToken)
-					this.stateService.setUserEmail(payload.email)
+					this.stateService.setUserEmail(payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"])
 					return { state: true, message: " Email BS set" };
 				} catch (error) {
 					console.error(error)
