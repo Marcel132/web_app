@@ -31,7 +31,7 @@
 
 					<div *ngIf="handlerList.editSex" class='edit-mode'>
 						<select [(ngModel)]="updateDataList.sex">
-							<option selected disabled>-Wybierz płeć-</option>
+							<option [value]='null' disabled selected>-Wybierz płeć-</option>
 							<option value='male'>Mężczyzna</option>
 							<option value='female'>Kobieta</option>
 						</select>
@@ -50,6 +50,7 @@
 					<div *ngIf="handlerList.editAge" class='edit-mode'>
 						<input
 						type="number"
+						placeholder='Wiek'
 						[(ngModel)]="updateDataList.age"
 						>
 						<button (click)="updateDetailsValue('age')">Zapisz</button>
@@ -67,6 +68,7 @@
 					<div *ngIf="handlerList.editHeight" class='edit-mode'>
 						<input
 						type="number"
+						placeholder='Wzrost'
 						[(ngModel)]="updateDataList.height"
 						>
 						<button (click)="updateDetailsValue('height')">Zapisz</button>
@@ -85,6 +87,7 @@
 					<div *ngIf="handlerList.editWeight" class='edit-mode'>
 						<input
 						type="number"
+						placeholder='Waga'
 						[(ngModel)]="updateDataList.weight"
 						>
 						<button (click)="updateDetailsValue('weight')">Zapisz</button>
@@ -93,6 +96,7 @@
 				</span>
 
 				<!-- <span class="items"><span class='items-value'></span></span> -->
+				<button class='btn-delete' (click)="deleteUserDetails()">Usuń dane</button>
 			</div>
 		</div>
 

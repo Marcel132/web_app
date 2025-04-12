@@ -39,9 +39,9 @@ export class GraphComponent implements OnInit {
 	) {
 		this.formUserData = this.fb.group({
 			sex: [null, Validators.required],
-			weight: [0, [Validators.required, Validators.min(1)]],
-			age: [0, [Validators.required, Validators.min(1)]],
-			height: [0, [Validators.required, Validators.min(1)]]
+			weight: [null, [Validators.required, Validators.min(1)]],
+			age: [null, [Validators.required, Validators.min(1)]],
+			height: [null, [Validators.required, Validators.min(1)]]
 		})
 	}
 

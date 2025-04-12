@@ -133,6 +133,19 @@
 		}
 	}
 }
+
+.btn-delete {
+	background-color: #af0000;
+	color: #fff;
+	border-radius: 5px;
+	padding: 0 1rem;
+	cursor: pointer;
+	transition: all 0.4s ease;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+	&:hover {
+		background-color: #d00;
+	}
+}
 .dashboard-data {
 	& .data .items::before{
 	background-color: #000;

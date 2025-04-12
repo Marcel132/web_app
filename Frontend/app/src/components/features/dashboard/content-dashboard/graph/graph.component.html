@@ -17,7 +17,7 @@
 			<div class="form-data">
 				<label for="sex">Płeć</label>
 				<select formControlName="sex" id="sex">
-					<option selected disabled>-Wybierz płeć-</option>
+					<option [value]='null'selected disabled>-Wybierz płeć-</option>
 					<option value='male'>Mężczyzna</option>
 					<option value='female'>Kobieta</option>
 				</select>
@@ -66,7 +66,7 @@
 			<button class='btn btn-calculate'(click)="calculateBmiAndBaseMetabolic()">Oblicz</button>
 
 			<button class='btn btn-save' (click)="saveData()">Zapisz</button>
-			
+
 			<span class='metabolic-block'>Twoje PPM wynosi <p>{{baseMetabolicRate}}</p>kcal</span>
 
 

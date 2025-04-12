@@ -29,7 +29,7 @@
 		</div>
 
 	<!-- Calculator -->
-	<div class='w-full'>
+	<div class='w-full p-4 '>
 		<form [formGroup]="formProductCalculator" class='flex flex-col items-center justify-center'>
 
 			<select formControlName='selectedProduct' name="selectedProduct" class='p-2 outline-none custom-pointer' >
@@ -37,7 +37,7 @@
 				<option *ngFor="let product of products" [value]="product.name">{{product.name}}</option>
 			</select>
 
-			<input formControlName='weight' name='weight' type="number" min='0' placeholder="Waga" class=' p-2 outline-none cursor-pointer ' />
+			<input formControlName='weight' name='weight' type="number" min='0' placeholder="Waga [g]" class=' p-2 outline-none cursor-pointer ' />
 
 			<div class="button-group w-full flex justify-center items-center py-4 gap-2">
 				<button [ngClass]="{'enable': formProductCalculator.valid, 'disable': !formProductCalculator.valid}" class='w-[100px] h-[30px] custom-button-green' (click)="addValue()">Dodaj</button>

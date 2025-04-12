@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
@@ -25,10 +25,10 @@ import { StateService } from '../../../../../services/state.service';
 export class AccountDashboardComponent {
 
 	constructor(
-		private tokenService: TokenService,
 		private subscriptionService : SubscriptionService,
 		private stateService: StateService,
 		private route: Router,
+		private cdr: ChangeDetectorRef,
 	) {	}
 
 	customFontUrl: string =''
@@ -38,10 +38,10 @@ export class AccountDashboardComponent {
 		role: '',
 	}
 	userDetails = {
-		sex: '',
-		weight: '',
-		height: '',
-		age: ''
+		sex: 'Nie podano',
+		age: 0,
+		height: 0,
+		weight: 0,
 	}
 	package!: SubscriptionInterface | null
 
@@ -52,10 +52,10 @@ export class AccountDashboardComponent {
 
 
 	updateDataList = {
-		sex: '',
-		age: 0,
-		height: 0,
-		weight: 0,
+		sex: null,
+		age: null,
+		height: null,
+		weight: null,
 	}
 
 	handlerErrorMessage = {
@@ -117,41 +117,110 @@ export class AccountDashboardComponent {
 						break;
 					} else {
 						storageParse.sex = this.updateDataList.sex
-						this.handlerErrorMessage.sex = ''
+						this.userDetails.sex = this.updateDataList.sex
+						this.toggleEditMode('sex')
 					}
 				break;
 				case 'age':
-					if(this.updateDataList.age <= 0){
+					if(this.updateDataList.age == null ||this.updateDataList.age <= 0){
 						this.handlerErrorMessage.age = "Wiek musi być większy niż 0"
 						break
 					} else {
 						storageParse.age = this.updateDataList.age
-						this.handlerErrorMessage.age = ''
+						this.userDetails.age = this.updateDataList.age
+						this.toggleEditMode('age')
+
 					}
 				break;
 				case 'height':
-					if(this.updateDataList.height <= 0){
+					if(this.updateDataList.height == null ||this.updateDataList.height <= 0){
 						this.handlerErrorMessage.height = "Wzrost musi być większy niż 0"
 						break
 					} else {
 						storageParse.height = this.updateDataList.height
-						this.handlerErrorMessage.height = ''
+						this.userDetails.height = this.updateDataList.height
+						this.toggleEditMode('height')
 					}
 				break;
 				case 'weight':
-					if(this.updateDataList.weight <= 0){
+					if(this.updateDataList.weight == null ||this.updateDataList.weight <= 0){
 						this.handlerErrorMessage.weight = "Waga musi być większa niż 0"
 						break
 					} else {
 						storageParse.weight = this.updateDataList.weight
-						this.handlerErrorMessage.weight = ''
+						this.userDetails.weight = this.updateDataList.weight
+						this.toggleEditMode('weight')
 					}
+				break;
+				default:
+					this.cdr.detectChanges()
 				break;
 			}
 			const storageString = JSON.stringify(storageParse)
 			localStorage.setItem("user%package_body_details", storageString)
 		}
+		else {
+			const body = {
+				sex: 'Nie podano',
+				age: 0,
+				weight: 0,
+				height: 0
+			}
+			switch(select){
+				case 'sex':
+					if(this.updateDataList.sex == null || this.updateDataList.sex == ''){
+						this.handlerErrorMessage.sex = "Musisz wybrać płeć"
+						break;
+					} else {
+						body.sex = this.updateDataList.sex;
+						this.userDetails.sex = this.updateDataList.sex
+						this.toggleEditMode('sex')
+					}
+				break;
+				case 'age':
+					if(this.updateDataList.age == null || this.updateDataList.age <= 0){
+						this.handlerErrorMessage.age = "Wiek musi być większy niż 0"
+						break
+					} else {
+						body.age = this.updateDataList.age
+						this.userDetails.age = this.updateDataList.age
+						this.toggleEditMode('age')
+					}
+				break;
+				case 'height':
+					if(this.updateDataList.height == null ||this.updateDataList.height <= 0){
+						this.handlerErrorMessage.height = "Wzrost musi być większy niż 0"
+						break
+					} else {
+						body.height = this.updateDataList.height
+						this.userDetails.height = this.updateDataList.height
+						this.toggleEditMode('height')
+					}
+				break;
+				case 'weight':
+					if(this.updateDataList.weight == null ||this.updateDataList.weight <= 0){
+						this.handlerErrorMessage.weight = "Waga musi być większa niż 0"
+						break
+					} else {
 
+						body.weight = this.updateDataList.weight
+						this.userDetails.weight = this.updateDataList.weight
+						this.toggleEditMode('weight')
+					}
+				break;
+				default:
+					this.cdr.detectChanges()
+					break;
+			}
+			localStorage.setItem("user%package_body_details", JSON.stringify(body))
+		}
+
+	}
+
+	deleteUserDetails(){
+		this.userDetails = { sex: 'Nie podano', age: 0, height: 0, weight: 0}
+		this.cdr.detectChanges()
+		localStorage.removeItem("user%package_body_details")
 	}
 
 
@@ -193,7 +262,7 @@ export class AccountDashboardComponent {
 
 	toggleEditMode(select: string){
 		this.handlerErrorMessage = {sex: '', age: '', height: '', weight: ''}
-		this.updateDataList = {sex: '', age: 0, height: 0, weight: 0}
+		this.updateDataList = {sex: null, age: null, height: null, weight: null}
 		this.handlerList = {editSex: false, editAge: false, editHeight: false, editWeight: false}
 		switch(select) {
 			case "sex":
