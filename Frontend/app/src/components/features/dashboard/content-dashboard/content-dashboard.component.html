@@ -15,6 +15,7 @@
 			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
 			<div class="item"><a [routerLink]='["account"]'>Konto</a></div> <!--For everybode (to login or singup) and for logged-->
 			<div class="item"  *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div> <!-- For logged-->
+			<div class="item" *ngIf="roleSubject == 'Admin'"><a [routerLink]='["/admin"]'>Panel Administratora</a></div>
 			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div> <!-- For logged-->
 		</div>
 	</div>
