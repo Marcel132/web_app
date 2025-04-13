@@ -87,44 +87,33 @@ export class TokenService {
 
 	// // For refreshing a token
 	refreshToken(): void {
-		if(!window){
-			this.stateService.accessTokenSubject$.subscribe((accessToken) => {
-				const token = this.getToken("token%auth")
+		if(window){
+			this.stateService.accessTokenSubject$.subscribe((accessToken => {
 				if(accessToken){
-					try {
-						const payload = this.decodeToken(accessToken)
-						const expire = payload.exp
-						const currentTime = Math.floor(Date.now() / 1000)
+					const payload = this.decodeToken(accessToken)
+					const expire = payload.exp
+					const currentTime = Math.floor(Date.now() / 1000)
 
-						console.log("CT: " + currentTime)
-						console.log("EXP: " + expire)
-
-						if(expire < currentTime){
-							console.log("Twój token wygasł")
-							const url = apiUrl.refresh
-							const body = {
-								accessToken: accessToken
-							}
-							this.http.post<{accessToken: string}>(url, body , {withCredentials: true})
-							.subscribe(response => {
-								this.saveToken("token%auth", response.accessToken)
-								this.stateService.setAccessToken(response.accessToken)
-							})
-						} else {
-							console.log("Twój token jest aktualny")
+					if(expire < currentTime){
+						console.log("Twój token wygasł")
+						const url = apiUrl.refresh
+						const body = {
+							accessToken: accessToken
 						}
-					} catch (error) {
-						console.log(error)
+						this.http.post<{accessToken: string}>(url, body , {withCredentials: true})
+						.subscribe(response => {
+							this.saveToken("token%auth", response.accessToken)
+							this.stateService.setAccessToken(response.accessToken)
+						})
+						console.log("Token odświeżony")
+					} else {
+						console.log("Twój token jest aktualny")
 					}
-				}
-				else if(token != null) {
-					this.stateService.setAccessToken(token)
-					console.log("Token z sesji")
+
 				} else {
-					console.log("Brak access tokenu")
-					this.route.navigate(['/home'])
+					const token = this.getToken("token%auth")
 				}
-			})
+			}))
 		}
 
 	}
