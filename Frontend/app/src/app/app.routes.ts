@@ -11,6 +11,9 @@ import { GraphComponent } from '../components/features/dashboard/content-dashboa
 import { SettingsComponent } from '../components/features/dashboard/content-dashboard/settings/settings.component';
 import { MealsComponent } from '../components/features/dashboard/content-dashboard/meals/meals.component';
 import { AdminComponent } from '../components/features/admin/admin.component';
+import { ProductsPanelComponent } from '../components/features/admin/products-panel/products-panel.component';
+import { AdminPanelComponent } from '../components/features/admin/admin-panel/admin-panel.component';
+import { UsersPanelComponent } from '../components/features/admin/users-panel/users-panel.component';
 
 export const routes: Routes = [
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -36,5 +39,10 @@ export const routes: Routes = [
 		path: 'admin',
 		component: AdminComponent,
 		canActivate: [authGuard],
+		children: [
+			{path: '', component: AdminPanelComponent},
+			{path: 'products/panel', component: ProductsPanelComponent},
+			{path: 'users/panel', component: UsersPanelComponent},
+		]
 	}
 ];
