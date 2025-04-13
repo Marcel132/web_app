@@ -1,1 +1,25 @@
-<p>admin works!</p>
+<div *ngIf="userRole === 'Admin'" class='admin-panel'>
+
+	<div class="navbar">
+		<a [routerLink]="['/home']">Main</a>
+		<a [routerLink]="['/admin']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}">Admin Dashboard</a>
+		<a [routerLink]="['products/panel']" routerLinkActive="active-link">Products</a>
+		<a [routerLink]="['users/panel']" routerLinkActive="active-link">Manage Users</a>
+		<a routerLink="/admin/view-reports" routerLinkActive="active-link">View Reports</a>
+		<a routerLink="/admin/configure-settings" routerLinkActive="active-link">Configure Settings</a>
+		<a routerLink="/logout">Logout</a>
+	</div>
+
+	<div class="content">
+
+		<router-outlet></router-outlet>
+
+	</div>
+
+
+	<!-- <p>Welcome to the admin panel. Here you can manage users, view reports, and configure settings.</p> -->
+	<!-- <button (click)="manageUsers()">Manage Users</button>
+	<button (click)="viewReports()">View Reports</button>
+	<button (click)="configureSettings()">Configure Settings</button> -->
+
+</div>
