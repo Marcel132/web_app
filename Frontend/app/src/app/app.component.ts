@@ -2,10 +2,9 @@ import { Component, Renderer2 } from '@angular/core';
 import { AppModule } from '../modules/app.module';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { SubscriptionService } from '../services/subscription.service';
-import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -27,33 +26,40 @@ export class AppComponent {
 
 	constructor(
 		private tokenService: TokenService,
-		private stateService: StateService,
-		private subscriptionService: SubscriptionService,
-		private renderer: Renderer2
+		private renderer: Renderer2,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
-		if(typeof window !== 'undefined'){
-			const token = this.tokenService.getToken("token%auth")
-			// Update value of token in BehaviorSubject
-			if(!token){
-				console.log("Refresh Token Checking... ")
-				this.tokenService.refreshToken()
-			}
 
-			// When user has token in storage, add data to BehaviorSubject's to update the state
-			if( token && !this.stateService.accessTokenSubject$){
+		if(!this.isBrowserEnvironment()){
+			console.warn("Not in browser environment, skipping token check.");
+			return;
+		}
+
+		const token = this.tokenService.getToken("token%auth")
+		if(!token){
+			console.log("Refresh Token Checking... ")
+			this.router.navigate(['/home'])
+		}
+		else {
+			const payload = this.tokenService.decodeToken(token)
+			if(payload.exp > Date.now() / 1000){
+				console.log("Token is valid, setting access token and user role.");
 				this.tokenService.setAccessToken(token)
 				this.tokenService.setUserEmail()
 				this.tokenService.setUserRole()
-			}
-
-			// Load custom font if it was set
-			const customFontUrl = localStorage.getItem('customFontUrl')
-			if(customFontUrl){
-				this.loadFont(customFontUrl)
+			} else {
+				console.log("Token expired, refreshing token.");
+				this.tokenService.refreshToken()
 			}
 		}
+
+		const customFontUrl = localStorage.getItem('customFontUrl')
+		if(customFontUrl){
+			this.loadFont(customFontUrl)
+		}
+
 	}
 
 	loadFont(url: string) {
@@ -93,4 +99,10 @@ export class AppComponent {
 		const match = url.match(/family=([^:&]+)/)
 		return match ? match[1].replace(/\+/g, ' ') : null
 	}
+
+
+ 	isBrowserEnvironment(): boolean {
+  	return typeof window !== 'undefined' && typeof sessionStorage !== 'undefined';
+	}
+
 }
