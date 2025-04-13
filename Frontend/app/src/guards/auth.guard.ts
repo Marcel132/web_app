@@ -19,6 +19,8 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
       if (isTokenValid(payload)) {
         return handleRole(payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"], router);
       } else {
+				console.warn("Token expired, redirecting to login.");
+				
         return redirectToLogin(router);
       }
     }
@@ -49,6 +51,6 @@ function handleRole(role: string, router: Router): boolean {
 }
 
 function redirectToLogin(router: Router): boolean {
-  router.navigate(['/login']);
+  router.navigate(['/home/forms/login']);
   return false;
 }
