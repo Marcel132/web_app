@@ -55,8 +55,8 @@ public class UsersController : ControllerBase
       Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
       {
         HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.None,
+        Secure = false,
+        SameSite = SameSiteMode.Strict,
         Expires = DateTime.Now.AddDays(7)
       });
 
@@ -117,8 +117,8 @@ public class UsersController : ControllerBase
       Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
       {
         HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.None,
+        Secure = false,
+        SameSite = SameSiteMode.Strict,
         Expires = DateTime.Now.AddDays(7)
       });
 

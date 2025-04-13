@@ -7,11 +7,13 @@ public class AuthService
 {
     private readonly JwtSettings _jwtSettings;
     private readonly TokenService _tokenService;
+    private readonly ILogger<AuthService> _logger;
 
-    public AuthService(JwtSettings jwtSettings, TokenService tokenService)
+    public AuthService(JwtSettings jwtSettings, TokenService tokenService, ILogger<AuthService> logger)
     {
         _jwtSettings = jwtSettings;
         _tokenService = tokenService;
+        _logger = logger;
     }
 
     public ClaimsPrincipal? ValidateJwtToken(string token)
@@ -30,7 +32,7 @@ public class AuthService
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateAudience = true,
                 ClockSkew = TimeSpan.Zero,
                 ValidateLifetime = true
             };
@@ -51,11 +53,13 @@ public class AuthService
         return null;
     }
 
-    public string? ValidateAndRefreshToken(string refreshToken, string accessToken)
+    public Task<string> ValidateAndRefreshToken(string refreshToken, string accessToken)
     {
+        _logger.LogInformation("Validating and refreshing token.");
+        _logger.LogInformation(refreshToken, accessToken);
         if(string.IsNullOrEmpty(refreshToken))
         {
-            return null;
+            throw new ArgumentNullException("refreshToken", "Refresh token is required.");
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -63,9 +67,12 @@ public class AuthService
 
         try {
             jwtToken = tokenHandler.ReadToken(accessToken) as JwtSecurityToken;
-            if(jwtToken == null) return null;
+            if(jwtToken == null)
+            {
+                throw new ArgumentNullException("accessToken", "Access token is required.");
+            }
         }catch {
-            return null;
+            throw;
         }
 
         var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
@@ -74,11 +81,10 @@ public class AuthService
 
     if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(email))
     {
-        return null;
+        throw new ArgumentNullException("Token claims are missing.", "Access token is required.");
     }
-
-
         var newAccessToken = _tokenService.GenerateAccessToken(userId, role, email);
-        return newAccessToken;
+        return Task.FromResult(newAccessToken);
     }
+
 }

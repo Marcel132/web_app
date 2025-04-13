@@ -52,12 +52,12 @@ builder.Services.AddSingleton<MealsService>();
 builder.Services.AddSingleton<ProductsService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<UsersService>();
+builder.Services.AddSingleton<AuthService>();
 
 
 var app = builder.Build();
 
-// app.UseAuthorization();
-// app.UseAuthentication();
+
 app.UseRouting();
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
