@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { TokenService } from '../../../../../services/token.service';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
@@ -42,6 +41,7 @@ export class AccountDashboardComponent {
 		age: 0,
 		height: 0,
 		weight: 0,
+		pal: 0,
 	}
 	package!: SubscriptionInterface | null
 
@@ -164,7 +164,8 @@ export class AccountDashboardComponent {
 				sex: 'Nie podano',
 				age: 0,
 				weight: 0,
-				height: 0
+				height: 0,
+				pal: 0
 			}
 			switch(select){
 				case 'sex':
@@ -218,7 +219,7 @@ export class AccountDashboardComponent {
 	}
 
 	deleteUserDetails(){
-		this.userDetails = { sex: 'Nie podano', age: 0, height: 0, weight: 0}
+		this.userDetails = { sex: 'Nie podano', age: 0, height: 0, weight: 0, pal: 0}
 		this.cdr.detectChanges()
 		localStorage.removeItem("user%package_body_details")
 	}
