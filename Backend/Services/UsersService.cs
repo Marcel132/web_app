@@ -78,7 +78,7 @@ public class UsersService
 
       request.Role = user.Role;
 
-      _logger.LogError(request.Role);
+      _logger.LogInformation(request.Role);
       if(user == null)
       {
         _logger.LogError("User with login {Login} not found", request.Email);
