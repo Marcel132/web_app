@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { UserModule } from './user.module';
-import { RouterModule } from '@angular/router';
-import { TokenService } from '../../../services/token.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { StateService } from '../../../services/state.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,20 +10,44 @@ import { TokenService } from '../../../services/token.service';
   imports: [
 		UserModule,
 		RouterModule,
+		CommonModule,
 ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
 
+
 	constructor(
-		private userService: UserService,
-		private tokenService: TokenService,
+		private stateService: StateService,
+		private router: Router,
+		private route: ActivatedRoute,
 	){}
 
+	toggleMenuVariable: boolean = true;
+	roleSubject: string | null = null
+	isHomeRoute: boolean = true
+
 	ngOnInit(): void {
-		if(typeof window !== 'undefined' && typeof sessionStorage !== 'undefined'){
-		}
+
+		this.stateService.userRoleSubject$.subscribe(response => {
+			this.roleSubject = response
+		})
+
+		this.router.events.subscribe(() => {
+			this.isHomeRoute = this.router.url === '/home'
+		})
+
+	}
+
+	toggleMenu(){
+		this.toggleMenuVariable = !this.toggleMenuVariable
+	}
+
+	logout(){
+		this.stateService.logout()
+		this.router.navigate(["/home"])
+		window.location.reload()
 	}
 
 }

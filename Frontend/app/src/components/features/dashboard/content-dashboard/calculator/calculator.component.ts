@@ -112,5 +112,6 @@ export class CalculatorComponent {
 		this.proteins = 0;
 		this.fats = 0;
 		this.carbohydrates = 0;
+		this.formProductCalculator.reset()
 	}
 }

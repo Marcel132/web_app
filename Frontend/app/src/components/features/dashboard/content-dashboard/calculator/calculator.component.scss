@@ -87,23 +87,16 @@ td {
 	font-size: 12px;
 	overflow-x: auto;
 	max-width: 300px;
-}
-
-@media screen and (min-width: 450px) {
-	.product-table {
+	@media screen and (min-width: 450px) {
 		max-width: 400px;
 	}
-}
-
-@media screen and (min-width: 600px) {
-	.product-table {
+	@media screen and (min-width: 600px) {
 		max-width: 550px;
 	}
-}
-
-@media screen and (min-width: 768px) {
-	.product-table {
-		max-width: 600px;
+	@media screen and (min-width: 768px) {
+		min-width: 85%;
 	}
-
+	@media screen and (min-width: 1024px) {
+		max-width: 75%;
+	}
 }

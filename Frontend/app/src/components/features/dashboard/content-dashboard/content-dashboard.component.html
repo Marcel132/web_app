@@ -1,6 +1,6 @@
 
 <div class="main-container">
-	<div class="sidebar">
+	<div class="sidebar device-sidebar">
 		<img
 		src="../../../../assets/img/list.svg"
 		alt="menu"
@@ -9,7 +9,7 @@
 		(click)="toggleMenu()"
 		>
 		<nav class="sidebar-nav" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
-			<div class="item text-wrap " routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}"><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
+			<div class="item" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}"><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
 			<div class="item" routerLinkActive="active-link" ><a [routerLink]='["calculator"]'>Kalkulator</a></div> <!-- For everyone-->
 			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div> <!-- For logged-->
 			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
