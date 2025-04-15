@@ -49,9 +49,11 @@ export class AppComponent {
 				this.tokenService.setAccessToken(token)
 				this.tokenService.setUserEmail()
 				this.tokenService.setUserRole()
+				this.router.navigate(['/home'])
 			} else {
 				console.log("Token expired, refreshing token.");
 				this.tokenService.refreshToken()
+				this.router.navigate(['/home'])
 			}
 		}
 
