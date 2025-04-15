@@ -22,7 +22,7 @@ export class GraphComponent implements OnInit {
 
 	meals: Meals | null = null
 	transformedMealsData: any[] = []
-	dailyCalorieNeeds: number = 2000
+	totalDailyEnergyExpenditure: number = 2000 // Total Daily Energy Expenditure, default value : 2000
 	formUserData: FormGroup<any>
 
 	baseMetabolicRate: number = 0;
@@ -35,13 +35,15 @@ export class GraphComponent implements OnInit {
 	constructor(
 		private stateService: StateService,
 		private userService: UserService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
 	) {
+
 		this.formUserData = this.fb.group({
 			sex: [null, Validators.required],
 			weight: [null, [Validators.required, Validators.min(1)]],
 			age: [null, [Validators.required, Validators.min(1)]],
-			height: [null, [Validators.required, Validators.min(1)]]
+			height: [null, [Validators.required, Validators.min(1)]],
+			pal: [null, Validators.required]
 		})
 	}
 
@@ -69,15 +71,16 @@ export class GraphComponent implements OnInit {
 					sex: parseData.sex,
 					age: parseData.age,
 					weight: parseData.weight,
-					height: parseData.height
+					height: parseData.height,
+					pal: parseData.pal,
 				}
 				this.formUserData.setValue(parseDataBody)
-				console.log(this.formUserData.value)
 
 				this.calculateBmiAndBaseMetabolic()
-				if(this.bmi != parseData.bmi || this.baseMetabolicRate != parseData.metabolicRate){
+				if(this.bmi != parseData.bmi || this.baseMetabolicRate != parseData.metabolicRate || this.totalDailyEnergyExpenditure != parseData.pal){
 					this.saveData()
 				}
+
 			} else {
 				console.log("LocalStorage is null")
 			}
@@ -148,8 +151,10 @@ export class GraphComponent implements OnInit {
 			sex: this.formUserData.value.sex,
 			age: this.formUserData.value.age,
 			weight: this.formUserData.value.weight,
-			height: this.formUserData.value.height
+			height: this.formUserData.value.height,
+			pal: this.formUserData.value.pal
 		}
+
 
 		if(body.sex == null) this.errorHandler = {state: true, message: 'Nie wybrano płci'}
 		else { this.errorHandler = {state: false, message: '' } }
@@ -158,6 +163,8 @@ export class GraphComponent implements OnInit {
 		if(body.height <= 0) this.errorHandler = {state: true, message: 'Twój wzrost musi być większy niż 0'}
 		else { this.errorHandler = {state: false, message: '' } }
 		if(body.weight <= 0) this.errorHandler = {state: true, message: 'Twoja waga musi być większa niż 0'}
+		else { this.errorHandler = {state: false, message: '' } }
+		if(body.pal <= 0) this.errorHandler = {state: true, message: 'Wskaźnik PAL musi być wybrany'}
 		else { this.errorHandler = {state: false, message: '' } }
 
 		if(body.sex === 'female'){
@@ -168,9 +175,16 @@ export class GraphComponent implements OnInit {
 		}
 
 		const calculateBmit = (body.weight / (body.height / 100)**2)
+		const calculateDailyCalorieNeeds = this.baseMetabolicRate * body.pal
+
 		if(calculateBmit != null && calculateBmit > 0){
 			this.bmi = parseFloat(calculateBmit.toFixed(2))
 		}
+		if(calculateDailyCalorieNeeds != null && calculateDailyCalorieNeeds > 0){
+			this.totalDailyEnergyExpenditure = parseFloat(calculateDailyCalorieNeeds.toFixed(2))
+		}
+
+		this.totalDailyEnergyExpenditure = calculateDailyCalorieNeeds
 	}
 
 	saveData() {
@@ -179,8 +193,10 @@ export class GraphComponent implements OnInit {
 			age: this.formUserData.value.age,
 			weight: this.formUserData.value.weight,
 			height: this.formUserData.value.height,
+			pal: this.formUserData.value.pal,
 			bmi: this.bmi,
-			metabolicRate: this.baseMetabolicRate
+			metabolicRate: this.baseMetabolicRate,
+			totalDailyEnergyExpenditure: this.totalDailyEnergyExpenditure
 		}
 
 		localStorage.setItem("user%package_body_details" , JSON.stringify(body))

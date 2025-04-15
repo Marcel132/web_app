@@ -10,7 +10,7 @@ import Chart from 'chart.js/auto'
 })
 export class CaloriesChartComponent  implements AfterViewInit{
 	@ViewChild('caloriesChart') chartRef! : ElementRef
-	@Input() dailyCalorieNeeds!: number
+	@Input() totalDailyEnergyExpenditure!: number
 	@Input() mealData!: {
 		date: string,
 		totalCalories: number,
@@ -52,7 +52,7 @@ export class CaloriesChartComponent  implements AfterViewInit{
           },
           {
             label: 'Dzienne zapotrzebowanie',
-            data: new Array(labels.length).fill(this.dailyCalorieNeeds),
+            data: new Array(labels.length).fill(this.totalDailyEnergyExpenditure),
             borderColor: 'red',
             borderWidth: 2,
             borderDash: [5, 5],
