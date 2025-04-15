@@ -125,7 +125,7 @@
 
 		</div>
 
-		<div class="dashboard-data">
+		<div class="dashboard-data" *ngIf="user.role != 'Admin'">
 			<h3>Subskrypcja</h3>
 			<div class="subscription-data data" *ngIf="user.role == 'Free'">
 
@@ -173,18 +173,23 @@
 
 			</div>
 
-			<div class='subscription-data data admin' *ngIf="user.role == 'Admin'">
+		</div>
+
+		<div class="dashboard-data"  *ngIf="user.role == 'Admin'">
+			<h3>Administrator</h3>
+
+			<div class='subscription-data data admin'>
 				<span class='items'>Email:
 					<span class='items-value'>{{user.email}}</span>
 				</span>
 
-				<span class='items'>Pakiet:
+				<span class='items'>Rola:
 					<span class="items-value">{{user.role}}</span>
 				</span>
 
 			</div>
-		</div>
 
+		</div>
 	</div>
 </ng-template>
 

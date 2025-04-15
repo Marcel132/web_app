@@ -4,7 +4,7 @@
 		<div>
 			<app-calories-chart
 			*ngIf="transformedMealsData && transformedMealsData.length > 0"
-			[dailyCalorieNeeds]="dailyCalorieNeeds"
+			[totalDailyEnergyExpenditure]="totalDailyEnergyExpenditure"
 			[mealData]="transformedMealsData">
 			</app-calories-chart>
 		</div>
@@ -48,6 +48,7 @@
 				class='custom-input'
 				>
 			</div>
+
 			<div class="form-data">
 				<label for="height">Wzrost</label>
 				<input
@@ -60,6 +61,18 @@
 				class='custom-input'
 				>
 			</div>
+
+			<div class="form-data">
+				<label for="pal">Aktywność fizyczna</label>
+				<select formControlName='pal' id="pal">
+					<option [value]='null' selected disabled>-Wybierz aktywność-</option>
+					<option value='1.2'>Siedzący tryb życia</option>
+					<option value='1.375'>Lekka aktywność fizyczna</option>
+					<option value='1.55'>Umiarkowana aktywność fizyczna</option>
+					<option value='1.725'>Wysoka aktywność fizyczna</option>
+					<option value='1.9'>Sportowiec</option>
+				</select>
+			</div>
 		</form>
 
 		<div class='result-box'>
@@ -71,6 +84,8 @@
 
 
 			<span class='bmi-block'>Twoja BMI wynosi <p>{{bmi}}</p></span>
+
+			<span class='tdee-block'>Twoje zapotrzebowanie wynosi: <p>{{totalDailyEnergyExpenditure}}</p>kcal</span>
 		</div>
 
 		<div class="error-handler" *ngIf="errorHandler.state">

@@ -4,11 +4,11 @@
 				<h1 class='logo-font'>FoodCalories</h1>
 		</div>
 
-		<div class='device-navigation' [ngClass]="{'unlogged': roleSubject ==''}">
+		<div class='device-navigation' [ngClass]="{'unlogged': roleSubject == ''}">
 			<div class="item" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}"><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
 			<div class="item" routerLinkActive="active-link" ><a [routerLink]='["calculator"]'>Kalkulator</a></div> <!-- For everyone-->
 			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div> <!-- For logged-->
-			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
+			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Premium' || roleSubject == 'Admin'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
 			<div class="item" routerLinkActive="active-link"><a [routerLink]='["account"]'>Konto</a></div> <!--For everybode (to login or singup) and for logged-->
 			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div> <!-- For logged-->
 			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Admin'"><a [routerLink]='["/admin"]'>Panel Administratora</a></div>

@@ -76,15 +76,18 @@
 
 	}
 
-	.metabolic-block, .bmi-block {
-		width: 157px;
-		height: 107px;
+	.metabolic-block, .bmi-block, .tdee-block {
+		width: 190px;
+		height: 145px;
+		align-content: center;
+		text-align: center;
 		padding: 0.5rem;
 		box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.1);
 
 		p{
 			text-align: center;
 			font-size: 1.5rem;
+			font-weight: 600;
 			color: rgba(0,0,0, 0.9)
 		}
 	}
