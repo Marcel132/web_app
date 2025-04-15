@@ -1,25 +1,25 @@
 
-<div class="w-full min-h-[500px] h-full flex flex-col md:flex-row relative bg-white">
-	<div class="sidebar w-full md:w-[150px] flex items-center justify-start flex-col lg:pt-10 relative">
+<div class="main-container">
+	<div class="sidebar">
 		<img
 		src="../../../../assets/img/list.svg"
 		alt="menu"
-		class='w-[30px] cursor-pointer left-0'
+		class='img'
 		loading='lazy'
 		(click)="toggleMenu()"
 		>
-		<div class="list-of-items py-5 flex flex-col items-center justify-center text-sm" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
-			<div class="item text-wrap " ><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
-			<div class="item" ><a [routerLink]='["calculator"]'>Kalkulator</a></div> <!-- For everyone-->
-			<div class="item" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div> <!-- For logged-->
-			<div class="item" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
-			<div class="item"><a [routerLink]='["account"]'>Konto</a></div> <!--For everybode (to login or singup) and for logged-->
-			<div class="item"  *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div> <!-- For logged-->
-			<div class="item" *ngIf="roleSubject == 'Admin'"><a [routerLink]='["/admin"]'>Panel Administratora</a></div>
-			<div class="item logout" (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div> <!-- For logged-->
-		</div>
+		<nav class="sidebar-nav" [ngClass]="{'enableMenu': toggleMenuVariable, 'disableMenu': !toggleMenuVariable}">
+			<div class="item text-wrap " routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}"><a [routerLink]='["/home"]'>Strona Główna</a></div> <!-- For everone -->
+			<div class="item" routerLinkActive="active-link" ><a [routerLink]='["calculator"]'>Kalkulator</a></div> <!-- For everyone-->
+			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject != ''"><a [routerLink]='["meals"]'>Posiłki</a></div> <!-- For logged-->
+			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Premium'"><a [routerLink]='["graph"]'>Wykresy</a></div> <!-- For premium users-->
+			<div class="item" routerLinkActive="active-link"><a [routerLink]='["account"]'>Konto</a></div> <!--For everybode (to login or singup) and for logged-->
+			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject != ''"><a [routerLink]='["settings"]'>Ustawienia</a></div> <!-- For logged-->
+			<div class="item" routerLinkActive="active-link" *ngIf="roleSubject == 'Admin'"><a [routerLink]='["/admin"]'>Panel Administratora</a></div>
+			<div class="item logout" routerLinkActive='active-link' (click)="logout()" *ngIf="roleSubject != ''">Wyloguj się</div> <!-- For logged-->
+		</nav>
 	</div>
-	<div class="flex flex-col h-full w-full py-4">
+	<div class="main-content">
 		<div *ngIf="isHomeRoute then HomeContent else RouteContent"></div>
 	</div>
 </div>

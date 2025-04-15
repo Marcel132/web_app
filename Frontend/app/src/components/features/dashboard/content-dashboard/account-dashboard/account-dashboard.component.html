@@ -172,6 +172,17 @@
 				</span>
 
 			</div>
+
+			<div class='subscription-data data admin' *ngIf="user.role == 'Admin'">
+				<span class='items'>Email:
+					<span class='items-value'>{{user.email}}</span>
+				</span>
+
+				<span class='items'>Pakiet:
+					<span class="items-value">{{user.role}}</span>
+				</span>
+
+			</div>
 		</div>
 
 	</div>
