@@ -65,8 +65,8 @@ export class LoginComponent {
 					// this.tokenService.setAccessToken(token)
 					setTimeout(() => {
 						this.routes.navigate(['/home'])
-						window.location.reload()
-					}, 2500);
+						// window.location.reload()
+					}, 1500);
 				}
 
 			} catch (error: any) {

@@ -71,7 +71,7 @@ export class RegisterComponent {
 					setTimeout(() => {
 						this.routes.navigate(['/home'])
 						window.location.reload()
-					}, 2500);
+					}, 1500);
 				}
 			} catch (error: any){
 				this.changeColor = false
