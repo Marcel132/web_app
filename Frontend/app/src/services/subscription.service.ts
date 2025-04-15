@@ -78,7 +78,6 @@ export class SubscriptionService {
 						}
 					}
 					else {
-						console.log("Your role is: " + this.role)
 						return { state: true, message: "Your role is: " + this.role}
 					}
 

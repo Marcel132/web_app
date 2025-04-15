@@ -143,7 +143,7 @@ export class GraphComponent implements OnInit {
 			totalProteins: dailyProteins[date],
 			totalCarbohydrates: dailyCarbohydrates[date],
     }));
-		console.log(this.transformedMealsData)
+		// console.log(this.transformedMealsData)
   }
 
 	calculateBmiAndBaseMetabolic() {
