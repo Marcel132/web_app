@@ -49,30 +49,35 @@ export class SubscriptionService {
 						}
 					})
 
-					if(this.role != '' && this.role!= "Free"){
-						const subscriptionToken = this.tokenService.getToken("token%subscription")
-						if(subscriptionToken){
-							const payload = this.tokenService.decodeToken(subscriptionToken)
-							this.stateService.setSubscriptionDetails(this.mapToSubscriptionDetails(payload))
-							return { state: true, message: "Set subscription by token"}
+					if(this.role !== "Admin") {
+						if(this.role != '' && this.role!= "Free"){
+							const subscriptionToken = this.tokenService.getToken("token%subscription")
+							if(subscriptionToken){
+								const payload = this.tokenService.decodeToken(subscriptionToken)
+								this.stateService.setSubscriptionDetails(this.mapToSubscriptionDetails(payload))
+								return { state: true, message: "Set subscription by token"}
+							} else {
+								const url = apiUrl.subscription
+								const body = { email: this.email, role: this.role}
+								this.http.post<{subscriptionToken: string}>(url, body, {withCredentials: true})
+								.subscribe(response => {
+									if(response){
+										this.tokenService.saveToken("token%subscription", response.subscriptionToken)
+										const payload = this.tokenService.decodeToken(response.subscriptionToken)
+										this.stateService.setSubscriptionDetails(payload as SubscriptionInterface)
+										return {state: true, message: "Set subscription by http"}
+									} else {
+										console.log("HTTP Post response is null")
+										return {state: false, message: "Http post is null"}
+									}
+								})
+								return  { state: true, message: "Set  subscription in BS"}
+							}
 						} else {
-							const url = apiUrl.subscription
-							const body = { email: this.email, role: this.role}
-							this.http.post<{subscriptionToken: string}>(url, body, {withCredentials: true})
-							.subscribe(response => {
-								if(response){
-									this.tokenService.saveToken("token%subscription", response.subscriptionToken)
-									const payload = this.tokenService.decodeToken(response.subscriptionToken)
-									this.stateService.setSubscriptionDetails(payload as SubscriptionInterface)
-									return {state: true, message: "Set subscription by http"}
-								} else {
-									console.log("HTTP Post response is null")
-									return {state: false, message: "Http post is null"}
-								}
-							})
-							return  { state: true, message: "Set  subscription in BS"}
+							return { state: true, message: "Your role is: " + this.role}
 						}
-					} else {
+					}
+					else {
 						console.log("Your role is: " + this.role)
 						return { state: true, message: "Your role is: " + this.role}
 					}
