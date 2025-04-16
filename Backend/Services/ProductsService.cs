@@ -11,7 +11,48 @@ public class ProductsService
 
   public async Task CreateProductAsync(ProductModel product)
   {
-    await _products.InsertOneAsync(product);
+
+    if(product == null)
+    {
+      throw new ArgumentException("Request is null");
+    }
+    else if(string.IsNullOrEmpty(product.Name))
+    {
+      throw new ArgumentException("Name is null");
+    }
+    else if(product.Id_prod == null)
+    {
+      throw new ArgumentException("ID prod is null");
+    }
+    else if(product.ProductDetails == null)
+    {
+      throw new ArgumentException("ProductDetails is null");
+    }
+    else if( product.ProductDetails.Kcal == null) 
+    {
+      throw new ArgumentException("Kcal is null");
+    }
+    else if(product.ProductDetails.Proteins == null){
+      throw new ArgumentException("Proteins is null");
+    }
+    else if(product.ProductDetails.Carbohydrates == null)
+    {
+      throw new ArgumentException("Carbohydrates is null");
+    }
+    else if(product.ProductDetails.Fats == null) 
+    {
+      throw new ArgumentException("Fats is null");
+    }
+
+    try
+    {
+      await _products.InsertOneAsync(product);
+      return;
+    }
+    catch (System.Exception)
+    {
+      throw;
+    }
   }
   public async Task<List<ProductModel>> GetAllProductsAsync()
   {
