@@ -1,27 +1,98 @@
-<div class="admin-container">
+<ng-container
+*ngIf="!products || products.length === 0;
+then LoadingSpinner;
+else Content
+"
+></ng-container>
 
-	<div class="panel add">
-		<h3>Dodaj produkt</h3>
+<ng-template #LoadingSpinner>
+	<app-loading-circle></app-loading-circle>
+</ng-template>
 
-		<div class="form-container">
-			<form action="" class="form">
-				<div class="form-item">
-					<label for="id_prod">ID produktu</label>
-					<input type="number" id="id_prod" name="id_prod" required>
-				</div>
-				<div class="form-item">
-					<label for="name">Nazwa</label>
-					<input type="text" id="name" name="name" required>
-				</div>
+<ng-template #Content>
+	<div class="admin-container">
 
-			</form>
+		<div class="panel add">
+			<h3>Dodaj produkt</h3>
+
+			<div class="form-container">
+				<form [formGroup]="addProductGroup" class="form">
+					<div class="form-item">
+						<label for="id_prod">ID produktu</label>
+						<input
+						type="number"
+						id="id_prod"
+						name="id_prod"
+						formControlName="idProd"
+						required
+						>
+					</div>
+					<div class="form-item">
+						<label for="name">Nazwa</label>
+						<input
+						type="text"
+						id="name"
+						name="name"
+						formControlName="nameProd"
+						required
+						>
+					</div>
+					<div class="form-item">
+						<label for="kcal">Kcal (na 100g)</label>
+						<input
+						type="number"
+						id="kcal"
+						name="kcal"
+						formControlName="kcal"
+						required
+						>
+					</div>
+					<div class="form-item">
+						<label for="proteins">Białko</label>
+						<input
+						type="number"
+						id="proteins"
+						name="proteins"
+						formControlName="proteins"
+						required
+						>
+					</div>
+					<div class="form-item">
+						<label for="fats">Tłuszcze</label>
+						<input
+						type="number"
+						id="fats"
+						name="fats"
+						formControlName="fats"
+						required
+						>
+					</div>
+					<div class="form-item">
+						<label for="carbohydrates">Węglowodany</label>
+						<input
+						type="number"
+						id="carbohydrates"
+						name="carbohydrates"
+						formControlName="carbohydrates"
+						required
+						>
+					</div>
+
+					<div class="form-item submit">
+						<button class='btn btn-add' (click)="addProduct()">Zatwierdź</button>
+						<span class='error-handler' *ngIf="errorHandler.state"> {{errorHandler.message}}</span>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="panel edit">
+			<h3>Edytuj produkt</h3>
+		</div>
+		<div class="panel delete">
+			<h3>Usuń produkt</h3>
 		</div>
 	</div>
-	<div class="panel edit">
-		<h3>Edytuj produkt</h3>
-	</div>
-	<div class="panel delete">
-		<h3>Usuń produkt</h3>
-	</div>
-</div>
+
+
+</ng-template>
 
