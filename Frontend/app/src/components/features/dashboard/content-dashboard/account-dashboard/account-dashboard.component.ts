@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
-import { SubscriptionInterface } from '../../../../../interfaces/subscription.details';
+import { SubscriptionInterface } from '../../../../../interfaces/subscription';
 import { SubscriptionService } from '../../../../../services/subscription.service';
 import { StateService } from '../../../../../services/state.service';
 

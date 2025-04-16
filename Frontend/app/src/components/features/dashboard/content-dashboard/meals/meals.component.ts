@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
-import { MealsTable } from '../../../../../interfaces/meals-table';
+import { MealsTableInterface } from '../../../../../interfaces/meals-table';
 import { StateService } from '../../../../../services/state.service';
-import { Product } from '../../../../../interfaces/product';
-import { Meals } from '../../../../../interfaces/meals';
+import { ProductInterface } from '../../../../../interfaces/product';
+import { MealsInterface } from '../../../../../interfaces/meals';
 import { LoadingCircleComponent } from "../../../../shared/loading-circle/loading-circle.component";
 
 @Component({
@@ -21,9 +21,9 @@ import { LoadingCircleComponent } from "../../../../shared/loading-circle/loadin
 })
 export class MealsComponent {
 
-	products: Product[] = [] // Product that user can select
+	products: ProductInterface[] = [] // Product that user can select
 	selectedProductById: number | null = null // Selected product sorting by ID
-	selectedProduct: Product | null = null // Selected product details
+	selectedProduct: ProductInterface | null = null // Selected product details
 	showAddMealCard: boolean = false // Card is visible for user when click a button
 	visibleIndex!: number | null
 	showDetails!: boolean[]
@@ -33,14 +33,14 @@ export class MealsComponent {
 	title: string = '' // Title of meal
 	description: string = '' // Description of meal
 
-	mealsTable: MealsTable[] = [] // Array with all user products
+	mealsTable: MealsTableInterface[] = [] // Array with all user products
 
 	handler = {
 		state: false,
 		message: ""
 	} // Handler for server response
 
-	userMeals: Meals | null = null // User data with all meals
+	userMeals: MealsInterface | null = null // User data with all meals
 
 	constructor(
 		private userService: UserService,

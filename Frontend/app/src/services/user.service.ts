@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, firstValueFrom, Observable, take, tap, throwError } from 'rxjs';
-import { MealsTable } from '../interfaces/meals-table';
+import { MealsTableInterface } from '../interfaces/meals-table';
 import { apiUrl } from '../env/env.route';
 import { StateService } from './state.service';
-import { Product } from '../interfaces/product';
-import { Meals } from '../interfaces/meals';
+import { ProductInterface } from '../interfaces/product';
+import { MealsInterface } from '../interfaces/meals';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class UserService {
 
   fetchProductsData(): void {
     const url = apiUrl.products;
-    this.http.get<Product[]>(url).pipe(
+    this.http.get<ProductInterface[]>(url).pipe(
 			take(1),
       tap(products => this.stateService.setProducts(products)),
       catchError(this.handleError)
@@ -29,7 +29,7 @@ export class UserService {
 
 	fetchMealsData(): void {
 		const url = apiUrl.meals;
-		this.http.get<MealsTable[]>(url).pipe(
+		this.http.get<MealsTableInterface[]>(url).pipe(
 			take(1),
 			tap(meals => this.stateService.setMeals(meals)),
 			catchError(this.handleError)
@@ -41,7 +41,7 @@ export class UserService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-	async saveUserMeal(title: string, description: string, meals: MealsTable[]): Promise<{ state: boolean, message: string} >{
+	async saveUserMeal(title: string, description: string, meals: MealsTableInterface[]): Promise<{ state: boolean, message: string} >{
 		let email: string | undefined;
 		await firstValueFrom(this.stateService.userEmailSubject$).then(data => {
 			if (data) {
@@ -105,7 +105,7 @@ export class UserService {
 			email,
 			role
 		}
-		this.http.post<{state: boolean, response: Meals}>(url, body, {withCredentials: true})
+		this.http.post<{state: boolean, response: MealsInterface}>(url, body, {withCredentials: true})
 		.pipe(
 			tap( response => {
 				if(response != null){

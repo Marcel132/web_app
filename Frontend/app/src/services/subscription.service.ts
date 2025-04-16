@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { SubscriptionInterface } from '../interfaces/subscription.details';
+import { SubscriptionInterface } from '../interfaces/subscription';
 import { TokenService } from './token.service';
 import { apiUrl } from '../env/env.route';
 import { HttpClient } from '@angular/common/http';

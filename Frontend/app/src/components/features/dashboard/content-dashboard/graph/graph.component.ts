@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../../../../services/state.service';
 import { UserService } from '../../../../../services/user.service';
-import { Meals } from '../../../../../interfaces/meals';
+import { MealsInterface } from '../../../../../interfaces/meals';
 import { CaloriesChartComponent } from "./calories-chart/calories-chart.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 })
 export class GraphComponent implements OnInit {
 
-	meals: Meals | null = null
+	meals: MealsInterface | null = null
 	transformedMealsData: any[] = []
 	totalDailyEnergyExpenditure: number = 2000 // Total Daily Energy Expenditure, default value : 2000
 	formUserData: FormGroup<any>

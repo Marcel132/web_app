@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SubscriptionInterface } from '../interfaces/subscription.details';
-import { MealsTable } from '../interfaces/meals-table';
-import { Product } from '../interfaces/product';
-import { Meals } from '../interfaces/meals';
+import { SubscriptionInterface } from '../interfaces/subscription';
+import { MealsTableInterface } from '../interfaces/meals-table';
+import { ProductInterface } from '../interfaces/product';
+import { MealsInterface } from '../interfaces/meals';
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +31,13 @@ export class StateService {
 	subscriptionDetailsSubject$ = this.subscriptionDetails.asObservable()
 	// subscriptionDetailsValue$ = this.subscriptionDetails.getValue()
 
-	private productsSubject = new BehaviorSubject<Product[] | null>(null);
+	private productsSubject = new BehaviorSubject<ProductInterface[] | null>(null);
 	products$ = this.productsSubject.asObservable();
 
-	private userMealsSubject = new BehaviorSubject<Meals | null>(null);
+	private userMealsSubject = new BehaviorSubject<MealsInterface | null>(null);
 	userMealsSubject$ = this.userMealsSubject.asObservable();
 
-	private mealsSubject = new BehaviorSubject<MealsTable[] | null>(null);
+	private mealsSubject = new BehaviorSubject<MealsTableInterface[] | null>(null);
 	meals$ = this.mealsSubject.asObservable();
 
 
@@ -53,16 +53,16 @@ export class StateService {
 	setSubscriptionDetails(details: SubscriptionInterface){
 		this.subscriptionDetails.next(details)
 	}
-	setProducts(products: Product[]){
+	setProducts(products: ProductInterface[]){
 		// console.log('Otrzymane produkty:', products);
 		const sortedProducts = [...products].sort((a,b) => a.name.localeCompare(b.name))
 		this.productsSubject.next(sortedProducts)
 		// console.log('Posortowane produkty:', sortedProducts);
 	}
-	setMeals(meals: MealsTable[]){
+	setMeals(meals: MealsTableInterface[]){
 		this.mealsSubject.next(meals)
 	}
-	setUserMeals(meals: Meals){
+	setUserMeals(meals: MealsInterface){
 		this.userMealsSubject.next(meals)
 	}
 
