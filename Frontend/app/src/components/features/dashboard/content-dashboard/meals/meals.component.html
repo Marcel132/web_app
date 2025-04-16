@@ -1,144 +1,162 @@
-<div class="meals-container">
+<ng-container
+*ngIf="!products || !mealsTable || products.length === 0;
+then LoadingSpinner;
+else Meals;
+"
+></ng-container>
 
-	<div class="header">
-		<h2>Posiłki</h2>
-		<button class="btn btn-add" (click)="toggleList('add-meal', 0)">Dodaj Posiłek</button>
-	</div>
+<ng-template #LoadingSpinner>
+	<app-loading-circle></app-loading-circle>
+</ng-template>
 
-	<div class="add-meal-card" *ngIf="showAddMealCard">
-		<div class="meal-card-box">
-			<label for="meal-header">Tytuł</label>
-			<input
-			type="text"
-			id='meal-header'
-			class='custom-input'
-			[(ngModel)]="title"
-			placeholder='Max. 80 znaków'
-			maxlength="80"
-			>
-		</div>
-		<div class="meal-card-box">
-			<label for="meal-description">Opis</label>
-			<input
-			type="text"
-			id='meal-description'
-			class='custom-input'
-			[(ngModel)]="description"
-			placeholder='Max. 250 znaków'
-			maxlength='250'
-			>
-		</div>
-		<div class="meal-card-box additional-select">
-			<select
-			name="select-product"
-			id="select-product"
-			[(ngModel)]="selectedProductById"
-			(change)="onProductChange()"
-			class='mb-4'
-			>
-				<option [ngValue]="null" selected disabled>-Wybierz produkt-</option>
-				<option [value]="product.id_prod" *ngFor="let product of products">{{product.name}}</option>
-			</select>
-			<input
-			type="number"
-			id='weight'
-			[(ngModel)]="weight"
-			min='0'
-			placeholder='Waga produktu'
-			class='text-center'
-			>
-		</div>
-		<div class="meal-card-box additional-details" *ngIf="selectedProduct">
-			<!-- Description -->
-			<span>Kalorie: {{selectedProduct.productDetails.kcal}}</span>
-			<span>Węgle: {{selectedProduct.productDetails.carbohydrates}}</span>
-			<span>Tłuszcze: {{selectedProduct.productDetails.fats}}</span>
-			<span>Białka: {{selectedProduct.productDetails.proteins}}</span> <br>
+<ng-template #Meals>
+	<div class="meals-container">
+
+		<div class="header">
+			<h2>Posiłki</h2>
+			<button class="btn btn-add" (click)="toggleList('add-meal', 0)">Dodaj Posiłek</button>
 		</div>
 
-		<button class='btn btn-add' (click)="addMealToTable()">Dodaj</button>
-
-		<!-- <div class='py-5'>
-			<h4 class='tracking-wide'>{{title}}</h4>
-			<p>{{description}}</p>
-		</div> -->
-
-		<div class='meals-table' *ngFor="let product of mealsTable; let i = index">
-			<p>Produkt: {{product.name}}</p>
-			<div class='meals-table-item'>
-				<span class='cursor-pointer font-semibold text-sm' (click)="toggleList('description', i)">Szczegóły: [g]</span>
-				<div  class='product-details' *ngIf="product.showDescription">
-					<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
-					<p class='meal-description'>Kcal: {{product.productDetails.kcal.toFixed(2)}}</p>
-					<p class='meal-description'>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}</p>
-					<p class='meal-description'>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}</p>
-					<p class='meal-description'>Białka: {{product.productDetails.proteins.toFixed(2)}}</p>
-				</div>
-				<div>
-					<button class='btn btn-delete my-2 mx-4 p-2' (click)="deleteMealFromTable(i)">Usuń</button>
-					<button class='btn btn-edit my-2 mx-4 p-2' (click)="toggleList('edit-mode', i)">Edytuj wagę</button>
-				</div>
+		<div class="add-meal-card" *ngIf="showAddMealCard">
+			<div class="meal-card-box">
+				<label for="meal-header">Tytuł</label>
+				<input
+				type="text"
+				id='meal-header'
+				class='custom-input'
+				[(ngModel)]="title"
+				placeholder='Max. 80 znaków'
+				maxlength="80"
+				>
 			</div>
-
-			<div *ngIf="product.editMode">
+			<div class="meal-card-box">
+				<label for="meal-description">Opis</label>
+				<input
+				type="text"
+				id='meal-description'
+				class='custom-input'
+				[(ngModel)]="description"
+				placeholder='Max. 250 znaków'
+				maxlength='250'
+				>
+			</div>
+			<div class="meal-card-box additional-select">
+				<select
+				name="select-product"
+				id="select-product"
+				[(ngModel)]="selectedProductById"
+				(change)="onProductChange()"
+				class='mb-4'
+				>
+					<option [ngValue]="null" selected disabled>-Wybierz produkt-</option>
+					<option [value]="product.id_prod" *ngFor="let product of products">{{product.name}}</option>
+				</select>
 				<input
 				type="number"
 				id='weight'
-				[(ngModel)]="editWeight"
+				[(ngModel)]="weight"
 				min='0'
 				placeholder='Waga produktu'
-				class='text-center'>
-				<button class='btn btn-save' (click)="editMealFromTable(i)">Zapisz</button>
+				class='text-center'
+				>
 			</div>
-		</div>
+			<div class="meal-card-box additional-details" *ngIf="selectedProduct">
+				<!-- Description -->
+				<span>Kalorie: {{selectedProduct.productDetails.kcal}}</span>
+				<span>Węgle: {{selectedProduct.productDetails.carbohydrates}}</span>
+				<span>Tłuszcze: {{selectedProduct.productDetails.fats}}</span>
+				<span>Białka: {{selectedProduct.productDetails.proteins}}</span> <br>
+			</div>
 
-		<button class="btn" (click)="saveMeal()">Zatwierdź</button>
+			<button class='btn btn-add' (click)="addMealToTable()">Dodaj</button>
 
-		<div *ngIf="handler.state">
-			<span class='handler-style'>{{handler.message}}</span>
-		</div>
-	</div>
+			<!-- <div class='py-5'>
+				<h4 class='tracking-wide'>{{title}}</h4>
+				<p>{{description}}</p>
+			</div> -->
 
-	<div class='meal-table' *ngIf="userMeals">
-			<div *ngFor="let meal of userMeals.details; let i = index" class='meal-table-item'>
-				<p class='date'>{{meal.date | date:'yyyy/MM/dd'}}</p>
-				<h4 class='title'>{{meal.title}}</h4>
-				<p class='description' max='10'>{{meal.description}}</p>
-				<button class='btn btn-show' (click)="toggleList('details',i)"> {{visibleIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
-				<div *ngFor="let product of meal.meals" class='item-details'>
+			<div class='meals-table' *ngFor="let product of mealsTable; let i = index">
+				<p>Produkt: {{product.name}}</p>
+				<div class='meals-table-item'>
+					<span class='cursor-pointer font-semibold text-sm' (click)="toggleList('description', i)">Szczegóły: [g]</span>
+					<div  class='product-details' *ngIf="product.showDescription">
+						<p class='meal-description'>Waga: {{product.weight.toFixed(2)}}</p>
+						<p class='meal-description'>Kcal: {{product.productDetails.kcal.toFixed(2)}}</p>
+						<p class='meal-description'>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}</p>
+						<p class='meal-description'>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}</p>
+						<p class='meal-description'>Białka: {{product.productDetails.proteins.toFixed(2)}}</p>
+					</div>
 					<div>
-						<p class='name'>Nazwa: {{product.name}}</p>
-						<p class='weight'>Waga: {{product.weight}}g</p>
-						<span class='product-details'  *ngIf="visibleIndex === i">
-							<p>Kcal: {{product.productDetails.kcal.toFixed(2)}}g</p>
-							<p>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}g</p>
-							<p>Białko: {{product.productDetails.proteins.toFixed(2)}}g</p>
-							<p>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}g</p>
-						</span>
+						<button class='btn btn-delete my-2 mx-4 p-2' (click)="deleteMealFromTable(i)">Usuń</button>
+						<button class='btn btn-edit my-2 mx-4 p-2' (click)="toggleList('edit-mode', i)">Edytuj wagę</button>
 					</div>
 				</div>
+
+				<div *ngIf="product.editMode">
+					<input
+					type="number"
+					id='weight'
+					[(ngModel)]="editWeight"
+					min='0'
+					placeholder='Waga produktu'
+					class='text-center'>
+					<button class='btn btn-save' (click)="editMealFromTable(i)">Zapisz</button>
+				</div>
 			</div>
-	</div>
 
-</div>
+			<button class="btn" (click)="saveMeal()">Zatwierdź</button>
 
-
-<!-- <div class="max-w-[300px] py-5 border-solid border-2 border-black rounded-lg">
-
-	<div class="meals-list-item" *ngFor="let meal of meals">
-		<div class="meals-list-item-header">
-			<h3>{{ meal.name }}</h3>
-			<button class="btn btn-edit" (click)="openEditMeal(meal)">Edytuj</button>
-			<button class="btn btn-delete"(click)="openDeleteMeal(meal)">Usuń</button>
+			<div *ngIf="handler.state">
+				<span class='handler-style'>{{handler.message}}</span>
+			</div>
 		</div>
 
-		<div class="meals-list-item-body">
-			<p>{{ meal.description }}</p>
-			<p>{{ meal.calories }} calories</p>
-			<p>{{ meal.protein }}g protein</p>
-			<p>{{ meal.carbs }}g carbs</p>
-			<p>{{ meal.fat }}g fat</p>
+		<div class='meal-table' *ngIf="userMeals">
+				<div *ngFor="let meal of userMeals.details; let i = index" class='meal-table-item'>
+					<p class='date'>{{meal.date | date:'yyyy/MM/dd'}}</p>
+					<h4 class='title'>{{meal.title}}</h4>
+					<p class='description' max='10'>{{meal.description}}</p>
+					<button class='btn btn-show' (click)="toggleList('details',i)"> {{visibleIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
+					<div *ngFor="let product of meal.meals" class='item-details'>
+						<div>
+							<p class='name'>Nazwa: {{product.name}}</p>
+							<p class='weight'>Waga: {{product.weight}}g</p>
+							<span class='product-details'  *ngIf="visibleIndex === i">
+								<p>Kcal: {{product.productDetails.kcal.toFixed(2)}}g</p>
+								<p>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}g</p>
+								<p>Białko: {{product.productDetails.proteins.toFixed(2)}}g</p>
+								<p>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}g</p>
+							</span>
+						</div>
+					</div>
+				</div>
 		</div>
+
 	</div>
 
-</div> -->
+
+	<!-- <div class="max-w-[300px] py-5 border-solid border-2 border-black rounded-lg">
+
+		<div class="meals-list-item" *ngFor="let meal of meals">
+			<div class="meals-list-item-header">
+				<h3>{{ meal.name }}</h3>
+				<button class="btn btn-edit" (click)="openEditMeal(meal)">Edytuj</button>
+				<button class="btn btn-delete"(click)="openDeleteMeal(meal)">Usuń</button>
+			</div>
+
+			<div class="meals-list-item-body">
+				<p>{{ meal.description }}</p>
+				<p>{{ meal.calories }} calories</p>
+				<p>{{ meal.protein }}g protein</p>
+				<p>{{ meal.carbs }}g carbs</p>
+				<p>{{ meal.fat }}g fat</p>
+			</div>
+		</div>
+
+	</div> -->
+
+</ng-template>
+
+
+
+

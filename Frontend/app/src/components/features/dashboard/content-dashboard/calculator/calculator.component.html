@@ -1,4 +1,13 @@
-<div class="flex flex-col items-center justify-center ">
+<ng-container *ngIf="!products || products.length === 0; then LoadingSpinner; else Calculator">
+
+</ng-container>
+
+<ng-template #LoadingSpinner>
+	<app-loading-circle></app-loading-circle>
+</ng-template>
+
+<ng-template #Calculator>
+	<div class="flex flex-col items-center justify-center ">
 		<!-- Producs data -->
 		<div class="product-table">
 			<table class="border-collapse">
@@ -77,3 +86,5 @@
 	</div>
 
 </div>
+</ng-template>
+

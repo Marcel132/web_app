@@ -6,14 +6,16 @@ import { MealsTable } from '../../../../../interfaces/meals-table';
 import { StateService } from '../../../../../services/state.service';
 import { Product } from '../../../../../interfaces/product';
 import { Meals } from '../../../../../interfaces/meals';
+import { LoadingCircleComponent } from "../../../../shared/loading-circle/loading-circle.component";
 
 @Component({
   selector: 'app-meals',
   standalone: true,
   imports: [
-		CommonModule,
-		FormsModule,
-	],
+    CommonModule,
+    FormsModule,
+    LoadingCircleComponent
+],
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.scss'
 })
