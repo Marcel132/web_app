@@ -1,6 +1,6 @@
-import { MealsTable } from "./meals-table"
+import { MealsTableInterface } from "./meals-table"
 
-export interface Meals {
+export interface MealsInterface {
 	id: string,
 	email: string,
 	details: [
@@ -9,7 +9,7 @@ export interface Meals {
 			title: string,
 			description: string,
 			date:  Date,
-			meals: MealsTable[]
+			meals: MealsTableInterface[]
 		}
 	]
 }
