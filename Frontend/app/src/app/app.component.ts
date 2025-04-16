@@ -5,6 +5,7 @@ import { UserService } from '../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { SubscriptionService } from '../services/subscription.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { SubscriptionService } from '../services/subscription.service';
 		AuthService,
 		UserService,
 		SubscriptionService,
+		AdminService,
 	],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
