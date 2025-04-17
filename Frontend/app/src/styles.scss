@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: "Nunito", Arial, sans-serif;
   font-size: 1rem; // Baza
 }
 
@@ -40,9 +40,9 @@ a {
 // }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("./assets/fonts/Montserrat-Medium.ttf") format(".ttf"),
-       url("./assets/fonts/Montserrat-Medium.ttf") format(".ttf");
+  font-family: "Nunito";
+  src: url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format(".ttf"),
+       url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format(".ttf");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

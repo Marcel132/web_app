@@ -33,6 +33,7 @@
 							"src/assets"
             ],
             "styles": [
+							"src/assets/variable.css",
 							"src/styles.scss"
             ],
             "scripts": [],
