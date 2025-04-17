@@ -2,25 +2,31 @@
 
 	<div class="settings-list">
 
-		<label class="item them-mode">
-			<p>Zmień: motyw</p>
-			<input
-			type="checkbox"
-			[checked]="isDarkMode"
-			(change)="toggleTheme($event)"
-			>
-			<span class="slider"></span>
-			<span class="mode-label">{{ isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
-		</label>
+		<div class="item">
+			<p>Zmień motyw:</p>
+			<label class="mode them-mode">
+				<input
+				type="checkbox"
+				[checked]="settings.isDarkMode"
+				(change)="toggleTheme($event)"
+				>
+				<span class="slider"></span>
+				<span class="mode-label">{{ settings.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+			</label>
+		</div>
 
-		<label class="item them-mode">
-			<p>Druga opcja</p>
-			<input
-			type="checkbox"
-			>
-			<span class="slider"></span>
-			<span class="mode-label">{{ isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
-		</label>
+		<div class="item">
+			<p>Zapamiętaj mnie</p>
+			<label class="mode them-mode">
+				<input
+				type="checkbox"
+				[checked]="settings.isRememberMe"
+				(change)="rememberMe($event)"
+				>
+				<span class="slider"></span>
+				<span class="mode-label">{{ settings.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+			</label>
+		</div>
 		<span class="item"></span>
 		<span class="item"></span>
 		<span class="item"></span>

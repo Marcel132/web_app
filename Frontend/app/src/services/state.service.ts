@@ -68,6 +68,7 @@ export class StateService {
 
 	clearAccessToken(){
 		this.accessToken.next(null)
+		localStorage.removeItem("token%auth")
 	}
 	clearUserRole(){
 		this.userRole.next("")

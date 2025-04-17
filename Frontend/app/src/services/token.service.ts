@@ -74,15 +74,36 @@ export class TokenService {
 		})
 	}
 	saveToken(key: string, value: any){
-		sessionStorage.setItem(key, value)
+		const isRememberMe = this.storageValidation("user%settings")
+
+		if(isRememberMe.rememberMe){
+			localStorage.setItem(key, value)
+		} else {
+			sessionStorage.setItem(key, value)
+		}
 	}
 
 	getToken(key: string){
-		return sessionStorage.getItem(key)
+		const isRememberMe = this.storageValidation("user%settings")
+
+		if(!isRememberMe){
+			return localStorage.setItem("user%settings", JSON.stringify({
+				theme: 'light',
+				rememberMe: false
+			}))
+		} else {
+			console.log(isRememberMe)
+			if(isRememberMe.rememberMe){
+				return localStorage.getItem(key)
+			} else {
+				return sessionStorage.getItem(key)
+			}
+		}
 	}
 
 	clearToken(key: any){
 		sessionStorage.removeItem(key)
+		localStorage.removeItem(key)
 	}
 
 	// // For refreshing a token
@@ -125,6 +146,23 @@ export class TokenService {
 			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 			const jsonPayload = atob(base64)
 			return JSON.parse(jsonPayload)
+		}
+
+		private storageValidation(key: string){
+			if(key){
+				const locStorage = localStorage.getItem(key)
+				const sessStorage = sessionStorage.getItem(key)
+
+				if(locStorage){
+					return JSON.parse(locStorage);
+				}
+				else if(sessStorage)
+					return JSON.parse(sessStorage);
+
+			} else {
+				console.log("There is no key")
+				return false
+			}
 		}
 
 }

@@ -115,4 +115,12 @@ export class UserService {
 			catchError(this.handleError)
 		).subscribe()
 	}
+
+	updateUserSettings(newValues: {}) {
+		const raw = localStorage.getItem("user%settings");
+		const current = raw ? JSON.parse(raw) : {};
+
+		const updated = { ...current, ...newValues };
+		localStorage.setItem("user%settings", JSON.stringify(updated));
+	}
 }
