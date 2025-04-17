@@ -59,6 +59,23 @@ export class AppComponent {
 			}
 		}
 
+
+		const appMode = localStorage.getItem("user%app_mode")
+		if(!appMode){
+			localStorage.setItem("user%app_mode", JSON.stringify({default: "light"}))
+			document.body.classList.add("light")
+		} else {
+			const payload = JSON.parse(appMode)
+			if(payload.default == "light"){
+				document.body.classList.add('light')
+				document.body.classList.remove('dark')
+			}
+			else if(payload.default == "dark"){
+				document.body.classList.add('dark')
+				document.body.classList.remove('light')
+			}
+		}
+
 		const customFontUrl = localStorage.getItem('customFontUrl')
 		if(customFontUrl){
 			this.loadFont(customFontUrl)
