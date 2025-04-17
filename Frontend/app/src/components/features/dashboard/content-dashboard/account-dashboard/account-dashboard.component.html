@@ -4,10 +4,13 @@
 
 
 <ng-template #UserForms>
-	<div  class='account-container'>
-		<div class="account-button"><a [routerLink]='["/home/forms/login"]'>Logowanie</a></div>
-		<div class="account-button"><a [routerLink]='["/home/forms/register"]'>Rejestracja</a></div>
+
+	<div class="account-wrapper">
+		<div class="account-forms">
+			<router-outlet></router-outlet>
+		</div>
 	</div>
+
 </ng-template>
 <ng-template #AccountDashboard>
 	<div class="account-dashboard">

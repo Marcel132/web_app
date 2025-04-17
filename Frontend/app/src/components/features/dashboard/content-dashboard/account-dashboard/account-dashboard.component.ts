@@ -7,17 +7,19 @@ import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
 import { SubscriptionInterface } from '../../../../../interfaces/subscription';
 import { SubscriptionService } from '../../../../../services/subscription.service';
 import { StateService } from '../../../../../services/state.service';
+import { LoginComponent } from "../../../auth-container/login/login.component";
 
 @Component({
   selector: 'app-account-dashboard',
   standalone: true,
   imports: [
-		CommonModule,
-		RouterModule,
-		FormsModule,
-		TranslatePipe,
-		BooleanHandlerPipe
-	],
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    TranslatePipe,
+    BooleanHandlerPipe,
+    LoginComponent
+],
   templateUrl: './account-dashboard.component.html',
   styleUrl: './account-dashboard.component.scss'
 })

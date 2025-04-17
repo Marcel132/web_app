@@ -34,7 +34,7 @@ export class RegisterComponent {
 
 	changeMode()
 	{
-		this.routes.navigate(['home/forms/login']);
+		this.routes.navigate(['/home/account/forms/login']);
 	}
 
 	async sendFormValue() {
