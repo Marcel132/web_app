@@ -16,7 +16,7 @@ body.light {
 
 	--img-color: #333333;
 
-	--checkbox: #ccc;
+	--checkbox: #000;
 
 	.img {
 		filter: invert(0%);
@@ -39,7 +39,7 @@ body.dark {
 
   --accent: #4caf50;
 
-	--checkbox: #555;
+	--checkbox: #000;
 
 
 	.img {
