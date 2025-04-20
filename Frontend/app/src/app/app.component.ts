@@ -59,7 +59,7 @@ export class AppComponent {
 			}
 		}
 
-
+		document.body.classList.add("light")
 		const userSettings = localStorage.getItem("user%settings")
 		console.log(userSettings)
 		if(userSettings)
@@ -67,16 +67,11 @@ export class AppComponent {
 			try {
 				const parseSettings = JSON.parse(userSettings)
 				if(parseSettings.theme === "light"){
-					document.body.classList.add('light')
 					document.body.classList.remove('dark')
 				}
 				else if(parseSettings.theme == "dark"){
 					document.body.classList.add('dark')
-					document.body.classList.remove('light')
-				} else {
-					document.body.classList.add("light")
-				}
-
+				} 
 			} catch (error) {
 				console.log(error)
 			}
