@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { MealsTableInterface } from '../../../../../interfaces/meals-table';
@@ -19,137 +19,178 @@ import { LoadingCircleComponent } from "../../../../shared/loading-circle/loadin
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.scss'
 })
-export class MealsComponent {
+export class MealsComponent implements OnInit{
 
-	products: ProductInterface[] = [] // Product that user can select
-	selectedProductById: number | null = null // Selected product sorting by ID
-	selectedProduct: ProductInterface | null = null // Selected product details
-	showAddMealCard: boolean = false // Card is visible for user when click a button
-	visibleIndex!: number | null
-	showDetails!: boolean[]
-	weight: number = 0; // Select weight
-	editWeight: number = 0; // Edit weight
+	products: ProductInterface[] | null = null;
+	selectedProduct: number | null = null;
+	selectedProductDetails: ProductInterface | null = null;
+	toggleAddMealCard: boolean = false;
+	detailsIndex: number | null = null
+	toggleDetails: boolean = false;
+	productWeight: {weight: number | null, newWeight: number | null} = {
+		weight: null,
+		newWeight: null,
+	}
+	productData: {title: string | null, description: string | null} = {
+		title: null,
+		description: null,
+	}
 
-	title: string = '' // Title of meal
-	description: string = '' // Description of meal
+	meals: MealsInterface | null = null;
+	mealDetails: MealsTableInterface[] | null = null;
 
-	mealsTable: MealsTableInterface[] = [] // Array with all user products
-
-	handler = {
+	handler: {state: boolean, message: string} = {
 		state: false,
-		message: ""
-	} // Handler for server response
-
-	userMeals: MealsInterface | null = null // User data with all meals
+		message: ''
+	}
 
 	constructor(
 		private userService: UserService,
 		private stateService: StateService,
-	){}
+	) {}
+
 
 	ngOnInit(): void {
-		this.stateService.products$.subscribe(products => {
-			if(products == null){
-				this.userService.fetchProductsData()
-			} else {
-				this.products = products
-			}
-		})
-		this.stateService.userMealsSubject$.subscribe(meals => {
-			if(meals == null){
-				this.userService.fetchUserMealsData()
-			} else {
-				this.userMeals = meals;
-			}
-		})
+			this.stateService.products$.subscribe(
+				products => {
+					if(products) {
+						this.products = products;
+					}
+					else {
+						this.userService.fetchProductsData();
+					}
+				}
+			)
+
+			this.stateService.userMealsSubject$.subscribe(
+				meals => {
+					if(meals){
+						this.meals = meals
+					}
+					else {
+						this.userService.fetchUserMealsData()
+					}
+				}
+			)
 	}
 
 	onProductChange(){
-		this.selectedProduct = this.products.find(prod => prod.id_prod == this.selectedProductById) || null;
-	}
-
-	addMealToTable(){
-		if(this.selectedProduct == null || this.weight == 0){
-			return
+		if(this.products){
+			this.selectedProductDetails = this.products.find(product => product.id_prod == this.selectedProduct) || null
 		}
-		this.mealsTable.push({
-			id_prod: this.selectedProduct.id_prod,
-			name: this.selectedProduct.name,
-			weight: this.weight,
-			productDetails: {
-				kcal: this.selectedProduct.productDetails.kcal * this.weight / 100,
-				proteins: this.selectedProduct.productDetails.proteins * this.weight / 100,
-				fats: this.selectedProduct.productDetails.fats * this.weight / 100,
-				carbohydrates: this.selectedProduct.productDetails.carbohydrates * this.weight / 100,
-			},
-			showDescription: false,
-			editMode: false
-		})
 	}
 
-
-	deleteMealFromTable(index: number): void {
-		this.mealsTable.splice(index, 1)
+	addMealsProducts()
+	{
+		if(!this.selectedProduct || !this.productWeight.weight){
+			this.handler = {state: true, message: "Należy wybrać produkt oraz wagę"}
+			return;
+		}
+		if(!this.mealDetails){
+			this.mealDetails = []
+		}
+		if(this.mealDetails && this.selectedProductDetails) {
+			const weight = this.productWeight.weight;
+			this.mealDetails.push({
+				id_prod: this.selectedProductDetails.id_prod,
+				name: this.selectedProductDetails.name,
+				weight: this.productWeight.weight,
+				productDetails: {
+					kcal: this.selectedProductDetails.productDetails.kcal * weight / 100,
+					proteins: this.selectedProductDetails.productDetails.proteins * weight / 100,
+					fats: this.selectedProductDetails.productDetails.fats * weight / 100,
+					carbohydrates: this.selectedProductDetails.productDetails.carbohydrates * weight / 100
+				},
+				showDescription: false,
+				editMode: false,
+			})
+		}
 	}
+
+	deleteMealsProduct(index: number): void {
+		if(this.mealDetails != null){
+			this.mealDetails.splice(index, 1)
+		}
+	}
+
 	editMealFromTable(index: number): void {
 		this.toggleList('edit-mode', index)
-		this.mealsTable[index].weight = this.editWeight
-		if (this.selectedProduct) {
-			this.mealsTable[index].productDetails = {
-				kcal: this.selectedProduct.productDetails.kcal * this.editWeight / 100,
-				proteins: this.selectedProduct.productDetails.proteins * this.editWeight / 100,
-				fats: this.selectedProduct.productDetails.fats * this.editWeight / 100,
-				carbohydrates: this.selectedProduct.productDetails.carbohydrates * this.editWeight / 100,
+		if(this.mealDetails != null){
+			const weight = this.productWeight.newWeight
+			if(weight && weight > 0){
+				this.mealDetails[index].weight = weight;
+				if (this.selectedProductDetails) {
+					this.mealDetails[index].productDetails = {
+						kcal: this.selectedProductDetails?.productDetails.kcal * weight / 100,
+						proteins: this.selectedProductDetails.productDetails.proteins * weight / 100,
+						fats: this.selectedProductDetails.productDetails.fats * weight / 100,
+						carbohydrates: this.selectedProductDetails.productDetails.carbohydrates * weight / 100,
+					}
+				}
 			}
 		}
 	}
 
-
 	saveMeal(){
-		if(this.title.length > 80 || this.title.length == 0){
-			this.handler.state = true;
-			this.handler.message = "Twój tytuł nie spełnia wymagań"
+		const title = this.productData.title;
+		const description = this.productData.description;
+
+		if(title && (title.length > 80 || title.length <= 0)){
+			this.handler = {state: true, message: "Twój tytuł nie spełnia wymagań"}
+			return;
 		}
-		else if( this.description.length > 250 || this.description.length == 0){
-			this.handler.state = true;
-			this.handler.message = "Twój opis nie spełnia wymagań"
+		if(description && (description.length > 250 || description.length == 0)){
+			this.handler = {state: true, message: "Twój opis nie spełnia wymagań"}
+			return;
 		}
-		else {
-			if(this.mealsTable.length > 0 && this.weight > 0){
-				this.userService.saveUserMeal(this.title, this.description, this.mealsTable)
-				.then(response => {
-					if(response) {
-						this.handler.state = response.state
-						this.handler.message = response.message
-					}
+		try {
+			this.handler = {state: false, message: ""};
+			if(!title){
+				this.handler = {state: true, message: "Musisz mieć tytuł"};
+				return;
+			}
+			if(!description){
+				this.handler = {state: true, message: "Musisz mieć opis"};
+				return
+			}
+			if(this.mealDetails && this.mealDetails.length > 0 && this.productWeight.weight && this.productWeight.weight > 0){
+				this.userService.saveUserMeal(title, description, this.mealDetails)
+				.then( response => {
+					this.handler = {state: true, message: response.message};
 				})
 			} else {
-				this.handler.state = true
-				this.handler.message = "Aby dodać posiłek podaj produkt i jego wagę"
+				this.handler = {state: true, message: "Należy wybrać produkt i jego wagę"}
 			}
+		} catch (error) {
+			this.handler = {state: true, message: "Błąd serwera"}
+			console.group("Add a meal")
+			console.error(error)
 		}
+
 	}
 
 	toggleList(select: string, index: number){
+		if(select == "add-meal") {
+			this.toggleAddMealCard = !this.toggleAddMealCard
+			return;
+		}
+		if(select == "details") {
+			this.detailsIndex = this.detailsIndex === index ? null : index;
+			return;
+		}
+
+ 		if(!this.mealDetails) {
+			return;
+		}
 		switch(select)
 		{
 			case 'description':
-			this.mealsTable[index].showDescription = !this.mealsTable[index].showDescription
-			break;
-
-			case 'details':
-			this.visibleIndex = this.visibleIndex === index ? null : index
+			this.mealDetails[index].showDescription = !this.mealDetails[index].showDescription
 			break;
 
 			case 'edit-mode':
-			this.mealsTable[index].editMode = !this.mealsTable[index].editMode
-			break;
-
-			case 'add-meal':
-			this.showAddMealCard = !this.showAddMealCard
+			this.mealDetails[index].editMode = !this.mealDetails[index].editMode
 			break;
 		}
 	}
-
-
 }
