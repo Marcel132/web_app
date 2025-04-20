@@ -80,7 +80,7 @@ export class MealsComponent implements OnInit{
 		}
 	}
 
-	addMealsProducts()
+	addProductToTable()
 	{
 		if(!this.selectedProduct || !this.productWeight.weight){
 			this.handler = {state: true, message: "Należy wybrać produkt oraz wagę"}
