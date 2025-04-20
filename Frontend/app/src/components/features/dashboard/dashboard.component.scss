@@ -49,16 +49,19 @@
 	display: block;
 	width: 100%;
 	min-height: 80px;
-	font-size: .675rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: var(--footer-bg);
 	color: var(--footer-text);
+
+	p{
+		font-size: .675rem;
+	}
 }
 .logout {
 	padding: 8px;
-	color: #cc0000;
+	color: var(--logout);
 	cursor: pointer;
 }
 

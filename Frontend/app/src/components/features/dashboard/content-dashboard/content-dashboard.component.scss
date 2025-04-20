@@ -53,8 +53,8 @@
 
 .logout {
 	padding: 8px;
-	color: #cc0000;
 	cursor: pointer;
+	color: var(--logout);
 }
 
 .active-link {
