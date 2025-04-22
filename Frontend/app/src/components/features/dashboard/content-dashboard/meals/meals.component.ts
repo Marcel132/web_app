@@ -39,9 +39,10 @@ export class MealsComponent implements OnInit{
 	meals: MealsInterface | null = null;
 	mealDetails: MealsTableInterface[] | null = null;
 
-	handler: {state: boolean, message: string} = {
+	handler: {state: boolean, message: string, errorColor: boolean} = {
 		state: false,
-		message: ''
+		message: '',
+		errorColor: false,
 	}
 
 	constructor(
@@ -83,7 +84,7 @@ export class MealsComponent implements OnInit{
 	addProductToTable()
 	{
 		if(!this.selectedProduct || !this.productWeight.weight){
-			this.handler = {state: true, message: "Należy wybrać produkt oraz wagę"}
+			this.handler = {state: true, message: "Należy wybrać produkt oraz wagę", errorColor: true}
 			return;
 		}
 		if(!this.mealDetails){
@@ -136,33 +137,33 @@ export class MealsComponent implements OnInit{
 		const description = this.productData.description;
 
 		if(title && (title.length > 80 || title.length <= 0)){
-			this.handler = {state: true, message: "Twój tytuł nie spełnia wymagań"}
+			this.handler = {state: true, message: "Twój tytuł nie spełnia wymagań", errorColor: true}
 			return;
 		}
 		if(description && (description.length > 250 || description.length == 0)){
-			this.handler = {state: true, message: "Twój opis nie spełnia wymagań"}
+			this.handler = {state: true, message: "Twój opis nie spełnia wymagań", errorColor: true}
 			return;
 		}
 		try {
-			this.handler = {state: false, message: ""};
+			this.handler = {state: false, message: "", errorColor: false};
 			if(!title){
-				this.handler = {state: true, message: "Musisz mieć tytuł"};
+				this.handler = {state: true, message: "Musisz mieć tytuł", errorColor: true};
 				return;
 			}
 			if(!description){
-				this.handler = {state: true, message: "Musisz mieć opis"};
+				this.handler = {state: true, message: "Musisz mieć opis", errorColor: true};
 				return
 			}
 			if(this.mealDetails && this.mealDetails.length > 0 && this.productWeight.weight && this.productWeight.weight > 0){
 				this.userService.saveUserMeal(title, description, this.mealDetails)
 				.then( response => {
-					this.handler = {state: true, message: response.message};
+					this.handler = {state: true, message: response.message, errorColor: false};
 				})
 			} else {
-				this.handler = {state: true, message: "Należy wybrać produkt i jego wagę"}
+				this.handler = {state: true, message: "Należy wybrać produkt i jego wagę", errorColor: true}
 			}
 		} catch (error) {
-			this.handler = {state: true, message: "Błąd serwera"}
+			this.handler = {state: true, message: "Błąd serwera", errorColor: true}
 			console.group("Add a meal")
 			console.error(error)
 		}
