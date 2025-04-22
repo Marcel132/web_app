@@ -119,6 +119,9 @@ body.light {
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
 
+	--meal-item-bg: var(var(--white-creme));
+	--meal-item-text: var(--grey-dark);
+
 
 	.img {
 		filter: invert(0%);
@@ -140,9 +143,9 @@ body.dark {
 	--checkbox: var(--black);
 	--logout: var(--red-light);
 
+	--meal-item-bg: var(var(--black-saturated));
+	--meal-item-text: var(--white-dark);
 
-
-	/* Buttons */
 
 	.img {
 		filter: invert(100%);
