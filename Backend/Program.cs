@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
           .AllowCredentials();
   });
 });
+
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ListenAnyIP(5000); // HTTP
@@ -58,6 +59,7 @@ builder.Services.AddSingleton<AuthService>();
 var app = builder.Build();
 
 
+Console.WriteLine("Listening on: " + builder.WebHost.GetSetting("urls"));
 app.UseRouting();
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
