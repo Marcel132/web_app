@@ -17,6 +17,10 @@ public class MealModel {
 
 public class SavedMeal 
 {
+  [BsonId]
+  [BsonRepresentation(BsonType.ObjectId)]
+  public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+  
   [BsonElement("title")]
   public string? Title { get; set; }
 

@@ -94,6 +94,33 @@ export class UserService {
 		// ).subscribe();
 	}
 
+	async deleteUserMeal(id: string): Promise<{ state: boolean, message: string}> {
+		const email = await firstValueFrom(this.stateService.userEmailSubject$);
+
+		if(!email) {
+			return { state: false, message: "Nie można usunąć posiłku" };
+		}
+
+		const url = `${apiUrl.userMeals}?email=${email}&id=${id}`;
+
+		try {
+			const response = await firstValueFrom(
+				this.http.delete<{ state: true, message: string }>(url, { withCredentials: true })
+			)
+
+			if(response.state) {
+				return { state: true, message: response.message };
+			}
+			else {
+				return { state: false, message: response.message };
+			}
+		}
+		catch(error){
+			console.error(error);
+			return { state: false, message: "Nie można usunąć posiłku" };
+		}
+	}
+
 	fetchUserMealsData(){
 		let email
 		this.stateService.userEmailSubject$.subscribe( data => data ? email = data : null)

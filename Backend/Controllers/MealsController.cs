@@ -68,6 +68,36 @@ public class MealsController : ControllerBase
       return BadRequest(new {state = false, message = error.Message});
     }
   }
+
+  [HttpDelete]
+  public async Task<IActionResult> DeleteMeal(string email, string id)
+  {
+    if(string.IsNullOrEmpty(email))
+    {
+      _logger.LogError("Error: Email is null or empty");
+      return BadRequest(new {state = false, message = "Brak emaila"});
+    }
+    if(string.IsNullOrEmpty(id))
+    {
+      _logger.LogError("Error: ID is null or empty");
+      return BadRequest(new {state = false, message = "Brak ID"});
+    }
+
+    try {
+      await _mealsService.DeleteMeal(email, id);
+      return Ok(new {state = true, message = "Usunięto posiłek"});
+    }
+    catch(ArgumentException error)
+    {
+      _logger.LogError("Error: " + error.Message);
+      return BadRequest(new {state = false, message = error.Message});
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error: " + error.Message);
+      return BadRequest(new {state = false, message = error.Message});
+    }
+  }
 }
 public class GetMealsRequest {
   public string? Email { get; set;}

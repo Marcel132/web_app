@@ -48,6 +48,25 @@ public class MealsService
     }
   }
 
+  public async Task DeleteMeal(string email, string mealId){
+
+    if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(mealId))
+    {
+      throw new ArgumentException("Email lub ID posiłku są puste");
+    }
+    try
+    {
+      var filter = Builders<MealModel>.Filter.Eq(m => m.Email, email) & Builders<MealModel>.Filter.ElemMatch(m => m.Details, d => d.Id == mealId);
+      var update = Builders<MealModel>.Update.PullFilter(m => m.Details, d => d.Id == mealId);
+      await _mealModel.UpdateOneAsync(filter, update);
+    }
+    catch (Exception error)
+    {
+      _logger.LogError("Error while deleting meal data" + error.Message);
+      throw new Exception("Błąd przy usuwaniu danych o posiłku" + " " + error.Message);
+    }
+
+  }
   public async Task<MealModel> GetUserMeal(string email)
   {
     try

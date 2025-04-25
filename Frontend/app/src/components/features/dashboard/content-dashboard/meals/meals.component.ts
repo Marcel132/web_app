@@ -38,12 +38,14 @@ export class MealsComponent implements OnInit{
 
 	meals: MealsInterface | null = null;
 	mealDetails: MealsTableInterface[] | null = null;
+	isMealsLoading: boolean = false;
 
 	handler: {state: boolean, message: string, errorColor: boolean} = {
 		state: false,
 		message: '',
 		errorColor: false,
 	}
+
 
 	constructor(
 		private userService: UserService,
@@ -52,27 +54,41 @@ export class MealsComponent implements OnInit{
 
 
 	ngOnInit(): void {
-			this.stateService.products$.subscribe(
-				products => {
-					if(products) {
-						this.products = products;
-					}
-					else {
-						this.userService.fetchProductsData();
-					}
+		this.isMealsLoading = true;
+		this.stateService.products$.subscribe(
+			products => {
+				if(products) {
+					this.products = products;
 				}
-			)
+				else {
+					this.userService.fetchProductsData();
+				}
+			}
+		)
 
-			this.stateService.userMealsSubject$.subscribe(
-				meals => {
-					if(meals){
-						this.meals = meals
-					}
-					else {
-						this.userService.fetchUserMealsData()
-					}
+		this.stateService.userMealsSubject$.subscribe(
+			meals => {
+				if(meals){
+					this.meals = meals;
+					this.isMealsLoading = false;
 				}
-			)
+				else {
+					this.userService.fetchUserMealsData()
+					this.isMealsLoading = false;
+				}
+			}
+		)
+
+	}
+
+	sortMealsByDate() {
+		if (this.meals && this.meals.details) {
+			this.meals.details.sort((a, b) => {
+				const dateA = new Date(a.date).getTime();
+				const dateB = new Date(b.date).getTime();
+				return dateB - dateA; // Sortowanie od najnowszych do najstarszych
+			});
+		}
 	}
 
 	onProductChange(){
@@ -157,7 +173,8 @@ export class MealsComponent implements OnInit{
 			if(this.mealDetails && this.mealDetails.length > 0 && this.productWeight.weight && this.productWeight.weight > 0){
 				this.userService.saveUserMeal(title, description, this.mealDetails)
 				.then( response => {
-					this.handler = {state: true, message: response.message, errorColor: false};
+					this.handler = {state: true, message: response.message, errorColor: false}
+
 				})
 			} else {
 				this.handler = {state: true, message: "Należy wybrać produkt i jego wagę", errorColor: true}
@@ -168,6 +185,23 @@ export class MealsComponent implements OnInit{
 			console.error(error)
 		}
 
+	}
+
+	deleteMeal(index: number): void {
+		if(this.meals && this.meals.details) {
+			const idMeal = this.meals.details[index].id;
+			this.userService.deleteUserMeal(idMeal)
+			.then(response => {
+				this.handler = {state: true, message: response.message, errorColor: false}
+				this.meals!.details.splice(index, 1)
+			})
+			.catch(error => {
+				this.handler = {state: true, message: "Błąd serwera", errorColor: true}
+				console.group("Delete meal")
+				console.error(error)
+			})
+
+		}
 	}
 
 	toggleList(select: string, index: number){
