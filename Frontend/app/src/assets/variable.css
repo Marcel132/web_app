@@ -101,6 +101,13 @@
 	--white-dark: rgb(220, 220, 220);
 	--white-opacity-90: rgba(255, 255, 255, 0.9);
 	--white-opacity-70: rgba(255, 255, 255, 0.7);
+
+	/* Graphite */
+	--graphite: rgb(128, 128, 128);
+	--graphite-saturated: rgb(105, 105, 105);
+	--graphite-creme: rgb(169, 169, 169);
+	--graphite-light: rgb(192, 192, 192);
+	--graphite-dark: rgb(31, 41, 55);
 }
 
 body.light {
@@ -119,8 +126,12 @@ body.light {
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
 
-	--meal-item-bg: var(var(--white-creme));
+	--meals-container-bg: var(--grey-creme);
+	--meal-item-bg: var(--white);
 	--meal-item-text: var(--grey-dark);
+	--meal-shadow: var(--black-opacity-70);
+	--meal-description-text: var(--black);
+
 
 
 	.img {
@@ -143,8 +154,12 @@ body.dark {
 	--checkbox: var(--black);
 	--logout: var(--red-light);
 
-	--meal-item-bg: var(var(--black-saturated));
+	--meals-container-bg: var(--grey-creme);
+	--meal-item-bg: var(--graphite-dark);
 	--meal-item-text: var(--white-dark);
+	--meal-shadow: var(--white-opacity-70);
+	--meal-description-text: var(--white-dark);
+
 
 
 	.img {
