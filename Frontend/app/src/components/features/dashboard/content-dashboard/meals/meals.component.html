@@ -12,6 +12,7 @@ else AddMeals;
 </ng-template>
 
 <ng-template #AddMeals>
+
 	<div class="meals-container">
 
 		<div class="text-center">
@@ -91,7 +92,7 @@ else AddMeals;
 				<div *ngIf="product.editMode">
 					<input
 					type="number"
-					id='weight'
+					id='wezight'
 					[(ngModel)]="productWeight.newWeight"
 					min='0'
 					placeholder='Waga produktu'
@@ -109,7 +110,7 @@ else AddMeals;
 
 		<div class="meal-card-box">
 			<ng-container
-			*ngIf="!meals;
+			*ngIf="isMealsLoading;
 			then LoadingSpinner;
 			else ListOfMeals
 			"></ng-container>
@@ -123,20 +124,27 @@ else AddMeals;
 <ng-template #ListOfMeals>
 	<div class='meal-table' *ngIf="meals">
 		<div *ngFor="let meal of meals.details; let i = index" class='meal-table-item'>
-			<p class='date'>{{meal.date | date:'yyyy/MM/dd'}}</p>
+			<span class='delete date'>
+				<img
+				src="./../../../../../assets/img/trash-fill.svg"
+				alt="Usuń"
+				class='img'
+				loading='lazy'
+				(click)="deleteMeal(i)"
+				>
+				<p>{{meal.date | date:'dd.MM.yyyy'}}</p>
+			</span>
 			<h4 class='title'>{{meal.title}}</h4>
 			<p class='description' max='10'>{{meal.description}}</p>
 			<button class='btn btn-show' (click)="toggleList('details',i)"> {{detailsIndex === i ?  "Ukryj Szczegóły" : "Pokaż szczegóły"}}</button>
-			<div *ngFor="let product of meal.meals" class='item-details'>
-				<div>
-					<p class='name'>Nazwa: {{product.name}}</p>
-					<p class='weight'>Waga: {{product.weight}}g</p>
-					<span class='product-details'  *ngIf="detailsIndex === i">
-						<p>Kcal: {{product.productDetails.kcal.toFixed(2)}}g</p>
-						<p>Tłuszcze: {{product.productDetails.fats.toFixed(2)}}g</p>
-						<p>Białko: {{product.productDetails.proteins.toFixed(2)}}g</p>
-						<p>Węgle: {{product.productDetails.carbohydrates.toFixed(2)}}g</p>
-					</span>
+			<div *ngFor='let product of meal.meals' class="item">
+				<p class="name">{{product.name}}</p>
+				<p class="weight">{{product.weight}}g</p>
+				<div class="product-details" *ngIf="detailsIndex === i">
+					<p>Kcal: <span>{{product.productDetails.kcal.toFixed(2)}}</span></p>
+					<p>Tłuszcze: <span>{{product.productDetails.fats.toFixed(2)}}g</span></p>
+					<p>Białko: <span>{{product.productDetails.proteins.toFixed(2)}}g</span></p>
+					<p>Węgle: <span>{{product.productDetails.carbohydrates.toFixed(2)}}g</span></p>
 				</div>
 			</div>
 		</div>
