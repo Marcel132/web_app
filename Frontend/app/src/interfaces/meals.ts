@@ -7,6 +7,7 @@ export interface MealsInterface {
 		{
 			showDescription: false
 			title: string,
+			id: string,
 			description: string,
 			date:  Date,
 			meals: MealsTableInterface[]
