@@ -89,7 +89,8 @@ export class TokenService {
 		if(!isRememberMe){
 			return localStorage.setItem("user%settings", JSON.stringify({
 				theme: 'light',
-				rememberMe: false
+				rememberMe: false,
+				defaultFontSize: 16,
 			}))
 		} else {
 			console.log(isRememberMe)
