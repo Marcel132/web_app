@@ -12,13 +12,17 @@ import { UserService } from '../../../../../services/user.service';
   styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit{
+deleteAccount() {
+throw new Error('Method not implemented.');
+}
 
 	constructor(
 		private userService: UserService
 	) {}
 	settings = {
 		isDarkMode: false,
-		isRememberMe: false
+		isRememberMe: false,
+		defaultFontSize: 16,
 	}
 
 	ngOnInit(): void {
@@ -26,12 +30,14 @@ export class SettingsComponent implements OnInit{
 		if (!userSettings) {
 			this.userService.updateUserSettings({theme: "light"})
 			this.settings.isDarkMode = false;
-			this.settings.isRememberMe = false
+			this.settings.isRememberMe = false;
+			this.settings.defaultFontSize = 16;
 		} else {
 			try {
 				const payload = JSON.parse(userSettings);
 				this.settings.isDarkMode = payload.theme === "dark";
 				this.settings.isRememberMe = payload.rememberMe === true
+				this.settings.defaultFontSize = payload.defaultFontSize || 16;
 				this.applyTheme(this.settings.isDarkMode);
 			} catch (error) {
 				console.error("Błąd podczas parsowania danych z localStorage:", error);
@@ -72,6 +78,19 @@ export class SettingsComponent implements OnInit{
 			} else if(this.settings.isRememberMe === false){
 				this.changeStorageRef("token%auth")
 			}
+		}
+	}
+
+	applyFontSize(event: Event) {
+		console.log("works")
+		const target = event.target as HTMLInputElement;
+		if (target) {
+			this.settings.defaultFontSize = parseInt(target.value, 10);
+			console.log(this.settings.defaultFontSize)
+			this.userService.updateUserSettings({defaultFontSize: this.settings.defaultFontSize})
+			document.body.style.fontSize = `${this.settings.defaultFontSize}px`;
+		} else {
+			console.error("Nie można odczytać wartości inputa.");
 		}
 	}
 
