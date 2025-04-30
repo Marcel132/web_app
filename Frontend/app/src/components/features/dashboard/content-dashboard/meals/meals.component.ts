@@ -70,6 +70,7 @@ export class MealsComponent implements OnInit{
 			meals => {
 				if(meals){
 					this.meals = meals;
+					this.sortMealsByDate();
 					this.isMealsLoading = false;
 				}
 				else {
@@ -86,7 +87,7 @@ export class MealsComponent implements OnInit{
 			this.meals.details.sort((a, b) => {
 				const dateA = new Date(a.date).getTime();
 				const dateB = new Date(b.date).getTime();
-				return dateB - dateA; // Sortowanie od najnowszych do najstarszych
+				return dateB - dateA;
 			});
 		}
 	}

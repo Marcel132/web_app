@@ -54,7 +54,8 @@ export class GraphComponent implements OnInit {
 				if(meals == null){
 					this.userService.fetchUserMealsData();
 				} else {
-					this.meals = meals
+					this.meals = meals;
+					this.sortMealsByDate()
 					this.transformMealData()
 				}
 			},
@@ -90,6 +91,16 @@ export class GraphComponent implements OnInit {
 			setTimeout(() => {
 				this.errorHandler = {state: false, message: ''}
 			}, 10000);
+		}
+	}
+
+	sortMealsByDate() {
+		if (this.meals && this.meals.details) {
+			this.meals.details.sort((a, b) => {
+				const dateA = new Date(a.date).getTime();
+				const dateB = new Date(b.date).getTime();
+				return dateA - dateB;
+			});
 		}
 	}
 
