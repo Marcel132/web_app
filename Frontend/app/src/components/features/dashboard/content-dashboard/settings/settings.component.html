@@ -3,33 +3,53 @@
 	<div class="settings-list">
 
 		<div class="item">
-			<p>Zmień motyw:</p>
+			<p id='theme-label'>Zmień motyw:</p>
 			<label class="mode them-mode">
 				<input
 				type="checkbox"
 				[checked]="settings.isDarkMode"
 				(change)="toggleTheme($event)"
+				aria-labelledby="theme-change-label"
 				>
-				<span class="slider"></span>
-				<span class="mode-label">{{ settings.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+				<span class="mode-label">{{ settings.isDarkMode ? 'Ciemny motyw' : 'Jasny motyw' }}</span>
+				<span class="slider" aria-hidden='true'></span>
 			</label>
 		</div>
 
 		<div class="item">
-			<p>Zapamiętaj mnie</p>
+			<p id='remember-me'>Zapamiętaj mnie</p>
 			<label class="mode them-mode">
 				<input
 				type="checkbox"
 				[checked]="settings.isRememberMe"
 				(change)="rememberMe($event)"
+				aria-labelledby='Remember me'
 				>
-				<span class="slider"></span>
-				<span class="mode-label">{{ settings.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+				<span class="mode-label">{{ settings.isRememberMe ? 'Zapamiętaj mnie' : 'Nie pamiętaj mnie'}} </span>
+				<span class="slider" aria-hidden='true'></span>
 			</label>
 		</div>
-		<span class="item"></span>
-		<span class="item"></span>
-		<span class="item"></span>
+		<div class="item font-size">
+			<p id='font-size'>Zmień rozmiar czcionki:</p>
+			<span class='font-size-control'>
+				<input type="range"
+				name="input-font-size"
+				id="font-size"
+				min='10'
+				max='20'
+				step='1'
+				[value]="settings.defaultFontSize"
+				(input)="applyFontSize($event)"
+				aria-labelledby="font-size"
+				>
+				<span class='font-size-value'>{{settings.defaultFontSize}}px</span>
+			</span>
+		</div>
+		<span class="item">
+			<button class="delete-account" (click)="deleteAccount()">
+				Usuń konto
+			</button>
+		</span>
 	</div>
 
 </div>

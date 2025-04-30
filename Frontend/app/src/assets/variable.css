@@ -125,6 +125,8 @@ body.light {
 	--img-color: var(--grey-dark);
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
+	--input-range-bg: var(--black);
+	--input-range-thumb: var(--black);
 
 	--meals-container-bg: var(--grey-creme);
 	--meal-item-bg: var(--white);
@@ -153,6 +155,10 @@ body.dark {
   --accent: var(--green-dark);
 	--checkbox: var(--black);
 	--logout: var(--red-light);
+	--input-range-bg: var(--green-light);
+	--input-range-thumb: var(--green-light);
+
+
 
 	--meals-container-bg: var(--grey-creme);
 	--meal-item-bg: var(--graphite-dark);
