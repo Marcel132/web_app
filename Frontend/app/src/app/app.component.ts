@@ -28,6 +28,7 @@ export class AppComponent {
 
 	constructor(
 		private tokenService: TokenService,
+		private subscriptionService: SubscriptionService,
 		private renderer: Renderer2,
 		private router: Router,
 	) {}
@@ -50,6 +51,7 @@ export class AppComponent {
 				console.log("Token is valid, setting access token and user role.");
 				this.tokenService.setAccessToken(token)
 				this.tokenService.setUserEmail()
+				this.subscriptionService.setSubscriptionDetails()
 				this.tokenService.setUserRole()
 				this.router.navigate(['/home'])
 			} else {
@@ -61,7 +63,6 @@ export class AppComponent {
 
 		document.body.classList.add("light")
 		const userSettings = localStorage.getItem("user%settings")
-		console.log(userSettings)
 		if(userSettings)
 		{
 			try {
@@ -71,7 +72,12 @@ export class AppComponent {
 				}
 				else if(parseSettings.theme == "dark"){
 					document.body.classList.add('dark')
-				} 
+				}
+				if(parseSettings.defaultFontSize) {
+					document.body.style.fontSize = parseSettings.defaultFontSize + 'px'
+				} else {
+					document.body.style.fontSize = '16px'
+				}
 			} catch (error) {
 				console.log(error)
 			}
