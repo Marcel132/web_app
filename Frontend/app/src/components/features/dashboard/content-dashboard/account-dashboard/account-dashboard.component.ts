@@ -18,7 +18,6 @@ import { LoginComponent } from "../../../auth-container/login/login.component";
     FormsModule,
     TranslatePipe,
     BooleanHandlerPipe,
-    LoginComponent
 ],
   templateUrl: './account-dashboard.component.html',
   styleUrl: './account-dashboard.component.scss'
@@ -81,11 +80,8 @@ export class AccountDashboardComponent {
 		this.stateService.userRoleSubject$.subscribe((role) => {
 			this.user.role = role
 		})
-
-		this.subscriptionService.setSubscriptionDetails().then((response)=> {
-			this.stateService.subscriptionDetailsSubject$.subscribe((details) => {
-				this.package = details
-			})
+		this.stateService.subscriptionDetailsSubject$.subscribe((details) => {
+			this.package = details
 		})
 
 		this.stateService.userEmailSubject$.subscribe((email) => {
