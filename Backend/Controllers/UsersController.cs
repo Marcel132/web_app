@@ -178,6 +178,42 @@ public class UsersController : ControllerBase
     }
   }
 
+  [HttpPut("subscription")]
+  public async Task<IActionResult> UpdateUserSubscription([FromBody] SubscriptionRequest request)
+  {
+    
+    if(request == null)
+    {
+      _logger.LogError("BadRequest: Request is missing");
+      return BadRequest(new {state = false, message = "Brak danych!"});
+    }
+
+    _logger.LogInformation("Updating user subscription for {Email} with role {Role}", request.Email, request.Role);
+    if(string.IsNullOrEmpty(request.Email))
+    {
+      return BadRequest(new {state = false, message = "Błąd: Email jest pusty"});
+    }
+    if(string.IsNullOrEmpty(request.Role))
+    {
+      return BadRequest(new {state = false, message = "Błąd: Rola jest pusta"});
+    }
+
+    try
+    {
+      await _usersService.UpdateUserAsync(request.Email, request.Role);
+      return Ok(new {state = true, message = "Użytkownik został zaktualizowany"});
+    }
+    catch(ArgumentException error)
+    {
+      _logger.LogError("Error while updating user" + error.Message);
+      return BadRequest(new {state = false, message = error.Message});
+    }
+    catch(UserNotFoundException error)
+    {
+      _logger.LogError("User with login {Login} not found", request.Email + error.Message);
+      return NotFound(new {state = false, message = "Nie znaleziono użytkownika"});
+    }
+  }
 }
 
 

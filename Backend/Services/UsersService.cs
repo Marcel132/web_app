@@ -124,6 +124,38 @@ public class UsersService
     }
   }
 
+  public async Task UpdateUserAsync(string email, string role)
+  {
+    if(string.IsNullOrEmpty(email))
+    {
+      throw new ArgumentException("Błąd: Email jest pusty");
+    }
+
+    if(string.IsNullOrEmpty(role))
+    {
+      throw new ArgumentException("Błąd: Rola jest pusta");
+    }
+
+    try
+    {
+      var existingUser = await _usersModel.Find(user => user.Email == email).FirstOrDefaultAsync();
+
+      if(existingUser == null)
+      {
+        _logger.LogError("User with login {Login} not found", email);
+        throw new UserNotFoundException("Nie znaleziono użytkownika");
+      }
+
+      var update = Builders<UsersModel>.Update.Set(user => user.Role, role);
+      await _usersModel.UpdateOneAsync(user => user.Email == email, update);
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error while updating user {Error}", error.Message);
+      throw;
+    }
+  }
+
   internal async Task<List<UsersModel>> GetAllUsersAsync()
   {
     return await _usersModel

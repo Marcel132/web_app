@@ -92,19 +92,23 @@ export class SubscriptionService {
 	}
 
 	private async processSubscription(){
-		const purchaseDate = new Date(this.subscriptionDetails.purchaseDate)
 		const currentDate = new Date();
 		const expirationDate = new Date(this.subscriptionDetails.expirationDate);
 
 		if(currentDate < expirationDate){
-			// console.log("Subscription is active")
-		} else if(currentDate >= expirationDate){
-			// console.log("Subscription is expired")
-			this.subscriptionDetails.status = "Inactive"
-			this.stateService.setSubscriptionDetails(this.subscriptionDetails)
-			this.stateService.subscriptionDetailsSubject$.pipe(take(1)).subscribe(response => {console.log("After func: " + response.status)})
-			this.stateService.setUserRole("Free")
+			console.log("Subscription is active")
 
+		} else if(currentDate >= expirationDate){
+
+			console.log("Subscription is expired")
+			this.http.put<{state: boolean, message: string}>(apiUrl.subscription, {email: this.email, role: "Free"}, {withCredentials: true}).pipe(
+				take(1)
+			).subscribe((response: any) => {
+				if(response.state){
+					this.stateService.logout()
+				}
+			}
+			)
 		}
 	}
 
