@@ -37,16 +37,12 @@ export class SubscriptionService {
 					this.stateService.userEmailSubject$.subscribe(value => {
 						if(value){
 							this.email = value
-						} else {
-							console.log("EmailSub is not defined")
 						}
 					})
 					this.stateService.userRoleSubject$.subscribe(value => {
 						if(value){
 							this.role = value
-						} else {
-							console.log("RoleSub is not defined")
-						}
+						} 
 					})
 
 					if(this.role !== "Admin") {
@@ -95,11 +91,12 @@ export class SubscriptionService {
 		const currentDate = new Date();
 		const expirationDate = new Date(this.subscriptionDetails.expirationDate);
 
-		if(currentDate < expirationDate){
+		if(this.subscriptionDetails.expirationDate == null || this.subscriptionDetails.expirationDate == undefined){
+			console.log("Expiration date is null or undefined")
+		} else if(currentDate < expirationDate){
 			console.log("Subscription is active")
 
 		} else if(currentDate >= expirationDate){
-
 			console.log("Subscription is expired")
 			this.http.put<{state: boolean, message: string}>(apiUrl.subscription, {email: this.email, role: "Free"}, {withCredentials: true}).pipe(
 				take(1)
