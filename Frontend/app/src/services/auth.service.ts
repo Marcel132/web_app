@@ -68,9 +68,11 @@ export class AuthService {
 					this.stateService.accessTokenSubject$.subscribe(accessToken => {
 						if(accessToken){
 							this.tokenService.saveToken("token%auth", accessToken)
-							this.tokenService.setUserEmail()
-							this.tokenService.setUserRole()
-							this.subscriptionService.setSubscriptionDetails()
+							setTimeout(() => {
+								this.tokenService.setUserEmail()
+								this.tokenService.setUserRole()
+								this.subscriptionService.setSubscriptionDetails()
+							}, 1500);
 						}
 					})
 				}),
@@ -106,10 +108,16 @@ export class AuthService {
 			const response = await firstValueFrom(this.http.post<{message: string, accessToken: string}>(url, body, {withCredentials: true }).pipe(
 				tap(response => {
 					this.tokenService.setAccessToken(response.accessToken)
-					this.tokenService.saveToken("token%auth", response.accessToken)
-					this.tokenService.setUserEmail()
-					this.tokenService.setUserRole()
-					this.subscriptionService.setSubscriptionDetails()
+					this.stateService.accessTokenSubject$.subscribe(accessToken => {
+						if(accessToken){
+							this.tokenService.saveToken("token%auth", accessToken)
+							setTimeout(() => {
+								this.tokenService.setUserEmail()
+								this.tokenService.setUserRole()
+								this.subscriptionService.setSubscriptionDetails()
+							}, 1500);
+						}
+					})
 				}),
 				catchError((error: HttpErrorResponse) => {
 					 	let errorMessage = "Błąd! Spróbuj ponownie za chwilę lub skontaktuj się z administratorem"
