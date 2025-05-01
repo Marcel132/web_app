@@ -85,6 +85,8 @@ export class StateService {
 		this.clearUserRole()
 		this.clearUserEmail()
 		this.clearSubscriptionDetails()
+		localStorage.removeItem("token%auth")
+		localStorage.removeItem("token%subscription")
 		sessionStorage.clear()
 		return { state: true, message: "Wylogowano" }
 	}
