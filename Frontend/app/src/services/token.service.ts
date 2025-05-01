@@ -93,7 +93,6 @@ export class TokenService {
 				defaultFontSize: 16,
 			}))
 		} else {
-			console.log(isRememberMe)
 			if(isRememberMe.rememberMe){
 				return localStorage.getItem(key)
 			} else {
