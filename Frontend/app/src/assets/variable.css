@@ -125,8 +125,8 @@ body.light {
 	--img-color: var(--grey-dark);
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
-	--input-range-bg: var(--black);
-	--input-range-thumb: var(--black);
+	--input-range-bg: var(--blue-ocean);
+	--input-range-thumb: var(--blue-ocean);
 
 	--meals-container-bg: var(--grey-creme);
 	--meal-item-bg: var(--white);
