@@ -59,6 +59,11 @@ export class AccountDashboardComponent {
 		weight: null,
 	}
 
+	formatDate: {purchaseDate: string, expireDate: string} = {
+		purchaseDate: 'dd/MM/yyyy | HH:mm:ss',
+		expireDate: 'dd/MM/yyyy | HH:mm:ss'
+	}
+
 	handlerErrorMessage = {
 		sex: '',
 		age: '',
@@ -276,6 +281,19 @@ export class AccountDashboardComponent {
 			case "weight":
 				this.handlerList.editWeight = !this.handlerList.editWeight
 				break;
+		}
+	}
+
+	changeFormatDate(index: number){
+		if(index === 0){
+			this.formatDate.purchaseDate = this.formatDate.purchaseDate === 'dd/MM/yyyy | HH:mm:ss'
+			? 'dd/MM/yyyy | hh:mm:ss a'
+			: 'dd/MM/yyyy | HH:mm:ss'
+		}
+		else if(index === 1){
+			this.formatDate.expireDate = this.formatDate.expireDate === 'dd/MM/yyyy | HH:mm:ss'
+			? 'dd/MM/yyyy | hh:mm:ss a'
+			: 'dd/MM/yyyy | HH:mm:ss'
 		}
 	}
 }

@@ -148,12 +148,14 @@
 					<span class="items-value">{{user.role}}</span>
 				</span>
 
-				<span class='items'>Data zakupu:
-					<span class="items-value">{{ package?.purchaseDate | date: 'dd/MM/yyyy'}}</span>
+				<span class='items date'>Data zakupu:
+					<span class="items-value">{{ package?.purchaseDate | date: formatDate.purchaseDate}}</span>
+					<button (click)="changeFormatDate(0)">Zmień format</button>
 				</span>
 
-				<span class='items'>Data ważności:
-					<span class="items-value">{{package?.expirationDate | date: 'dd/MM/yyyy'}}</span>
+				<span class='items date'>Data ważności:
+					<span class="items-value">{{package?.expirationDate | date: formatDate.expireDate}}</span>
+					<button (click)="changeFormatDate(1)">Zmień format</button>
 				</span>
 
 				<span class='items'>Status subskrypcji:
