@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
@@ -7,7 +7,6 @@ import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
 import { SubscriptionInterface } from '../../../../../interfaces/subscription';
 import { SubscriptionService } from '../../../../../services/subscription.service';
 import { StateService } from '../../../../../services/state.service';
-import { LoginComponent } from "../../../auth-container/login/login.component";
 
 @Component({
   selector: 'app-account-dashboard',
@@ -22,10 +21,9 @@ import { LoginComponent } from "../../../auth-container/login/login.component";
   templateUrl: './account-dashboard.component.html',
   styleUrl: './account-dashboard.component.scss'
 })
-export class AccountDashboardComponent {
+export class AccountDashboardComponent implements OnInit {
 
 	constructor(
-		private subscriptionService : SubscriptionService,
 		private stateService: StateService,
 		private route: Router,
 		private cdr: ChangeDetectorRef,
