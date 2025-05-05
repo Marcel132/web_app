@@ -36,7 +36,6 @@ export class SubscriptionService {
 				this.http.post<{subscriptionToken: string, state: boolean, isActive: boolean, paymentStatus: string, error: string | null}>(url, body, {withCredentials: true})
 			)
 			const tokenPayload = this.tokenService.decodeToken(response.subscriptionToken) || null
-			console.log("Payload: ", tokenPayload)
 
 			if(tokenPayload){
 				this.stateService.setSubscriptionDetails(this.mapToSubscriptionDetails(tokenPayload))

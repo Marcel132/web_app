@@ -86,11 +86,6 @@ export class AccountDashboardComponent implements OnInit {
 			this.isLogged = true
 		}
 
-		console.log("User email: ", this.user.email)
-		console.log("User role: ", this.user.role)
-
-		console.log("User package: ", this.package)
-
 
 		if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
 			const customFontUrl = localStorage.getItem('customFontUrl')
