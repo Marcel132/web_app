@@ -124,6 +124,25 @@ public class UsersService
     }
   }
 
+  public async Task UpdateSubsciprionDetails(string email)
+  {
+    if(string.IsNullOrEmpty(email))
+    {
+      throw new ArgumentException("Błąd: Email jest pusty");
+    }
+
+    try
+    {
+      var update = Builders<SubscriptionDetailsModel>.Update.Set(subscription => subscription.Status, "inactive");
+      await _subscriptionDetailsModel.UpdateOneAsync(subscription => subscription.Email == email, update);
+    }
+    catch(Exception error)
+    {
+      _logger.LogError("Error while updating subscription details {Error}", error.Message);
+      throw;
+    }
+  }
+
   public async Task UpdateUserAsync(string email, string role)
   {
     if(string.IsNullOrEmpty(email))

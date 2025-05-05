@@ -155,16 +155,42 @@ public class UsersController : ControllerBase
     }
     if(string.IsNullOrEmpty(request.Role))
     {
-      request.Role = "Free";
+      return BadRequest(new {state = false, message = "Błąd: Rola jest pusta"});
     }
 
     try
     {
       var subscriptionDetails = await _usersService.GetSubscriptionDetailsModelAsync(request.Email);
 
+      if(subscriptionDetails == null)
+      {
+        return NotFound(new {state = false, message = "Nie znaleziono subskrypcji"});
+      }
+
+
+      var currentDate = DateTime.UtcNow;
+      if(subscriptionDetails.Expiration_date < currentDate)
+      {
+        await _usersService.UpdateSubsciprionDetails(request.Email);
+        await _usersService.UpdateUserAsync(request.Email, "Free");
+        _logger.LogInformation("Subscription expired for user {Email}", request.Email);
+        subscriptionDetails = await _usersService.GetSubscriptionDetailsModelAsync(request.Email);
+      }
+
       var subscriptionToken = _tokenService.GenerateSubscriptionToken(subscriptionDetails);
 
-      return Ok(new {state = true, message = "Dane subskrypcji", subscriptionToken});
+
+      if(subscriptionDetails.Last_payment_status == "unpaid")
+      {
+        return Ok(new { state = true, message = "Oczekiwanie na płatność", subscriptionToken, isActive = false, paymentStatus = "unpaid"});
+      }
+
+      if(subscriptionDetails.Status == "inactive")
+      {
+        return Ok(new { state = true, message = "Subskrypcja nieaktywna", subscriptionToken, isActive = false});
+      }
+
+      return Ok(new {state = true, message = "Dane subskrypcji", subscriptionToken, isActive = true});
     }
     catch(ArgumentException error)
     {
