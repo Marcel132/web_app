@@ -5,6 +5,7 @@ import { FeatureModule } from './feature.module';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { authInterceptor } from '../interceptors/auth.interceptor';
+import { requestDuplicationInterceptor } from '../interceptors/request-duplication.interceptor';
 
 
 
@@ -22,7 +23,7 @@ import { authInterceptor } from '../interceptors/auth.interceptor';
 	],
 	providers: [
 		AuthService,
-		provideHttpClient(withInterceptors([authInterceptor])),
+		provideHttpClient(withInterceptors([authInterceptor, requestDuplicationInterceptor])),
 	]
 })
 export class AppModule { }
