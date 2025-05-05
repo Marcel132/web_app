@@ -7,6 +7,7 @@ import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
 import { SubscriptionInterface } from '../../../../../interfaces/subscription';
 import { SubscriptionService } from '../../../../../services/subscription.service';
 import { StateService } from '../../../../../services/state.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-account-dashboard',
@@ -75,23 +76,21 @@ export class AccountDashboardComponent implements OnInit {
 		editAge: false
 	}
 
-	ngOnInit(): void {
-		this.stateService.userEmailSubject$.subscribe((email) => {
-			this.user.email = email
-		})
+	async ngOnInit() {
 
-		this.stateService.userRoleSubject$.subscribe((role) => {
-			this.user.role = role
-		})
-		this.stateService.subscriptionDetailsSubject$.subscribe((details) => {
-			this.package = details
-		})
+		this.user.email = await firstValueFrom(this.stateService.userEmailSubject$)
+		this.user.role = await firstValueFrom(this.stateService.userRoleSubject$)
+		this.package = await firstValueFrom(this.stateService.subscriptionDetailsSubject$)
 
-		this.stateService.userEmailSubject$.subscribe((email) => {
-			if(email){
-				this.isLogged = true
-			}
-		})
+		if(this.user.role != ''){
+			this.isLogged = true
+		}
+
+		console.log("User email: ", this.user.email)
+		console.log("User role: ", this.user.role)
+
+		console.log("User package: ", this.package)
+
 
 		if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
 			const customFontUrl = localStorage.getItem('customFontUrl')

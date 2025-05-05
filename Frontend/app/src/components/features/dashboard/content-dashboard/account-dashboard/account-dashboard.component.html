@@ -130,16 +130,16 @@
 
 		<div class="dashboard-data" *ngIf="user.role != 'Admin'">
 			<h3>Subskrypcja</h3>
-			<div class="subscription-data data" *ngIf="user.role == 'Free'">
+			<div class="subscription-data data">
 
-				<span class="items">
+				<span class="items" *ngIf="!package">
 					<p>Aktualnie posiadasz plan darmowy</p>
 					<span class='items-value-buy'>Kup premium: <button class='btn-buy' (click)="buyPremium()">Kup</button></span>
 				</span>
 
 			</div>
 
-			<div class="subscription-data data active" *ngIf="user.role == 'Premium'">
+			<div class="subscription-data data active">
 				<span class='items'> Email:
 					<span class='items-value'>{{user.email}}</span>
 				</span>
@@ -148,32 +148,33 @@
 					<span class="items-value">{{user.role}}</span>
 				</span>
 
-				<span class='items date'>Data zakupu:
-					<span class="items-value">{{ package?.purchaseDate | date: formatDate.purchaseDate}}</span>
-					<button (click)="changeFormatDate(0)">Zmień format</button>
-				</span>
-
-				<span class='items date'>Data ważności:
-					<span class="items-value">{{package?.expirationDate | date: formatDate.expireDate}}</span>
-					<button (click)="changeFormatDate(1)">Zmień format</button>
-				</span>
 
 				<span class='items'>Status subskrypcji:
-					<span class="items-value">{{package?.status ?? "" | translate }}</span>
+					<span class="items-value">{{package?.status ?? "Nieaktywna" | translate }}</span>
 				</span>
 
 				<span class='items'>Metoda płatności:
-					<span class="items-value">{{package?.paymentMethod}}</span>
+					<span class="items-value">{{package?.paymentMethod ?? "Niezapłacona"}}</span>
 				</span>
 
 				<span class='items'>Rozliczenia cykliczne:
-					<span class="items-value">{{package?.recurringPayment | booleanHandler }}</span>
+					<span class="items-value">{{package?.recurringPayment ?? false| booleanHandler }}</span>
 				</span>
 
 				<span class='items'>Status ostatniej płatności:
 					<span class="items-value">
 						{{package?.lastPaymentStatus ?? 'Brak danych' | translate}}
 					</span>
+				</span>
+
+				<span class='items date'>Data zakupu:
+					<span class="items-value">{{ package?.purchaseDate  | date: formatDate.purchaseDate}}</span>
+					<button (click)="changeFormatDate(0)">Zmień format</button>
+				</span>
+
+				<span class='items date'>Data ważności:
+					<span class="items-value">{{package?.expirationDate | date: formatDate.expireDate}}</span>
+					<button (click)="changeFormatDate(1)">Zmień format</button>
 				</span>
 
 			</div>
