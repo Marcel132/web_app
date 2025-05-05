@@ -112,6 +112,7 @@
 
 body.light {
 	/* Base */
+
   --header-bg: var(--white-creme);
   --header-text: var(--grey-dark);
   --content-bg: var(--white-creme);
@@ -123,6 +124,10 @@ body.light {
   --footer-text: var(--grey-dark);
   --accent: var(--grey-dark);
 	--img-color: var(--grey-dark);
+	--scrollbar: var(--white-dark);
+	--scrollbar-thumb: var(--grey-dark);
+	--scrollbar-track: var(--white-creme);
+	--table-border-color: var(--grey-dark);
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
 	--input-range-bg: var(--blue-ocean);
@@ -153,6 +158,10 @@ body.dark {
   --footer-bg: var(--black-dark);
   --footer-text: var(--grey-light);
   --accent: var(--green-dark);
+	--scrollbar: var(--graphite-dark);
+	--scrollbar-thumb: var(--graphite);
+	--scrollbar-track: var(--black-creme);
+	--table-border-color: var(--white-opacity-70);
 	--checkbox: var(--black);
 	--logout: var(--red-light);
 	--input-range-bg: var(--green-light);
