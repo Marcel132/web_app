@@ -123,9 +123,9 @@ export class UserService {
 
 	fetchUserMealsData(){
 		let email
-		this.stateService.userEmailSubject$.subscribe( data => data ? email = data : null)
+		this.stateService.userEmailSubject$.pipe(take(1)).subscribe( data => data ? email = data : null)
 		let role
-		this.stateService.userRoleSubject$.subscribe( data => data ? role = data : null)
+		this.stateService.userRoleSubject$.pipe(take(1)).subscribe( data => data ? role = data : null)
 
 		const url = apiUrl.userMeals
 		const body = {
