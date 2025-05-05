@@ -51,8 +51,11 @@ export class AppComponent {
 				console.log("Token is valid, setting access token and user role.");
 				this.tokenService.setAccessToken(token)
 				this.tokenService.setUserEmail()
-				this.subscriptionService.setSubscriptionDetails()
 				this.tokenService.setUserRole()
+				this.subscriptionService.getSubscriptionDetails()
+				.then(response => {
+					console.log(response.message)
+				})
 				this.router.navigate(['/home'])
 			} else {
 				console.log("Token expired, refreshing token.");

@@ -71,7 +71,7 @@ export class AuthService {
 							setTimeout(() => {
 								this.tokenService.setUserEmail()
 								this.tokenService.setUserRole()
-								this.subscriptionService.setSubscriptionDetails()
+								this.subscriptionService.getSubscriptionDetails()
 							}, 1500);
 						}
 					})
@@ -114,7 +114,7 @@ export class AuthService {
 							setTimeout(() => {
 								this.tokenService.setUserEmail()
 								this.tokenService.setUserRole()
-								this.subscriptionService.setSubscriptionDetails()
+								this.subscriptionService.getSubscriptionDetails()
 							}, 1500);
 						}
 					})
