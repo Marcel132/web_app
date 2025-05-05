@@ -1,3 +1,44 @@
+th {
+	background-color: var(--content-bg) !important;
+	color: var(--content-text) !important;
+}
+
+.product-table {
+	font-size: .75em;
+	overflow-x: auto;
+	max-width: 300px;
+	@media screen and (min-width: 450px) {
+		max-width: 400px;
+	}
+	@media screen and (min-width: 600px) {
+		max-width: 550px;
+	}
+	@media screen and (min-width: 768px) {
+		min-width: 85%;
+	}
+	@media screen and (min-width: 1024px) {
+		max-width: 75%;
+	}
+}
+
+.product-table::-webkit-scrollbar {
+  height: 9px;
+  background-color: var(--scrollbar);
+  border-radius: 10px;
+}
+
+
+.product-table::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+}
+
+
+.product-table::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track);
+  border-radius: 10px;
+}
+
 .custom-pointer{
 	&:hover {
 		cursor: pointer;
@@ -40,7 +81,7 @@
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 80px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--black-opacity-70);
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -69,34 +110,28 @@
 
 table {
   width: 100%;
-  white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+  white-space: nowrap;
 }
 
 th {
-  background-color: #f3f4f6; /* Jasne tło dla etykiet */
+  background-color: #f3f4f6;
   text-align: left;
   font-weight: bold;
+	border: 1px solid var(--table-border-color);
+
 }
 
 td {
   text-align: center;
+	border: 1px solid var(--table-border-color);
+
 }
 
-
-.product-table {
-	font-size: .75em;
-	overflow-x: auto;
-	max-width: 300px;
-	@media screen and (min-width: 450px) {
-		max-width: 400px;
-	}
-	@media screen and (min-width: 600px) {
-		max-width: 550px;
-	}
-	@media screen and (min-width: 768px) {
-		min-width: 85%;
-	}
-	@media screen and (min-width: 1024px) {
-		max-width: 75%;
-	}
+input, select {
+	background-color: inherit;
 }
+option {
+	background-color: var(--content-bg);
+	color: var(--content-text);
+}
+

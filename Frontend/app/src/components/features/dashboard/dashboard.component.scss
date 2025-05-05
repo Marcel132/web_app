@@ -38,6 +38,11 @@
 	}
 }
 
+.content {
+	background-color: var(--content-bg);
+	color: var(--content-text)
+}
+
 .unlogged {
 	justify-content: end;
 	gap: 1rem;
