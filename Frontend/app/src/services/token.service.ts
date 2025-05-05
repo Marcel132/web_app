@@ -141,28 +141,32 @@ export class TokenService {
 
 
 	// 	//For decodeing a token
-		decodeToken(token: string): any {
-			const base64Url = token.split('.')[1]
-			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-			const jsonPayload = atob(base64)
-			return JSON.parse(jsonPayload)
+	decodeToken(token: string): any {
+		if(token == null) {
+			console.log("Token is null")
+			return null
 		}
+		const base64Url = token.split('.')[1]
+		const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+		const jsonPayload = atob(base64)
+		return JSON.parse(jsonPayload)
+	}
 
-		private storageValidation(key: string){
-			if(key){
-				const locStorage = localStorage.getItem(key)
-				const sessStorage = sessionStorage.getItem(key)
+	private storageValidation(key: string){
+		if(key){
+			const locStorage = localStorage.getItem(key)
+			const sessStorage = sessionStorage.getItem(key)
 
-				if(locStorage){
-					return JSON.parse(locStorage);
-				}
-				else if(sessStorage)
-					return JSON.parse(sessStorage);
-
-			} else {
-				console.log("There is no key")
-				return false
+			if(locStorage){
+				return JSON.parse(locStorage);
 			}
+			else if(sessStorage)
+				return JSON.parse(sessStorage);
+
+		} else {
+			console.log("There is no key")
+			return false
 		}
+	}
 
 }
