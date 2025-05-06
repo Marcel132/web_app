@@ -124,16 +124,33 @@ body.light {
   --footer-text: var(--grey-dark);
   --accent: var(--grey-dark);
 	--img-color: var(--grey-dark);
+
 	--scrollbar: var(--white-dark);
 	--scrollbar-thumb: var(--grey-dark);
 	--scrollbar-track: var(--white-creme);
-	--table-border-color: var(--grey-dark);
+
+	--table-border-color: var(--white-dark);
+	--table-first-column-bg: var(--white-dark);
+	--table-first-column-text: var(--black-saturated);
+
+	--table-bg: var(--white-creme);
+	--table-text: var(--black-saturated);
+
+	--table-first-row-bg: var(--white-dark);
+	--table-first-row-text: var(--black-saturated);
+
+
 	--checkbox: var(--black);
 	--logout: var(--red-dark);
 	--input-range-bg: var(--blue-ocean);
 	--input-range-thumb: var(--blue-ocean);
 
 	--meals-container-bg: var(--grey-creme);
+
+	--meal-card-bg: var(--white);
+	--meal-card-text: var(--black-saturated);
+	--meal-card-shadow: var(--black-opacity-70);
+
 	--meal-item-bg: var(--white);
 	--meal-item-text: var(--grey-dark);
 	--meal-shadow: var(--black-opacity-70);
@@ -158,10 +175,22 @@ body.dark {
   --footer-bg: var(--black-dark);
   --footer-text: var(--grey-light);
   --accent: var(--green-dark);
+	--img-color: var(--white-dark);
+
 	--scrollbar: var(--graphite-dark);
 	--scrollbar-thumb: var(--graphite);
 	--scrollbar-track: var(--black-creme);
-	--table-border-color: var(--white-opacity-70);
+
+	--table-border-color: var(--white-dark);
+	--table-first-column-bg: var(--grey-saturated);
+	--table-first-column-text: var(--black-dark);
+
+	--table-bg: var(--white-creme);
+	--table-text: var(--black-saturated);
+
+	--table-first-row-bg: var(--grey-saturated);
+	--table-first-row-text: var(--black-dark);
+
 	--checkbox: var(--black);
 	--logout: var(--red-light);
 	--input-range-bg: var(--green-light);
@@ -170,6 +199,11 @@ body.dark {
 
 
 	--meals-container-bg: var(--grey-creme);
+
+	--meal-card-bg: var(--graphite-dark);
+	--meal-card-text: var(--white-dark);
+	--meal-card-shadow: var(--white-opacity-70);
+
 	--meal-item-bg: var(--graphite-dark);
 	--meal-item-text: var(--white-dark);
 	--meal-shadow: var(--white-opacity-70);
