@@ -1,4 +1,4 @@
-export interface MealsTableInterface {
+export interface MealModel {
 	id_prod: number,
 	name: string,
 	weight: number,

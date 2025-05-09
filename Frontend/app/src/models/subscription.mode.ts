@@ -1,4 +1,4 @@
-export interface SubscriptionInterface {
+export interface SubscriptionModel {
 	email: string;
 	purchaseDate: Date;
 	expirationDate: Date;

@@ -1,4 +1,4 @@
-export interface SaveProductInterface {
+export interface ProductSaveModel {
 	id_prod: number,
 	name: string,
 	productDetails: {

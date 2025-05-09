@@ -1,6 +1,6 @@
-import { MealsTableInterface } from "./meals-table"
+import { MealModel } from "./meal.model"
 
-export interface MealsInterface {
+export interface UserMealsModel {
 	id: string,
 	email: string,
 	details: [
@@ -10,7 +10,7 @@ export interface MealsInterface {
 			id: string,
 			description: string,
 			date:  Date,
-			meals: MealsTableInterface[]
+			meals: MealModel[]
 		}
 	]
 }
