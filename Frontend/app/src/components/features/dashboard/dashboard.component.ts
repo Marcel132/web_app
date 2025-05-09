@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserModule } from './user.module';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StateService } from '../../../services/state.service';
 import { CommonModule } from '@angular/common';
@@ -8,7 +7,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-		UserModule,
 		RouterModule,
 		CommonModule,
 ],

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedModule } from '../../../../modules/shared.module';
 import { AuthService } from '../../../../services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenService } from '../../../../services/token.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-	SharedModule,
+	CommonModule,
 	FormsModule,
 	ReactiveFormsModule,
 	],

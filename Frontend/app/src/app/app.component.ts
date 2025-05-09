@@ -1,5 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
-import { AppModule } from '../modules/app.module';
+import { AppModule } from './app.module';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Router, RouterModule } from '@angular/router';
