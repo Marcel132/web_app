@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SubscriptionInterface } from '../interfaces/subscription';
-import { MealsTableInterface } from '../interfaces/meals-table';
-import { ProductInterface } from '../interfaces/product';
-import { MealsInterface } from '../interfaces/meals';
+import { ProductModel } from '../models/product.model';
+import { SubscriptionModel } from '../models/subscription.mode';
+import { UserMealsModel } from '../models/user-meals.model';
+import { MealModel } from '../models/meal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +27,17 @@ export class StateService {
 	userEmailSubject$ = this.userEmail.asObservable()
 	// userEmailValue$ = this.userEmail.getValue()
 
-	private subscriptionDetails = new BehaviorSubject<SubscriptionInterface>({} as SubscriptionInterface)
+	private subscriptionDetails = new BehaviorSubject<SubscriptionModel>({} as SubscriptionModel)
 	subscriptionDetailsSubject$ = this.subscriptionDetails.asObservable()
 	// subscriptionDetailsValue$ = this.subscriptionDetails.getValue()
 
-	private productsSubject = new BehaviorSubject<ProductInterface[] | null>(null);
+	private productsSubject = new BehaviorSubject<ProductModel[] | null>(null);
 	products$ = this.productsSubject.asObservable();
 
-	private userMealsSubject = new BehaviorSubject<MealsInterface | null>(null);
+	private userMealsSubject = new BehaviorSubject<UserMealsModel | null>(null);
 	userMealsSubject$ = this.userMealsSubject.asObservable();
 
-	private mealsSubject = new BehaviorSubject<MealsTableInterface[] | null>(null);
+	private mealsSubject = new BehaviorSubject<MealModel[] | null>(null);
 	meals$ = this.mealsSubject.asObservable();
 
 
@@ -50,19 +50,19 @@ export class StateService {
 	setUserEmail(email: string){
 		this.userEmail.next(email)
 	}
-	setSubscriptionDetails(details: SubscriptionInterface){
+	setSubscriptionDetails(details: SubscriptionModel){
 		this.subscriptionDetails.next(details)
 	}
-	setProducts(products: ProductInterface[]){
+	setProducts(products: ProductModel[]){
 		// console.log('Otrzymane produkty:', products);
 		const sortedProducts = [...products].sort((a,b) => a.name.localeCompare(b.name))
 		this.productsSubject.next(sortedProducts)
 		// console.log('Posortowane produkty:', sortedProducts);
 	}
-	setMeals(meals: MealsTableInterface[]){
+	setMeals(meals: MealModel[]){
 		this.mealsSubject.next(meals)
 	}
-	setUserMeals(meals: MealsInterface){
+	setUserMeals(meals: UserMealsModel){
 		this.userMealsSubject.next(meals)
 	}
 
@@ -77,7 +77,7 @@ export class StateService {
 		this.userEmail.next("")
 	}
 	clearSubscriptionDetails(){
-		this.subscriptionDetails.next({} as SubscriptionInterface)
+		this.subscriptionDetails.next({} as SubscriptionModel)
 	}
 
 	logout(): {state: boolean, message: string} {
