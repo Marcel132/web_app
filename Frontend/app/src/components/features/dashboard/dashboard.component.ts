@@ -4,14 +4,14 @@ import { StateService } from '../../../services/state.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [
-		RouterModule,
-		CommonModule,
-],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+		standalone: true,
+    imports: [
+        RouterModule,
+        CommonModule,
+    ],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
 

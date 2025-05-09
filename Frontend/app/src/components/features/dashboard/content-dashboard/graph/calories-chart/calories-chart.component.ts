@@ -2,11 +2,11 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import Chart from 'chart.js/auto'
 
 @Component({
-  selector: 'app-calories-chart',
-  standalone: true,
-  imports: [],
-  templateUrl: './calories-chart.component.html',
-  styleUrl: './calories-chart.component.scss'
+    selector: 'app-calories-chart',
+		standalone: true,
+    imports: [],
+    templateUrl: './calories-chart.component.html',
+    styleUrl: './calories-chart.component.scss'
 })
 export class CaloriesChartComponent  implements AfterViewInit{
 	@ViewChild('caloriesChart') chartRef! : ElementRef

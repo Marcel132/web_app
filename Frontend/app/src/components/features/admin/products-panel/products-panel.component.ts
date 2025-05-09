@@ -1,23 +1,22 @@
 import { Component } from '@angular/core';
 import { StateService } from '../../../../services/state.service';
-import { ProductInterface } from '../../../../interfaces/product';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { LoadingCircleComponent } from "../../../shared/loading-circle/loading-circle.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminService } from '../../../../services/admin.service';
-import { SaveProductInterface } from '../../../../interfaces/save-product';
+import { ProductModel } from '../../../../models/product.model';
+import { ProductSaveModel } from '../../../../models/product-save.model';
 
 @Component({
-  selector: 'app-products-panel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    LoadingCircleComponent,
-		ReactiveFormsModule
-],
-  templateUrl: './products-panel.component.html',
-  styleUrl: './products-panel.component.scss'
+    selector: 'app-products-panel',
+    imports: [
+        CommonModule,
+        LoadingCircleComponent,
+        ReactiveFormsModule
+    ],
+    templateUrl: './products-panel.component.html',
+    styleUrl: './products-panel.component.scss'
 })
 export class ProductsPanelComponent {
 
@@ -37,7 +36,7 @@ export class ProductsPanelComponent {
 		})
 	}
 
-	products: ProductInterface[] | null = null;
+	products: ProductModel[] | null = null;
 	addProductGroup: FormGroup<any>
 	errorHandler: {state: boolean, message: string} = { state: false, message: ''}
 
@@ -57,7 +56,7 @@ export class ProductsPanelComponent {
 
 	async addProduct()
 	{
-		const body: SaveProductInterface = {
+		const body: ProductSaveModel = {
 			id_prod: this.addProductGroup.value.idProd,
 			name: this.addProductGroup.value.nameProd,
 			productDetails: {
@@ -93,7 +92,7 @@ export class ProductsPanelComponent {
 
 	}
 
-	dataValidation(data: SaveProductInterface){
+	dataValidation(data: ProductSaveModel){
 		if(data.id_prod == null) {
 			this.errorHandler = {state: true, message: "ID produktu nie może być null / 0"};
 			return false;

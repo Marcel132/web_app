@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../../../../services/state.service';
 import { UserService } from '../../../../../services/user.service';
-import { MealsInterface } from '../../../../../interfaces/meals';
 import { CaloriesChartComponent } from "./calories-chart/calories-chart.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserMealsModel } from '../../../../../models/user-meals.model';
 
 @Component({
-  selector: 'app-graph',
-  standalone: true,
-  imports: [
-		CaloriesChartComponent,
-		CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
-	],
-  templateUrl: './graph.component.html',
-  styleUrl: './graph.component.scss'
+    selector: 'app-graph',
+		standalone: true,
+    imports: [
+        CaloriesChartComponent,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './graph.component.html',
+    styleUrl: './graph.component.scss'
 })
 export class GraphComponent implements OnInit {
 
-	meals: MealsInterface | null = null
+	meals: UserMealsModel | null = null
 	transformedMealsData: any[] = []
 	totalDailyEnergyExpenditure: number = 2000 // Total Daily Energy Expenditure, default value : 2000
 	formUserData: FormGroup<any>

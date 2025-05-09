@@ -4,23 +4,21 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '../../../../../pipes/translate.pipe';
 import { BooleanHandlerPipe } from '../../../../../pipes/boolean-handler.pipe';
-import { SubscriptionInterface } from '../../../../../interfaces/subscription';
-import { SubscriptionService } from '../../../../../services/subscription.service';
 import { StateService } from '../../../../../services/state.service';
 import { firstValueFrom } from 'rxjs';
+import { SubscriptionModel } from '../../../../../models/subscription.mode';
 
 @Component({
-  selector: 'app-account-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    TranslatePipe,
-    BooleanHandlerPipe,
-],
-  templateUrl: './account-dashboard.component.html',
-  styleUrl: './account-dashboard.component.scss'
+    selector: 'app-account-dashboard',
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        TranslatePipe,
+        BooleanHandlerPipe,
+    ],
+    templateUrl: './account-dashboard.component.html',
+    styleUrl: './account-dashboard.component.scss'
 })
 export class AccountDashboardComponent implements OnInit {
 
@@ -43,7 +41,7 @@ export class AccountDashboardComponent implements OnInit {
 		weight: 0,
 		pal: 0,
 	}
-	package!: SubscriptionInterface | null
+	package!: SubscriptionModel | null
 
 	validationInfo = {
 		fontValid: true,

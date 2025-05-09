@@ -2,28 +2,28 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
 import { FormsModule } from '@angular/forms';
-import { MealsTableInterface } from '../../../../../interfaces/meals-table';
 import { StateService } from '../../../../../services/state.service';
-import { ProductInterface } from '../../../../../interfaces/product';
-import { MealsInterface } from '../../../../../interfaces/meals';
 import { LoadingCircleComponent } from "../../../../shared/loading-circle/loading-circle.component";
+import { ProductModel } from '../../../../../models/product.model';
+import { UserMealsModel } from '../../../../../models/user-meals.model';
+import { MealModel } from '../../../../../models/meal.model';
 
 @Component({
-  selector: 'app-meals',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    LoadingCircleComponent
-],
-  templateUrl: './meals.component.html',
-  styleUrl: './meals.component.scss'
+    selector: 'app-meals',
+		standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        LoadingCircleComponent
+    ],
+    templateUrl: './meals.component.html',
+    styleUrl: './meals.component.scss'
 })
 export class MealsComponent implements OnInit{
 
-	products: ProductInterface[] | null = null;
+	products: ProductModel[] | null = null;
 	selectedProduct: number | null = null;
-	selectedProductDetails: ProductInterface | null = null;
+	selectedProductDetails: ProductModel | null = null;
 	toggleAddMealCard: boolean = false;
 	detailsIndex: number | null = null
 	toggleDetails: boolean = false;
@@ -36,8 +36,8 @@ export class MealsComponent implements OnInit{
 		description: null,
 	}
 
-	meals: MealsInterface | null = null;
-	mealDetails: MealsTableInterface[] | null = null;
+	meals: UserMealsModel | null = null;
+	mealDetails: MealModel[] | null = null;
 	isMealsLoading: boolean = false;
 
 	handler: {state: boolean, message: string, errorColor: boolean} = {

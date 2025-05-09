@@ -6,16 +6,16 @@ import { StateService } from '../../../../../services/state.service';
 import { LoadingCircleComponent } from "../../../../shared/loading-circle/loading-circle.component";
 
 @Component({
-  selector: 'app-calculator',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    LoadingCircleComponent
-],
-  templateUrl: './calculator.component.html',
-  styleUrl: './calculator.component.scss'
+    selector: 'app-calculator',
+		standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        LoadingCircleComponent
+    ],
+    templateUrl: './calculator.component.html',
+    styleUrl: './calculator.component.scss'
 })
 export class CalculatorComponent {
 

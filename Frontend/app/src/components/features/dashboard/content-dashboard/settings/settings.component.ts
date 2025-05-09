@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user.service';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-		CommonModule,
-	],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+    selector: 'app-settings',
+		standalone: true,
+    imports: [
+        CommonModule,
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit{
 deleteAccount() {

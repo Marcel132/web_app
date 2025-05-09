@@ -7,16 +7,16 @@ import { TokenService } from '../../../../services/token.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [
-			CommonModule,
-			FormsModule,
-			ReactiveFormsModule,
-			HttpClientModule
-	],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+		standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
+    ],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 

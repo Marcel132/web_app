@@ -4,14 +4,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StateService } from '../../../../services/state.service';
 
 @Component({
-  selector: 'app-content-dashboard',
-  standalone: true,
-  imports: [
-		RouterModule,
-		CommonModule
-	],
-  templateUrl: './content-dashboard.component.html',
-  styleUrl: './content-dashboard.component.scss'
+    selector: 'app-content-dashboard',
+		standalone: true,
+    imports: [
+        RouterModule,
+        CommonModule
+    ],
+    templateUrl: './content-dashboard.component.html',
+    styleUrl: './content-dashboard.component.scss'
 })
 export class ContentDashboardComponent {
 
