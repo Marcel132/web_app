@@ -7,16 +7,16 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	background-color: var(--main-container-bg);
 }
 
 .add-meal-card {
 	z-index: 2;
 	padding: 1.6rem 1.067rem;
-	margin: 1rem 0;
+	margin: 4rem 0;
 	border-radius: .6rem;
-	box-shadow: 0px 4px 12px var(--black-opacity-70);
-	background-color: var(--white);
+	box-shadow: 0px 4px 12px var(--meal-card-shadow);
+	background-color: var(--meal-card-bg);
+	color: var(--meal-card-text);
 	overflow-y: auto;
 	display: flex;
 	align-items: center;
@@ -24,6 +24,13 @@
 	flex-direction: column;
 	gap: 1rem;
 	width: 300px;
+
+	input, select, option {
+		background-color: inherit;
+		cursor: pointer;
+		max-width: 250px;
+		margin: 0 auto
+	}
 
 	@media screen and (min-width: 500px) {
 		width: 400px;
@@ -138,6 +145,7 @@
 	cursor: pointer;
 	overflow: hidden;
 	letter-spacing: .25rem;
+	border-radius: 25px;
 }
 .btn-toggle {
 	box-shadow: 0px 4px 12px var(--red);
@@ -206,7 +214,7 @@
 	font-size: 16px;
 	padding-top: 0.7rem;
 
-	@media screen and (min-width: 650px) {
+	@media screen and (min-width: 700px) {
 		grid-template-columns: 1fr 1fr;
 	}
 
