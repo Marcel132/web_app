@@ -8,20 +8,20 @@ import { SubscriptionService } from '../services/subscription.service';
 import { AdminService } from '../services/admin.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    AppModule,
-		RouterModule
-],
-	providers: [
-		AuthService,
-		UserService,
-		SubscriptionService,
-		AdminService,
-	],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+		standalone: true,
+    imports: [
+        // AppModule,
+        RouterModule
+    ],
+    providers: [
+        AuthService,
+        UserService,
+        SubscriptionService,
+        AdminService,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'app';

@@ -4,6 +4,9 @@ import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/
 import { AuthService } from '../services/auth.service';
 import { authInterceptor } from '../interceptors/auth.interceptor';
 import { requestDuplicationInterceptor } from '../interceptors/request-duplication.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/app.state';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 
@@ -11,7 +14,9 @@ import { requestDuplicationInterceptor } from '../interceptors/request-duplicati
   declarations: [],
   imports: [
     CommonModule,
-		HttpClientModule
+		HttpClientModule,
+		StoreModule.forRoot(reducers),
+		StoreDevtoolsModule.instrument({ maxAge: 25}),
   ],
 	exports: [
 	],
